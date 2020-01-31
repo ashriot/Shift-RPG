@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
-public class HeroPanel : MonoBehaviour {
+public class HeroPanel : Panel {
 
-  public Text currentJobName, currentHp, currentArmor, currentMp;
-
-  public Image hpFillImage;
+  public Text currentJobName;
+  public Image[] manaCrystals;
+  public Image jobColor, jobIcon;
   public Hero hero;
+
 }

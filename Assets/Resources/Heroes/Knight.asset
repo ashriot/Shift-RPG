@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: Knight
   m_EditorClassIdentifier: 
   name: Knight
-  hp: 100
-  armor: 5
-  mp: 2
+  hp: 120
+  armor: 50
+  mp: 20
   strength: 20
   intellect: 15
   agility: 9
   crit: 10
   surge: 10
   armorClass: 5
-  hpCurrent: 100
-  armorCurrent: 5
-  mpCurrent: 2
+  hpCurrent: 0
+  armorCurrent: 0
+  mpCurrent: 0
   ticks: 0
   mpRegen: 0
   martialDefense: 0
@@ -32,5 +32,7 @@ MonoBehaviour:
   isPlayer: 1
   jobs:
   - {fileID: 11400000, guid: 947b5115b66aa5b47bb77e690a856ab7, type: 2}
+  - {fileID: 11400000, guid: d87cb771f3b66a54cb2b452a10aaaaec, type: 2}
+  - {fileID: 11400000, guid: 1cc36c516db9dd9469c150eea0aca36a, type: 2}
   currentJob: {fileID: 11400000, guid: 947b5115b66aa5b47bb77e690a856ab7, type: 2}
   isTaunting: 0

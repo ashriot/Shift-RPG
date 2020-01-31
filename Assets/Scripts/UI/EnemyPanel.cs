@@ -1,11 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
-public class EnemyPanel : MonoBehaviour {
+public class EnemyPanel : Panel {
 
-  public Text enemyName, currentHp, currentArmor, currentMp;
-
-  public Image hpFillImage, initiativeFillImage, targetCursor;
-  public Image enemyImage;
+  public Image enemyImage, targetCursor;
   public Enemy enemy;
 }

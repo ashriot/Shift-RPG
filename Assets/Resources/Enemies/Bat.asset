@@ -30,3 +30,5 @@ MonoBehaviour:
   martialDefense: 0
   etherDefense: 0
   isPlayer: 0
+  actions:
+  - {fileID: 11400000, guid: f7a21bb9ec225c2419c4b611436ae08c, type: 2}
