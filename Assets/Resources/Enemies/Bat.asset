@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1974fda8240f4524b9767572e4692ff4, type: 3}
+  m_Name: Bat
+  m_EditorClassIdentifier: 
+  name: Bat
+  hp: 100
+  armor: 5
+  mp: 2
+  strength: 10
+  intellect: 10
+  agility: 8
+  crit: 15
+  surge: 10
+  armorClass: 2
+  hpCurrent: 0
+  armorCurrent: 0
+  mpCurrent: 0
+  ticks: 0
+  mpRegen: 0
+  martialDefense: 0
+  etherDefense: 0
+  isPlayer: 0

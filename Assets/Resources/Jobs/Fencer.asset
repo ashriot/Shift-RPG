@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ec50bec946f584eaee2bd50b79b201, type: 3}
+  m_Name: Fencer
+  m_EditorClassIdentifier: 
+  name: Fencer
+  martialDefense: 0.75
+  etherDefense: 0
+  actions:
+  - {fileID: 11400000, guid: f2a3fcf236e4e724da3569587e294955, type: 2}
+  - {fileID: 11400000, guid: 361e9beb6a126d44a8eb9753a51a9ed1, type: 2}
+  - {fileID: 11400000, guid: 8d17c77e264827f418ca5187c95d4d44, type: 2}
+  - {fileID: 11400000, guid: 0bc19a11e7b86174f828c02392233fe9, type: 2}
