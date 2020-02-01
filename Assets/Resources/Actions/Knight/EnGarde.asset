@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
   m_Name: EnGarde
   m_EditorClassIdentifier: 
-  name: En-garde!
+  name: En garde!
   description: Forces all enemies to target you until you receive an armor break
     or shift.
   cost: 0
+  hits: 1
   potency: 0
   delay: 1
+  sprite: {fileID: 21300000, guid: 276dbd73eab659741b1fe7b15c3ab146, type: 3}
   targetType: 0
   damageType: 0
   sfxName: sword-unsheathe

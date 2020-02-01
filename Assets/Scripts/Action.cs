@@ -9,6 +9,7 @@ public class Action : ScriptableObject {
   public int hits = 1;
   public int potency;
   public float delay = 1f;
+  public Sprite sprite;
   public TargetTypes targetType;
   public DamageTypes damageType;
 

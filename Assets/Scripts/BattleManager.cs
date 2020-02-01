@@ -139,37 +139,10 @@ public class BattleManager : MonoBehaviour {
       // PLAYER TURN
       var hero = currentCombatant as Hero;
       var panel = heroPanels.Where(hp => hp.hero == hero).Single();
-      AudioManager.instance.PlaySfx("end_turn");
+
       MoveHeroPanel(panel, true);
-      for(var i = 0; i < actionMenu.actionButtons.Length; i++) {
-        if (hero.currentJob.actions[i] != null) {
-          actionMenu.actionButtons[i].gameObject.SetActive(true);
-          actionMenu.actionNames[i].text = hero.currentJob.actions[i].name;
-          actionMenu.actionCosts[i].text = (hero.currentJob.actions[i].cost / 10).ToString();
-        } else {
-          actionMenu.actionButtons[i].gameObject.SetActive(false);
-        }
-      }
+      StartCoroutine(DoDisplayHeroMenus(hero));
 
-      if (hero.jobs.Length > 0) {
-        shiftMenu.gameObject.SetActive(true);
-        shiftMenu.nameL.text = hero.jobs[1].name;
-        shiftMenu.jobIconL.sprite = hero.jobs[1].jobIcon;
-        shiftMenu.colorL.color = hero.jobs[1].jobColor;
-        if (hero.jobs.Length == 2) {
-          shiftMenu.nameR.text = hero.jobs[1].name;
-        shiftMenu.jobIconR.sprite = hero.jobs[1].jobIcon;
-        shiftMenu.colorR.color = hero.jobs[1].jobColor;
-        } else {
-          shiftMenu.nameR.text = hero.jobs[2].name;
-          shiftMenu.jobIconR.sprite = hero.jobs[2].jobIcon;
-          shiftMenu.colorR.color = hero.jobs[2].jobColor;
-        }
-      } else         { 
-        shiftMenu.gameObject.SetActive(false);
-      }
-
-      actionMenu.gameObject.SetActive(true);
     } else {
       Debug.Log("Enemy turn");
       // ENEMY TURN
@@ -233,8 +206,52 @@ public class BattleManager : MonoBehaviour {
 
   private void MoveHeroPanel(Panel panel, bool up) {
     // Debug.Log("Starting pos: " + panel.transform.localPosition);
-    var distance = 100f * (up ? 1f : -1f);
-    panel.Move(distance, 0.33f * battleSpeed);
+    var distance = 40f * (up ? 1f : -1f);
+    panel.Move(distance, 0.25f * battleSpeed);
+  }
+
+  private IEnumerator DoDisplayHeroMenus(Hero hero) {
+    Debug.Log("waiting");
+    yield return new WaitForSeconds(battleSpeed * 0.25f);
+    DisplayHeroMenus(hero);
+  }
+
+  private void DisplayHeroMenus(Hero hero) {
+    AudioManager.instance.PlaySfx("end_turn");
+    for (var i = 0; i < actionMenu.actionButtons.Length; i++) {
+      if (hero.currentJob.actions[i] != null) {
+        actionMenu.actionButtons[i].gameObject.SetActive(true);
+        actionMenu.actionButtons[i].icon.sprite = hero.currentJob.actions[i].sprite;
+        actionMenu.actionButtons[i].fillColor.color = hero.currentJob.jobColor;
+        actionMenu.actionButtons[i].nameText.text = hero.currentJob.actions[i].name;
+        actionMenu.actionButtons[i].costText.text = (hero.currentJob.actions[i].cost / 10).ToString();
+      }
+      else {
+        actionMenu.actionButtons[i].gameObject.SetActive(false);
+      }
+    }
+
+    if (hero.jobs.Length > 0) {
+      shiftMenu.gameObject.SetActive(true);
+      shiftMenu.nameL.text = hero.jobs[1].name;
+      shiftMenu.jobIconL.sprite = hero.jobs[1].jobIcon;
+      shiftMenu.colorL.color = hero.jobs[1].jobColor;
+      if (hero.jobs.Length == 2) {
+        shiftMenu.nameR.text = hero.jobs[1].name;
+        shiftMenu.jobIconR.sprite = hero.jobs[1].jobIcon;
+        shiftMenu.colorR.color = hero.jobs[1].jobColor;
+      }
+      else {
+        shiftMenu.nameR.text = hero.jobs[2].name;
+        shiftMenu.jobIconR.sprite = hero.jobs[2].jobIcon;
+        shiftMenu.colorR.color = hero.jobs[2].jobColor;
+      }
+    }
+    else {
+      shiftMenu.gameObject.SetActive(false);
+    }
+    actionMenu.gameObject.SetActive(true);
+
   }
 
   private void ShakePanel(Panel panel, float intensity) {
@@ -301,7 +318,7 @@ public class BattleManager : MonoBehaviour {
 
   public void ClickActionButton(int buttonId) {
     Action actionToExecute = null;
-    var actionName = actionMenu.actionNames[buttonId].text;
+    var actionName = actionMenu.actionButtons[buttonId].nameText.text;
     var hero = currentCombatant as Hero;
     foreach(var action in hero.currentJob.actions) {
       if (action.name == actionName) {

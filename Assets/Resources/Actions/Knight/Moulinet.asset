@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
-  m_Name: DeadlyRemise
+  m_Name: Moulinet
   m_EditorClassIdentifier: 
-  name: Deadly Remise
-  description: 
-  cost: 30
+  name: Moulinet
+  description: PHY damage split between all enemies.
+  cost: 20
+  hits: 1
   potency: 0
   delay: 0
+  sprite: {fileID: 21300000, guid: 8d4cb0f1802c8164080d41f58266abb2, type: 3}
   targetType: 0
   damageType: 0
   sfxName: 
