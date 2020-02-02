@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4526484903570686863}
   - component: {fileID: 2907381097381623936}
   - component: {fileID: 2451109283190575949}
-  - component: {fileID: -5379984846609175085}
+  - component: {fileID: 2880829055538582120}
   m_Layer: 5
   m_Name: DamageText
   m_TagString: Untagged
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 1, y: 1}
   m_UseGraphicAlpha: 1
---- !u!114 &-5379984846609175085
+--- !u!114 &2880829055538582120
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8091645848988431344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b3939dd551ab154cab5acd49b148550, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f772d3e08dd9764fa443ea6481f0c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 1

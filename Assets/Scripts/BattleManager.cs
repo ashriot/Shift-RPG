@@ -15,7 +15,7 @@ public class BattleManager : MonoBehaviour {
 
   [Header("Prefabs")]
   public PopupText popup;
-  public DamageText damageText;
+  public PopupText damageText;
   public StatusEffectDisplay buffDisplay;
   public StatusEffectDisplay debuffDisplay;
 
@@ -391,9 +391,9 @@ public class BattleManager : MonoBehaviour {
     if (actionToExecute != null) {
       if (actionToExecute.mpCost > hero.mpCurrent) {
         var panel = heroPanels.Where(hp => hp.hero == currentCombatant).Single();
-        var position = panel.gameObject.transform.localPosition;
+        var position = panel.gameObject.transform.position;
         position.y += panel.GetComponent<RectTransform>().rect.height;
-        Instantiate(popup, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage("Not enough Mana!", battleSpeed * .8f, Color.white, false);
+        Instantiate(popup, position, panel.gameObject.transform.rotation, panel.transform).DisplayMessage("Not enough Mana!", battleSpeed * .8f, Color.white, false);
         return;
       }
       HeroAction(actionToExecute);
@@ -522,7 +522,7 @@ public class BattleManager : MonoBehaviour {
     var panel = enemyPanels.Where(ep => ep.enemy == defender).Single();
     var position = panel.image.transform.position;
 
-    Instantiate(damageText, position, panel.gameObject.transform.rotation, canvas.transform).DisplayDamage(damage.ToString("N0"), battleSpeed * 0.8f, color);
+    Instantiate(damageText, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(damage.ToString("N0"), battleSpeed * 0.8f, color);
 
     UpdateUi();
   }
@@ -610,7 +610,7 @@ public class BattleManager : MonoBehaviour {
 
     var panel = heroPanels.Where(hp => hp.hero == defender).Single();
     var position = panel.gameObject.transform.position;
-    Instantiate(damageText, position, panel.gameObject.transform.rotation, canvas.transform).DisplayDamage(damage.ToString("N0"), battleSpeed * 0.8f, color);
+    Instantiate(damageText, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(damage.ToString("N0"), battleSpeed * 0.8f, color);
 
     UpdateUi();
   }

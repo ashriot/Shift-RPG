@@ -23,7 +23,7 @@ public class PopupText : MonoBehaviour {
         Destroy (gameObject);
       }
     }
-    transform.position += new Vector3(0f, direction * distance * Time.deltaTime, 0f);
+    transform.localPosition += new Vector3(0f, direction * distance * Time.deltaTime, 0f);
   }
 
   public void DisplayMessage(string message, float duration, Color color, bool shouldMove = true) {

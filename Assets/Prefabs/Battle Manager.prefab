@@ -1513,7 +1513,7 @@ MonoBehaviour:
   actionMenu: {fileID: 1539930361}
   shiftMenu: {fileID: 8439847108852834197}
   popup: {fileID: 5392435715144227516, guid: cfa0a96cf49cd1e45ac078cf28e1f0c9, type: 3}
-  damageText: {fileID: -5379984846609175085, guid: 9f75c3b084e166b4f860d46e1ac2e57d,
+  damageText: {fileID: 2880829055538582120, guid: 9f75c3b084e166b4f860d46e1ac2e57d,
     type: 3}
   buffDisplay: {fileID: 761778255497779492, guid: b7cb121896e1d0b44bf47b996fff4451,
     type: 3}
