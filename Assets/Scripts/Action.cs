@@ -1,19 +1,30 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Action", menuName = "Action")]
 public class Action : ScriptableObject {
     
   public new string name;
   public string description;
-  public int cost;
-  public int hits = 1;
-  public int potency;
+  public int mpCost;
+  public float potency;
+  public int hits;
   public float delay = 1f;
+  public bool splitDamage;
   public Sprite sprite;
   public TargetTypes targetType;
   public DamageTypes damageType;
+  public PowerTypes powerType;
+  public List<StatusEffect> buffs;
+  public List<StatusEffect> debuffs;
 
   public string sfxName;
+
+  public virtual bool Execute(Unit attacker, Unit defender) {
+    var dealsDamage = true;
+
+    return dealsDamage;
+  }
 }
 
 public enum TargetTypes {
@@ -23,11 +34,16 @@ public enum TargetTypes {
   OtherAllies,
   EntireParty,
   OneEnemy,
-  AllEnemies
+  AllEnemies,
 }
 
 public enum DamageTypes {
   Martial,
   Ether,
   Piercing
+}
+
+public enum PowerTypes {
+  Attack,
+  Willpower
 }

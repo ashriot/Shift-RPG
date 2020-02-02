@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class Panel : MonoBehaviour {
 
   public Text currentHp, currentArmor, currentMp;
-  public Shaker shaker;
+  public ShakeObject shaker;
 
   public Image hpFillImage;
 

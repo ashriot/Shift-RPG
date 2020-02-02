@@ -30,14 +30,11 @@ public class PopupText : MonoBehaviour {
     text.color = color;
     // Debug.Log("Popup pos: " + transform.position);
     if (shouldMove) {
-      text.fontStyle = FontStyle.Bold;
-      transform.position = new Vector3(transform.position.x, transform.position.y * 0.75f, 1f);
       distance = initialDistance * (1 / duration);
     } else {
-      text.fontStyle = FontStyle.Normal;
-      transform.position = new Vector3(transform.position.x, transform.position.y * 1.25f, 1f);
       distance = 0f;
     }
+    transform.position += new Vector3(0f, 60f, 0f); 
     lifetime = duration;
     text.text = message;
   }

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ec50bec946f584eaee2bd50b79b201, type: 3}
+  m_Name: Evoker
+  m_EditorClassIdentifier: 
+  name: Evoker
+  description: 
+  jobIcon: {fileID: 21300000, guid: fadb10bcdb13ede4591a99f15a667345, type: 3}
+  jobColor: {r: 0.5740477, g: 0.8131635, b: 0.9433962, a: 1}
+  martialDefense: 0
+  etherDefense: 0.5
+  actions:
+  - {fileID: 11400000, guid: 400ea5ced35903242a8686ab2893dafc, type: 2}
+  - {fileID: 11400000, guid: 2726e11a623a59c4fb8a83d72714fb4e, type: 2}
+  - {fileID: 11400000, guid: b082ad1757696394b9d77c87d948bb25, type: 2}
+  - {fileID: 11400000, guid: 8d59d01342624844fb1bde9f1793523f, type: 2}

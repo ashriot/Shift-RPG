@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Riposte
   description: 
-  cost: 10
+  mpCost: 10
   hits: 1
   potency: 0
   delay: 1
   sprite: {fileID: 21300000, guid: 4c8fc5b792bccd44287499ff5d870051, type: 3}
   targetType: 0
   damageType: 0
+  powerType: 0
   sfxName: 

@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Redoublement
   description: 
-  cost: 30
+  mpCost: 30
   hits: 1
   potency: 0
-  delay: 0
+  delay: 1
   sprite: {fileID: 21300000, guid: 04e32c06757be414fbbcdc73b672afb6, type: 3}
   targetType: 0
   damageType: 0
+  powerType: 0
   sfxName: 

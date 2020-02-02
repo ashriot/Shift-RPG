@@ -16,9 +16,9 @@ MonoBehaviour:
   hp: 120
   armor: 50
   mp: 20
-  strength: 20
-  intellect: 15
-  agility: 9
+  attack: 16
+  willpower: 14
+  speed: 9
   crit: 10
   surge: 10
   armorClass: 5
@@ -30,6 +30,7 @@ MonoBehaviour:
   martialDefense: 0
   etherDefense: 0
   isPlayer: 1
+  heroName: Knight
   jobs:
   - {fileID: 11400000, guid: 947b5115b66aa5b47bb77e690a856ab7, type: 2}
   - {fileID: 11400000, guid: d87cb771f3b66a54cb2b452a10aaaaec, type: 2}

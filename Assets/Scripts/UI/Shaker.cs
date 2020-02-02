@@ -27,14 +27,11 @@ public class Shaker : MonoBehaviour {
 
   private IEnumerator DoShake() {
     isShaking = true;
-    var intensityScalar = 1f;
 
     var startTime = Time.realtimeSinceStartup;
     while (Time.realtimeSinceStartup < startTime + shakeLifetime) {
-      intensityScalar = Time.realtimeSinceStartup / startTime + shakeLifetime;
-      Debug.Log(intensityScalar.ToString());
-      var randomPoint = new Vector3(Random.Range(-1f, 1f) * intensity * intensityScalar, Random.Range(-1f, 1f) * intensity, initialPos.z);
-      // Debug.Log("random point: " + randomPoint);
+      var randomPoint = new Vector3(Random.Range(-1f, 1f) * intensity, Random.Range(-1f, 1f) * intensity, initialPos.z);
+      Debug.Log("Current Loc: " + transform.localPosition + " " + "Random Pt: " + randomPoint);
       transform.localPosition = randomPoint;
       yield return null;
     }

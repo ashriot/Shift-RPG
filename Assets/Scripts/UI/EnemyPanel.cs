@@ -2,6 +2,6 @@
 
 public class EnemyPanel : Panel {
 
-  public Image enemyImage, targetCursor;
+  public Image image, targetCursor;
   public Enemy enemy;
 }

@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Sonic Blast
   description: 
-  cost: 0
+  mpCost: 0
   hits: 1
-  potency: 12
+  potency: 1
   delay: 1
+  sprite: {fileID: 0}
   targetType: 1
   damageType: 1
+  powerType: 0
   sfxName: spell

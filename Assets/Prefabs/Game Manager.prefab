@@ -46,3 +46,5 @@ MonoBehaviour:
   heroes: []
   heroRefs:
   - {fileID: 11400000, guid: cc8493c08fd5e88468ce7f177a1b7889, type: 2}
+  - {fileID: 11400000, guid: accb80069703f7d42975dae8e7c8fcd5, type: 2}
+  - {fileID: 11400000, guid: df9032261103278489eef26f6383c564, type: 2}

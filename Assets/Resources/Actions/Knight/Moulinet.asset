@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Moulinet
   description: PHY damage split between all enemies.
-  cost: 20
+  mpCost: 20
   hits: 1
   potency: 0
-  delay: 0
+  delay: 1
   sprite: {fileID: 21300000, guid: 8d4cb0f1802c8164080d41f58266abb2, type: 3}
   targetType: 0
   damageType: 0
+  powerType: 0
   sfxName: 
