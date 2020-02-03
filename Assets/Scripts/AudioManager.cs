@@ -35,7 +35,7 @@ public class AudioManager : MonoBehaviour {
     } else if (name == "end_turn") {
       sfxs[2].Play();
     } else {
-      Debug.LogError("SFX named '" + name + "' does not exist!");
+      // Debug.LogError("SFX named '" + name + "' does not exist!");
     }
   }
 

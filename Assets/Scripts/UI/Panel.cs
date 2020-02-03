@@ -3,10 +3,13 @@ using UnityEngine.UI;
 
 public class Panel : MonoBehaviour {
 
-  public Text currentHp, currentArmor, currentMp;
+  public Text currentHp;
   public ShakeObject shaker;
+  public bool panelMoved;
 
-  public Image hpFillImage;
+  public Image hpFillImage, image;
+  public Image[] crystals;
+  public Image[] shields;
 
   public float moveLifetime;
   public float initialSpeed;

@@ -15,11 +15,14 @@ MonoBehaviour:
   name: Feedback
   description: 
   mpCost: 60
+  potency: 2
   hits: 1
-  potency: 0
   delay: 1
+  splitDamage: 0
   sprite: {fileID: 21300000, guid: 357761fe289dfc84b9be2eaf9be6d0e8, type: 3}
   targetType: 5
   damageType: 1
   powerType: 0
+  buffs: []
+  debuffs: []
   sfxName: 

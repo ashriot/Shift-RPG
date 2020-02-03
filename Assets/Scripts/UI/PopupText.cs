@@ -26,11 +26,12 @@ public class PopupText : MonoBehaviour {
     transform.localPosition += new Vector3(0f, direction * distance * Time.deltaTime, 0f);
   }
 
-  public void DisplayMessage(string message, float duration, Color color, bool shouldMove = true) {
+  public void DisplayMessage(string message, float duration, Color color, bool isCrit, bool shouldMove = false) {
     text.color = color;
     // Debug.Log("Popup pos: " + transform.position);
     if (shouldMove) {
-      distance = initialDistance * (1 / duration);
+      text.fontSize = (int)(text.fontSize * (isCrit ? 1.25f : 1));
+      distance = initialDistance * (1 / duration) * (isCrit ? 1.25f : 1);
     } else {
       distance = 0f;
     }

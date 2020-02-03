@@ -15,11 +15,14 @@ MonoBehaviour:
   name: Sonic Blast
   description: 
   mpCost: 0
+  potency: 1.25
   hits: 1
-  potency: 1
   delay: 1
+  splitDamage: 0
   sprite: {fileID: 0}
   targetType: 1
   damageType: 1
-  powerType: 0
+  powerType: 1
+  buffs: []
+  debuffs: []
   sfxName: spell

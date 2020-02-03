@@ -16,20 +16,24 @@ MonoBehaviour:
   hp: 90
   armor: 30
   mp: 30
+  mpRegen: 10
   attack: 20
-  willpower: 16
-  speed: 11
+  willpower: 15
+  speed: 13
   crit: 25
-  surge: 24
+  surge: 25
   armorClass: 0
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0
   ticks: 0
-  mpRegen: 0
   martialDefense: 0
   etherDefense: 0
+  breakBonus: 2
+  buffs: []
+  debuffs: []
   isPlayer: 1
+  isArmorBroke: 0
   heroName: Rogue
   jobs:
   - {fileID: 11400000, guid: 284e77ec2a430e64897942cdd81bf51e, type: 2}

@@ -19,6 +19,7 @@ public enum StatusEffectTypes {
 
 public enum Triggers
 {
+  Constant,
   StartOfTurn,
   EndOfTurn,
   BeingHit,

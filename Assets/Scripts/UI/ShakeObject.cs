@@ -35,7 +35,7 @@ public class ShakeObject : MonoBehaviour {
     startAmount = shakeAmount;//Reset the start amount, to determine percentage.
     shakeDuration = duration;//Add to the current time.
     startDuration = shakeDuration;//Reset the start time.
-    Debug.Log("begin shake amount: " + amount + " duration: " + shakeDuration);
+    // Debug.Log("begin shake amount: " + amount + " duration: " + shakeDuration);
 
     if (!isRunning) StartCoroutine(DoShake());//Only call the coroutine if it isn't currently running. Otherwise, just set the variables.
   }
@@ -43,7 +43,7 @@ public class ShakeObject : MonoBehaviour {
 
   IEnumerator DoShake() {
     isRunning = true;
-    Debug.Log("local: " + transform.localPosition);
+    // Debug.Log("DoShake initial pos: " + transform.localPosition);
     var initialPos = transform.localPosition;
     while (shakeDuration > 0.01f) {
       Vector3 rotationAmount = Random.insideUnitSphere * shakeAmount + initialPos;//A Vector3 to add to the Local Rotation

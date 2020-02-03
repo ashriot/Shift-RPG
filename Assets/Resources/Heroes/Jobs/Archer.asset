@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Archer
   description: 
   jobIcon: {fileID: 21300000, guid: 6841d1e8a7a49904582e06057072cab5, type: 3}
-  jobColor: {r: 0.5303755, g: 0.7830189, b: 0.49123356, a: 1}
+  jobColor: {r: 0.4218495, g: 0.8773585, b: 0.3517711, a: 1}
   martialDefense: 0
   etherDefense: 0
   actions:
@@ -23,3 +23,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06ad26e560df5cc46b0998f9e3959403, type: 2}
   - {fileID: 11400000, guid: c87302bcd464f334b8bfd1bc54563315, type: 2}
   - {fileID: 11400000, guid: 327a52eeb976c9d40af1924f6f9c1870, type: 2}
+  trait: {fileID: 11400000, guid: b2b894c12e6b8834eb8944b0ae592060, type: 2}
+  shiftAction: {fileID: 11400000, guid: a4d77ce0c021d504e90eed4ba0676fc6, type: 2}

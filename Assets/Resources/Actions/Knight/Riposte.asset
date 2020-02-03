@@ -15,11 +15,15 @@ MonoBehaviour:
   name: Riposte
   description: 
   mpCost: 10
-  hits: 1
-  potency: 0
+  potency: 0.5
+  hits: 2
   delay: 1
+  splitDamage: 0
   sprite: {fileID: 21300000, guid: 4c8fc5b792bccd44287499ff5d870051, type: 3}
-  targetType: 0
+  targetType: 5
   damageType: 0
   powerType: 0
+  buffs:
+  - {fileID: 11400000, guid: 024516af727adc54d91289bb05293f1c, type: 2}
+  debuffs: []
   sfxName: 

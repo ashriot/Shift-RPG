@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
-  m_Name: EnGarde
+  m_Name: ArcaneBurst
   m_EditorClassIdentifier: 
-  name: En Garde!
-  description: All enemies are targetting you.
-  sprite: {fileID: 21300000, guid: 276dbd73eab659741b1fe7b15c3ab146, type: 3}
+  name: Arcane Burst
+  description: 
+  duration: 0
+  sprite: {fileID: 21300000, guid: b3363b98e5a05c042b1c808ecf38f787, type: 3}
   statusEffectType: 0
   targetType: 0
+  trigger: 1

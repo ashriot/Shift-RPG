@@ -16,20 +16,24 @@ MonoBehaviour:
   hp: 60
   armor: 20
   mp: 40
-  attack: 20
-  willpower: 26
+  mpRegen: 10
+  attack: 25
+  willpower: 20
   speed: 10
-  crit: 15
-  surge: 18
+  crit: 20
+  surge: 20
   armorClass: 0
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0
   ticks: 0
-  mpRegen: 0
   martialDefense: 0
   etherDefense: 0
+  breakBonus: 2
+  buffs: []
+  debuffs: []
   isPlayer: 1
+  isArmorBroke: 0
   heroName: Mage
   jobs:
   - {fileID: 11400000, guid: 6a76874a6445e5e41a498d0dc325325b, type: 2}
