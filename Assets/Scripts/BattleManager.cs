@@ -244,6 +244,8 @@ public class BattleManager : MonoBehaviour {
         StartCoroutine(DoPause());
       }
       panel.currentJobName.text = panel.hero.currentJob.name.ToUpper();
+      panel.jobColor.color = panel.hero.currentJob.jobColor;
+      panel.jobIcon.sprite = panel.hero.currentJob.jobIcon;
       panel.hero.martialDefense = panel.hero.currentJob.martialDefense;
       panel.hero.etherDefense = panel.hero.currentJob.etherDefense;
       if (!heroes[i].buffs.Contains(panel.hero.currentJob.trait)) {
@@ -396,15 +398,18 @@ public class BattleManager : MonoBehaviour {
       shiftMenu.nameL.text = hero.jobs[1].name;
       shiftMenu.jobIconL.sprite = hero.jobs[1].jobIcon;
       shiftMenu.colorL.color = hero.jobs[1].jobColor;
+      shiftMenu.jobIdL = 1;
       if (hero.jobs.Length == 2) {
         shiftMenu.nameR.text = hero.jobs[1].name;
         shiftMenu.jobIconR.sprite = hero.jobs[1].jobIcon;
         shiftMenu.colorR.color = hero.jobs[1].jobColor;
+        shiftMenu.jobIdR = 1;
       }
       else {
         shiftMenu.nameR.text = hero.jobs[2].name;
         shiftMenu.jobIconR.sprite = hero.jobs[2].jobIcon;
         shiftMenu.colorR.color = hero.jobs[2].jobColor;
+        shiftMenu.jobIdR = 2;
       }
     }
     else {
@@ -480,7 +485,6 @@ public class BattleManager : MonoBehaviour {
   }
 
   public void ClickActionButton(int buttonId) {
-
     Action actionToExecute = null;
     var actionName = actionMenu.actionButtons[buttonId].nameText.text;
     var hero = currentCombatant as Hero;
@@ -502,6 +506,20 @@ public class BattleManager : MonoBehaviour {
     } else {
       Debug.Log("action is null!");
     }
+  }
+
+  public void ClickShiftButton(int buttonId) {
+    StartCoroutine(DoShiftJobs(buttonId));
+  }
+
+  public IEnumerator DoShiftJobs(int jobId) {
+    var hero = currentCombatant as Hero;
+    SlideHeroMenus(hero, false);
+    hero.currentJob = hero.jobs[jobId];
+    yield return new WaitForSeconds(battleSpeed);
+
+    SlideHeroMenus(hero, true);
+    UpdateUi();
   }
 
   public void HeroAction(Action action) {

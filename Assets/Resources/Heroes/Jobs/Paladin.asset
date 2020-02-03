@@ -18,4 +18,10 @@ MonoBehaviour:
   jobColor: {r: 0.83921576, g: 0.3372549, b: 0.4901961, a: 1}
   martialDefense: 0.5
   etherDefense: 0.5
-  actions: []
+  actions:
+  - {fileID: 11400000, guid: 42c7e2138f0422b4abb4b53610c9f82d, type: 2}
+  - {fileID: 11400000, guid: 876eef7e5eb326e428c0fdb8324698ad, type: 2}
+  - {fileID: 11400000, guid: be77e35dc29181d41a6de6a0f98cb1af, type: 2}
+  - {fileID: 11400000, guid: cd810059a9742a54e8dab58b131880f2, type: 2}
+  trait: {fileID: 11400000, guid: 85694d5821c528d488afbad252ca9549, type: 2}
+  shiftAction: {fileID: 11400000, guid: 9d9ddb7f76db5fe4a9c26120cf435c7c, type: 2}

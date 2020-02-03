@@ -536,7 +536,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6333905522023310068}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8439847108852834197}
+        m_MethodName: Click
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6631947934672750877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1952,7 +1963,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6496325504711067074}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8439847108852834197}
+        m_MethodName: Click
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1437864043603185669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2262,6 +2284,8 @@ MonoBehaviour:
   jobIconR: {fileID: 1020049401735344950}
   traitIcon: {fileID: 4826017709264690854}
   shiftIcon: {fileID: 6208564355158637565}
+  jobIdL: 0
+  jobIdR: 0
   initialSize: {x: 0, y: 0}
 --- !u!1 &5697203175858850203
 GameObject:
@@ -2742,6 +2766,8 @@ MonoBehaviour:
   battleActive: 0
   battleWaiting: 0
   delaying: 0
+  paused: 0
+  pausedForTriggers: 0
   combatants: []
   currentCombatant: {fileID: 0}
   playerTarget: {fileID: 0}
