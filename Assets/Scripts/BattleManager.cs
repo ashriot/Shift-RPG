@@ -31,6 +31,9 @@ public class BattleManager : MonoBehaviour {
   public float battleSpeed;
   public bool battleActive;
   public bool battleWaiting;
+  public bool choosingEnemyTarget;
+  public bool choosingAllyOnlyTarget;
+  public bool choosingSelfOrAllyTarget;
   public bool delaying;
   public bool paused;
   public bool pausedForTriggers;
@@ -235,7 +238,7 @@ public class BattleManager : MonoBehaviour {
       if (panel.hero.armorCurrent <= 0 && !panel.hero.isArmorBroke) {
         panel.hero.isArmorBroke = true;
         ShakePanel(panel, SHAKE_INTENSITY * 1.5f, 1f);
-        // play shatter sound
+        AudioManager.instance.PlaySfx("damage02");
         Debug.Log("Armor Break!");
         var position = panel.gameObject.transform.position;
         position.y += panel.GetComponent<RectTransform>().rect.height;
@@ -280,7 +283,7 @@ public class BattleManager : MonoBehaviour {
       if (panel.enemy.armorCurrent <= 0 && !panel.enemy.isArmorBroke) {
         panel.enemy.isArmorBroke = true;
         ShakePanel(panel, SHAKE_INTENSITY * 1.5f, 1f);
-        // play shatter sound
+        AudioManager.instance.PlaySfx("damage02");
         Debug.Log("Armor Break!");
         var popupText = Instantiate(popup, panel.transform, false);
         popupText.transform.localPosition += new Vector3(0f, 75f, 0f);
@@ -384,8 +387,7 @@ public class BattleManager : MonoBehaviour {
       }
     }
 
-    if (hero.jobs.Length > 1) {
-      // set trait and shift action info
+      // set current trait and shift action info
       shiftMenu.traitColor.color = hero.currentJob.jobColor;
       shiftMenu.traitName.text = hero.currentJob.trait.name;
       shiftMenu.traitIcon.sprite = hero.currentJob.trait.sprite;
@@ -393,24 +395,22 @@ public class BattleManager : MonoBehaviour {
       shiftMenu.shiftName.text = hero.currentJob.shiftAction.name;
       shiftMenu.shiftIcon.sprite = hero.currentJob.shiftAction.sprite;
 
+    if (hero.jobs.Length > 1) {
+      var jobIndex = System.Array.IndexOf(hero.jobs, hero.currentJob);
+      var jobLIndex = (jobIndex - 1) < 0 ? hero.jobs.Length - 1 : jobIndex - 1;
+      var jobRIndex = (jobIndex + 1) == hero.jobs.Length ? 0 : jobIndex + 1;
+      var jobL = hero.jobs[jobLIndex];
+      var jobR = hero.jobs[jobRIndex];
       shiftMenu.GetComponent<RectTransform>().sizeDelta = shiftMenu.initialSize;
       shiftMenu.gameObject.SetActive(true);
-      shiftMenu.nameL.text = hero.jobs[1].name;
-      shiftMenu.jobIconL.sprite = hero.jobs[1].jobIcon;
-      shiftMenu.colorL.color = hero.jobs[1].jobColor;
-      shiftMenu.jobIdL = 1;
-      if (hero.jobs.Length == 2) {
-        shiftMenu.nameR.text = hero.jobs[1].name;
-        shiftMenu.jobIconR.sprite = hero.jobs[1].jobIcon;
-        shiftMenu.colorR.color = hero.jobs[1].jobColor;
-        shiftMenu.jobIdR = 1;
-      }
-      else {
-        shiftMenu.nameR.text = hero.jobs[2].name;
-        shiftMenu.jobIconR.sprite = hero.jobs[2].jobIcon;
-        shiftMenu.colorR.color = hero.jobs[2].jobColor;
-        shiftMenu.jobIdR = 2;
-      }
+      shiftMenu.nameL.text = jobL.name;
+      shiftMenu.jobIconL.sprite = jobL.jobIcon;
+      shiftMenu.colorL.color = jobL.jobColor;
+      shiftMenu.jobIdL = jobLIndex;
+      shiftMenu.nameR.text = jobR.name;
+      shiftMenu.jobIconR.sprite = jobR.jobIcon;
+      shiftMenu.colorR.color = jobR.jobColor;
+      shiftMenu.jobIdR = jobRIndex;
     }
     else {
       shiftMenu.gameObject.SetActive(false);

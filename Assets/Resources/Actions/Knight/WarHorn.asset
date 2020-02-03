@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
-  m_Name: Moulinet
+  m_Name: WarHorn
   m_EditorClassIdentifier: 
-  name: Moulinet
-  description: PHY damage split between all enemies.
-  mpCost: 20
-  potency: 1.2
+  name: War Horn
+  description: 
+  mpCost: 0
+  potency: 0
   hits: 1
   delay: 1
-  splitDamage: 1
+  splitDamage: 0
   removesArmor: 1
-  sprite: {fileID: 21300000, guid: 4b5f2ad26cd0f8a4aaf77f2b135736fb, type: 3}
-  targetType: 6
+  sprite: {fileID: 21300000, guid: 8b959a12e0726ed478da763740d00fab, type: 3}
+  targetType: 0
   damageType: 0
   powerType: 0
   additionalDamage: []
