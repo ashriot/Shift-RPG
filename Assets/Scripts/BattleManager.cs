@@ -662,16 +662,34 @@ public class BattleManager : MonoBehaviour {
     UpdateUi();
     yield return new WaitForSeconds(battleSpeed / 2f);
 
-    for (var h = 0; h < action.hits; h++) {
-      while (paused || delaying || pausedForTriggers) {
-        yield return new WaitForEndOfFrame();
+    if (action.targetType == TargetTypes.OneEnemy) {
+      for (var h = 0; h < action.hits; h++) {
+        while (paused || delaying || pausedForTriggers) {
+          yield return new WaitForEndOfFrame();
+        }
+        ExecuteActionEffects(action);
+        EnemyDealDamage(action);
+        if (action.hits > 1) {
+          yield return new WaitForSeconds(battleSpeed / 4f);
+        }
       }
-      ExecuteActionEffects(action);
-      EnemyDealDamage(action);
-      if (action.hits > 1) {
-        yield return new WaitForSeconds(battleSpeed / 4f);
+    } else if (action.targetType == TargetTypes.AllEnemies) {
+      foreach(var hero in heroes) {
+        for (var h = 0; h < action.hits; h++){
+          while (paused || delaying || pausedForTriggers) {
+            yield return new WaitForEndOfFrame();
+          }
+          ExecuteActionEffects(action);
+          EnemyDealDamage(action, hero);
+          if (action.hits > 1) {
+            yield return new WaitForSeconds(battleSpeed / 4f);
+          }
+        }
       }
+
     }
+
+    
 
     yield return new WaitForSeconds(battleSpeed);
 
@@ -683,10 +701,10 @@ public class BattleManager : MonoBehaviour {
     NextTurn();
   }
 
-  private void EnemyDealDamage(Action action) {
+  private void EnemyDealDamage(Action action, Hero target = null) {
     // Debug.Log("Enemy dealing damage to " + enemyTarget.heroName);
     var attacker = currentCombatant as Enemy;
-    var defender = enemyTarget;
+    var defender = target ?? enemyTarget;
     var color = Color.white;
     var isCrit = false;
 
