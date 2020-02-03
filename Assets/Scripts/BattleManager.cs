@@ -32,6 +32,8 @@ public class BattleManager : MonoBehaviour {
   public bool battleActive;
   public bool battleWaiting;
   public bool delaying;
+  public bool paused;
+  public bool pausedForTriggers;
   public List<Unit> combatants = new List<Unit>();
   public Unit currentCombatant;
   public Enemy playerTarget;
@@ -61,9 +63,12 @@ public class BattleManager : MonoBehaviour {
     var enemyName = "Bat";
     var newEnemy = Instantiate(Resources.Load<Enemy>("Enemies/" + enemyName));
     enemyLoadList.Add(newEnemy);
-    var enemyName2 = "Tree";
-    var newEnemy2 = Instantiate(Resources.Load<Enemy>("Enemies/" + enemyName2));
+    enemyName = "Tree";
+    var newEnemy2 = Instantiate(Resources.Load<Enemy>("Enemies/" + enemyName));
     enemyLoadList.Add(newEnemy2);
+    enemyName = "Wolf";
+    var newEnemy3 = Instantiate(Resources.Load<Enemy>("Enemies/" + enemyName));
+    enemyLoadList.Add(newEnemy3);
     InitializeBattle();
   }
 
@@ -172,7 +177,7 @@ public class BattleManager : MonoBehaviour {
   }
 
   void FixedUpdate() {
-    if (!battleActive || !battleWaiting || delaying) { return; }
+    if (!battleActive || !battleWaiting || delaying || paused || pausedForTriggers) { return; }
     // These values must be TRUE to continue EXCEPT delaying
     battleWaiting = false;
 
@@ -236,7 +241,7 @@ public class BattleManager : MonoBehaviour {
         position.y += panel.GetComponent<RectTransform>().rect.height;
         Instantiate(popup, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage("Armor Break!", battleSpeed * .8f, Color.white, false);
         StartCoroutine(DoFlashImage(panel.image, Color.red));
-        StartCoroutine(DoDelay());
+        StartCoroutine(DoPause());
       }
       panel.currentJobName.text = panel.hero.currentJob.name.ToUpper();
       panel.hero.martialDefense = panel.hero.currentJob.martialDefense;
@@ -279,7 +284,7 @@ public class BattleManager : MonoBehaviour {
         popupText.transform.localPosition += new Vector3(0f, 75f, 0f);
         popupText.DisplayMessage("Armor Break!", battleSpeed, Color.white, false);
         StartCoroutine(DoFlashImage(panel.image, Color.red));
-        StartCoroutine(DoDelay());
+        StartCoroutine(DoPause());
       }
       if (panel.enemy.isDead) {
         panel.gameObject.SetActive(false);
@@ -508,6 +513,7 @@ public class BattleManager : MonoBehaviour {
   }
 
   public IEnumerator DoHeroAction(Action action, Hero hero = null, Enemy target = null, bool nextTurn = true) {
+    if (target != null && target.isDead) yield break;
     var panel = heroPanels.Where(hp => hp.hero == (hero ?? currentCombatant)).Single();
     panel.hero.mpCurrent -= action.mpCost;
     UpdateUi();
@@ -515,16 +521,22 @@ public class BattleManager : MonoBehaviour {
     var position = panel.gameObject.transform.position;
     position.y += panel.GetComponent<RectTransform>().rect.height * 0.8f;
     Instantiate(popup, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(action.name, battleSpeed * .8f, Color.white, false);
-    yield return new WaitForSeconds(battleSpeed / 4f);
+    yield return new WaitForSeconds(battleSpeed / 3f);
 
     for (var h = 0; h < action.hits; h++) {
-      if (delaying) {
-        yield return new WaitForSeconds(battleSpeed);
+      while (paused || delaying) {
+        yield return new WaitForEndOfFrame();
       }
       ExecuteActionEffects(action);
       HandleActionTarget(action, hero, target);
       if (action.hits > 1) {
-        yield return new WaitForSeconds(battleSpeed / 4f);
+        yield return new WaitForSeconds(battleSpeed / 3f);
+      }
+      if (action.additionalDamage.Count > 0) {
+        foreach (var add in action.additionalDamage) {
+          yield return new WaitForSeconds(battleSpeed / 3f);
+          HeroDealDamage(add, target ?? playerTarget, hero);
+        }
       }
     }
 
@@ -532,8 +544,9 @@ public class BattleManager : MonoBehaviour {
     if (panel.panelMoved) {
       MovePanel(panel, false);
     }
-    StartCoroutine(DoDelay());
     if (nextTurn) {
+      Debug.Log("DoDelay");
+      StartCoroutine(DoDelay());
       NextTurn();
     }
   }
@@ -546,7 +559,6 @@ public class BattleManager : MonoBehaviour {
         dealsDamage = action.Execute(currentCombatant, playerTarget);
         if (dealsDamage) {
           HeroDealDamage(action, target ?? playerTarget, hero);
-          ShakePanel(enemyPanel, SHAKE_INTENSITY);
         }
         break;
       case TargetTypes.AllEnemies:
@@ -554,7 +566,11 @@ public class BattleManager : MonoBehaviour {
         if (dealsDamage) {
           foreach(var panel in enemyPanels.Where(ep => ep.gameObject.activeInHierarchy)) {
             HeroDealDamage(action, target ?? panel.enemy, hero);
-            ShakePanel(panel, SHAKE_INTENSITY);
+            if (action.additionalDamage.Count > 0) {
+              foreach (var add in action.additionalDamage) {
+                HeroDealDamage(add, target ?? playerTarget, hero);
+              }
+            }
           }
         }
         break;
@@ -598,7 +614,6 @@ public class BattleManager : MonoBehaviour {
 
     // check for Crit
     var critRoll = Random.Range(1, 100);
-    Debug.Log("Crit Roll: " + critRoll + "/" + attacker.crit);
     if (critRoll <= attacker.crit) {
       isCrit = true;
     }
@@ -609,6 +624,7 @@ public class BattleManager : MonoBehaviour {
     var position = panel.image.transform.position;
 
     Instantiate(damagePopup, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(damage, battleSpeed * 0.8f, color, isCrit, true);
+    ShakePanel(panel, SHAKE_INTENSITY);
 
     UpdateUi();
   }
@@ -646,15 +662,24 @@ public class BattleManager : MonoBehaviour {
     UpdateUi();
     yield return new WaitForSeconds(battleSpeed / 2f);
 
-    ExecuteActionEffects(action);
+    for (var h = 0; h < action.hits; h++) {
+      while (paused || delaying || pausedForTriggers) {
+        yield return new WaitForEndOfFrame();
+      }
+      ExecuteActionEffects(action);
+      EnemyDealDamage(action);
+      if (action.hits > 1) {
+        yield return new WaitForSeconds(battleSpeed / 4f);
+      }
+    }
 
-    EnemyDealDamage(action);
-    var heroPanel = heroPanels.Where(hp => hp.hero == enemyTarget).Single();
-    ShakePanel(heroPanel, SHAKE_INTENSITY);
     yield return new WaitForSeconds(battleSpeed);
 
+    while (pausedForTriggers) {
+      yield return new WaitForEndOfFrame();
+    }
     CalculateSpeedTicks(currentCombatant, action.delay);
-    // Debug.Log("Enemy turn done.");
+    Debug.Log("Enemy turn done.");
     NextTurn();
   }
 
@@ -685,11 +710,11 @@ public class BattleManager : MonoBehaviour {
     var panel = heroPanels.Where(hp => hp.hero == defender).Single();
     var position = panel.gameObject.transform.position + new Vector3(0f, 50f, 0f);
     Instantiate(damagePopup, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(damage, battleSpeed * 0.8f, color, isCrit, true);
+    ShakePanel(panel, SHAKE_INTENSITY);
 
     var onHitEffects = defender.buffs.Where(b => b.trigger == Triggers.BeingHit).ToList();
     onHitEffects.AddRange(defender.debuffs.Where(b => b.trigger == Triggers.BeingHit).ToList());
     if (onHitEffects.Count > 0) {
-        delaying = true;
         StartCoroutine(DoHandleStatusEffects(onHitEffects, defender));
     }
 
@@ -720,6 +745,8 @@ public class BattleManager : MonoBehaviour {
     if (action.name == "Mana Bolt") {
       potency *= defender.mpCurrent;
       Debug.Log("Mana Bolt potency: " + potency);
+    } else if (action.name == "Disintegrate") {
+      potency *= (1 + (1 - defender.hpPercent));
     }
 
     if (action.splitDamage) {
@@ -750,8 +777,9 @@ public class BattleManager : MonoBehaviour {
       defender.hpCurrent = 0;
     }
 
-    if (!defender.isArmorBroke) {
+    if (!defender.isArmorBroke && action.removesArmor) {
       defender.armorCurrent -= 10;
+      Debug.Log("Current Armor: " + defender.armorCurrent);
       if (defender.armorCurrent <= 0) {
         defender.armorCurrent = 0;
       }
@@ -766,22 +794,25 @@ public class BattleManager : MonoBehaviour {
   }
 
   private IEnumerator DoHandleStatusEffects(List<StatusEffect> effects, Unit unit) {
-    foreach(var effect in effects) {
-      if (effect.name == "Counterattack") {
+    if (effects.Count == 0) yield break;
+    pausedForTriggers = true;
+    for(var i = 0; i < effects.Count; i++) {
+      while (paused) {
+        yield return new WaitForEndOfFrame();
+      }
+      if (effects[i].name == "Counterattack") {
+        yield return new WaitForSeconds(battleSpeed * 0.5f);
         var action = Instantiate(Resources.Load<Action>("Actions/Knight/" + "Counterattack"));
+        if (effects.Where(e => e.name == "Riposte").Count() > 0) {
+          action.additionalDamage.Add(Resources.Load<Action>("Actions/Knight/" + "RiposteCounter"));
+        }
         StartCoroutine(DoHeroAction(action, unit as Hero, currentCombatant as Enemy, false));
       }
-      if (effect.name == "Riposte") {
-        var action = Instantiate(Resources.Load<Action>("Actions/Knight/" + "RiposteCounter"));
-        StartCoroutine(DoHeroAction(action, unit as Hero, currentCombatant as Enemy, false));
-      }
-      if (effects.Count > 1) {
-        yield return new WaitForSeconds(battleSpeed);
-      } else {
-        yield return new WaitForSeconds(battleSpeed / 4f);
+      yield return new WaitForSeconds(battleSpeed * 0.5f);
+      if (i == effects.Count - 1) {
+        pausedForTriggers = false;
       }
     }
-    delaying = false;
   }
 
   private IEnumerator DoFlashImage(Image image, Color color) {
@@ -799,6 +830,13 @@ public class BattleManager : MonoBehaviour {
     duration *= battleSpeed;
     yield return new WaitForSeconds(duration);
     delaying = false;
+  }
+
+  private IEnumerator DoPause(float duration = 1f) {
+    paused = true;
+    duration *= battleSpeed;
+    yield return new WaitForSeconds(duration);
+    paused = false;
   }
 
   public void ShowTooltip() {

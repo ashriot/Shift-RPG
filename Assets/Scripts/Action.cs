@@ -8,13 +8,15 @@ public class Action : ScriptableObject {
   public string description;
   public int mpCost;
   public float potency;
-  public int hits;
+  public int hits = 1;
   public float delay = 1f;
   public bool splitDamage;
+  public bool removesArmor = true;
   public Sprite sprite;
   public TargetTypes targetType;
   public DamageTypes damageType;
   public PowerTypes powerType;
+  public List<Action> additionalDamage;
   public List<StatusEffect> buffs;
   public List<StatusEffect> debuffs;
 

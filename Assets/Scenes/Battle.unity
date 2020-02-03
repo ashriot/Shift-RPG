@@ -5433,6 +5433,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6757933802002968548, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0,
+        type: 3}
+      propertyPath: battleSpeed
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 6778498546073981992, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0,
         type: 3}
       propertyPath: m_AnchorMin.y

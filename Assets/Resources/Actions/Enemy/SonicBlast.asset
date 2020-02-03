@@ -20,7 +20,7 @@ MonoBehaviour:
   delay: 1
   splitDamage: 0
   sprite: {fileID: 0}
-  targetType: 1
+  targetType: 5
   damageType: 1
   powerType: 1
   buffs: []
