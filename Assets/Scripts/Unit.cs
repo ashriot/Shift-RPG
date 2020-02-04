@@ -3,6 +3,7 @@
 public class Unit : ScriptableObject {
     
   public new string name;
+  public string description;
 
   public int hpMax, armorMax, mp, mpRegen, attack, willpower, speed, crit, surge;
   public int hpCurrent, armorCurrent, mpCurrent;

@@ -1202,7 +1202,7 @@ GameObject:
   - component: {fileID: 3264076564310338138}
   - component: {fileID: 8184933054755119771}
   - component: {fileID: 7683705311362637483}
-  - component: {fileID: 6588902284752177086}
+  - component: {fileID: 904493892120254639}
   m_Layer: 5
   m_Name: Enemy
   m_TagString: Untagged
@@ -1252,8 +1252,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8441cb8179767ca44b8766a601996e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unit: {fileID: 0}
   currentHp: {fileID: 0}
   shaker: {fileID: 5782642210077714400}
+  tooltipButton: {fileID: 904493892120254639}
   panelMoved: 0
   hpFillImage: {fileID: 9022828578194422636}
   image: {fileID: 5630955553365739505}
@@ -1279,13 +1281,20 @@ MonoBehaviour:
   - {fileID: 4305169645703239524}
   - {fileID: 361525422914369386}
   - {fileID: 7187934399548420887}
+  buffsPanel: {fileID: 0}
+  debuffsPanel: {fileID: 0}
+  buffs: []
+  debuffs: []
   moveLifetime: 1
   initialSpeed: 150
   notificationText: {fileID: 0}
   updateHpBar: 0
+  isArmorBroke: 0
+  isStunned: 0
+  isTaunting: 0
+  ticks: 0
   targetCursor: {fileID: 7376636196530882205}
-  enemy: {fileID: 0}
---- !u!114 &6588902284752177086
+--- !u!114 &904493892120254639
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1294,7 +1303,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3502822028243700278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: d64dc99b4d66c444b9cd7e2a6d98a623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -1307,9 +1316,9 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_PressedColor: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 0}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1339,6 +1348,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  title: 
+  kind: 
+  cost: 
+  content: 
+  job: {fileID: 0}
 --- !u!1 &3570813483177106860
 GameObject:
   m_ObjectHideFlags: 0

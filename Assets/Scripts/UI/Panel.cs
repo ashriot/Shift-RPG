@@ -7,6 +7,7 @@ public class Panel : MonoBehaviour {
   public Unit unit;
   public Text currentHp;
   public ShakeObject shaker;
+  public TooltipButton tooltipButton;
   public bool panelMoved;
 
   public Image hpFillImage, image;

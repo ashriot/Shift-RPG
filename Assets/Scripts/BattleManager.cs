@@ -13,6 +13,8 @@ public class BattleManager : MonoBehaviour {
   public ActionMenu actionMenu;
   public ShiftMenu shiftMenu;
   public Tooltip tooltip;
+  public Image enemyTargetPanel;
+  public Image heroTargetPanel;
 
   [Header("Prefabs")]
   public PopupText popup;
@@ -48,6 +50,7 @@ public class BattleManager : MonoBehaviour {
   public Color purple;
   public Color yellow;
   public Color gray;
+  public Color translucentYellow;
 
   private const float INITIATIVE_GROWTH = .05f;
   private const float SHAKE_INTENSITY = 20f;
@@ -82,6 +85,9 @@ public class BattleManager : MonoBehaviour {
 
     AudioManager.instance.PlayBgm("battle-conflict");
     battleActive = true;
+
+    enemyTargetPanel.color = Color.clear;
+    heroTargetPanel.color = Color.clear;
 
     for (var i = 0; i < heroPanels.Length; i++) {
       if (i >= GameManager.instance.heroes.Count) { 
@@ -123,11 +129,15 @@ public class BattleManager : MonoBehaviour {
         panel.unit.mpCurrent = panel.unit.mp;
         panel.hpFillImage.fillAmount = panel.unit.hpPercent;
         UpdateCrystalsAndShields(panel);
+        SetupTooltip(panel.tooltipButton, enemy.name, "Enemy".ToUpper(), "NA", enemy.tooltipDescription);
       }
     }
     heroes = heroPanels.Where(p => p.gameObject.activeInHierarchy).ToList();
     enemies = enemyPanels.Where(p => p.gameObject.activeInHierarchy).ToList();
 
+    foreach (var panel in enemies) {
+      panel.targetCursor.gameObject.SetActive(false);
+    }
     combatants.AddRange(heroes);
     combatants.AddRange(enemies);
 
@@ -167,7 +177,7 @@ public class BattleManager : MonoBehaviour {
         SmoothHpBar(panel, panel.unit.hpPercent);
       }
     }
-    foreach (var panel in enemyPanels) {
+    foreach (var panel in enemies) {
       if (panel.updateHpBar) {
         SmoothHpBar(panel, panel.unit.hpPercent);
       }
@@ -176,7 +186,7 @@ public class BattleManager : MonoBehaviour {
 
   void FixedUpdate() {
     if (!battleActive || !battleWaiting || delaying || paused || pausedForTriggers) { return; }
-    // These values must be TRUE to continue EXCEPT delaying
+    if (choosingEnemyTarget || choosingAllyOnlyTarget || choosingSelfOrAllyTarget) { return; }
     battleWaiting = false;
 
     // check status effects
@@ -476,6 +486,7 @@ public class BattleManager : MonoBehaviour {
 
   public void ClickActionButton(int buttonId) {
     Action action = null;
+    actionMenu.actionButtons[buttonId].GetComponent<Image>().color = yellow;
     var actionName = actionMenu.actionButtons[buttonId].nameText.text;
     var hero = currentPanel.unit as Hero;
     foreach (var a in hero.currentJob.actions) {
@@ -485,15 +496,17 @@ public class BattleManager : MonoBehaviour {
       }
     }
     if (action != null){
-      DetermineTargetType(action);
+      if (action.targetType == TargetTypes.AllEnemies || action.targetType == TargetTypes.OneEnemy) {
+        foreach(var panel in enemyPanels) {
+          panel.targetCursor.gameObject.SetActive(true);
+        }
+        enemyTargetPanel.color = translucentYellow;
+        choosingEnemyTarget = true;
+      }
     }
     else {
       Debug.Log("action is null!");
     }
-  }
-
-  public void DetermineTargetType(Action action) {
-    
   }
 
   public void ClickTarget(Panel panelId) {
