@@ -9,6 +9,7 @@ public class ShiftMenu : MonoBehaviour {
   public Text nameL, nameR, traitName, shiftName;
   public Image jobIconL, jobIconR, traitIcon, shiftIcon;
   public int jobIdL, jobIdR;
+  public TooltipButton traitTooltipButton, shiftActionTooltipButton, shiftLTooltipButton, shiftRTooltipButton;
 
   public Vector2 initialSize;
 

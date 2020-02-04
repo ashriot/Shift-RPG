@@ -41,11 +41,13 @@ public class BattleManager : MonoBehaviour {
   public Unit currentCombatant;
   public Enemy playerTarget;
   public Hero enemyTarget;
+  public Action currentAction;  // TODO: hook this up
 
   [Header("Text colors")]
   public Color orange;
   public Color purple;
   public Color yellow;
+  public Color gray;
 
   private const float INITIATIVE_GROWTH = .05f;
   private const float SHAKE_INTENSITY = 20f;
@@ -61,7 +63,7 @@ public class BattleManager : MonoBehaviour {
     }
 
     shiftMenu.gameObject.SetActive(false);
-    HideTooltip();
+    Tooltip.HideTooltip();
     // TEMPORARY BATTLE START
     var enemyName = "Bat";
     var newEnemy = Instantiate(Resources.Load<Enemy>("Enemies/" + enemyName));
@@ -100,15 +102,15 @@ public class BattleManager : MonoBehaviour {
       panel.hero = heroes[i];
       panel.jobColor.color = panel.hero.currentJob.jobColor;
       panel.jobIcon.sprite = panel.hero.currentJob.jobIcon;
-      panel.hero.hpCurrent = panel.hero.hp;
-      panel.hero.armorCurrent = panel.hero.armor;
+      panel.hero.hpCurrent = panel.hero.hpMax;
+      panel.hero.armorCurrent = panel.hero.armorMax;
       panel.hero.mpCurrent = panel.hero.mp;
       panel.heroName.text = panel.hero.heroName;
       panel.currentJobName.text = panel.hero.currentJob.name.ToUpper();
       panel.hero.martialDefense = panel.hero.currentJob.martialDefense;
       panel.hero.etherDefense = panel.hero.currentJob.etherDefense;
       panel.hpFillImage.fillAmount = panel.hero.hpPercent;
-      panel.currentHp.text = panel.hero.hp.ToString();
+      panel.currentHp.text = panel.hero.hpMax.ToString();
       var crystals = panel.hero.mpCurrent / 10;
       for (var m = 0; m < panel.crystals.Length; m++) {
         if (m >= crystals) {
@@ -136,8 +138,8 @@ public class BattleManager : MonoBehaviour {
         panel.gameObject.SetActive(true);
         panel.enemy = enemies[i];
         panel.image.sprite = panel.enemy.sprite;
-        panel.enemy.hpCurrent = panel.enemy.hp;
-        panel.enemy.armorCurrent = panel.enemy.armor;
+        panel.enemy.hpCurrent = panel.enemy.hpMax;
+        panel.enemy.armorCurrent = panel.enemy.armorMax;
         panel.enemy.mpCurrent = panel.enemy.mp;
         panel.hpFillImage.fillAmount = panel.enemy.hpPercent;
         var crystals = panel.enemy.mpCurrent / 10;
@@ -202,6 +204,18 @@ public class BattleManager : MonoBehaviour {
     } else {
       // Debug.Log("Enemy turn");
       // ENEMY TURN
+      if (currentCombatant.isStunned) {
+        CalculateSpeedTicks(currentCombatant, 1f);
+        Debug.Log("Stunned");
+        currentCombatant.isStunned = false;
+        if (currentCombatant.isArmorBroke) {
+          currentCombatant.isArmorBroke = false;
+        }
+        UpdateUi();
+        NextTurn();
+        return;
+      }
+
       var taunters = heroes.Where(h => h.isTaunting).ToList();
       if (taunters.Count > 0) {
         enemyTarget = taunters.First();
@@ -226,7 +240,7 @@ public class BattleManager : MonoBehaviour {
     shiftMenu.gameObject.SetActive(false);
     // check for battle end
 
-    UpdatePlayerTarget();
+    // UpdatePlayerTarget();
 
     CountdownTicks();
 
@@ -235,7 +249,7 @@ public class BattleManager : MonoBehaviour {
   private void UpdateUi() {
     for (var i = 0; i < heroes.Count; i++) {
       var panel = heroPanels.Where(hp => hp.hero == heroes[i]).Single();
-      if (panel.hero.armorCurrent <= 0 && !panel.hero.isArmorBroke) {
+      if (panel.hero.armorCurrent < 0 && !panel.hero.isArmorBroke) {
         panel.hero.isArmorBroke = true;
         ShakePanel(panel, SHAKE_INTENSITY * 1.5f, 1f);
         AudioManager.instance.PlaySfx("damage02");
@@ -280,7 +294,7 @@ public class BattleManager : MonoBehaviour {
 
     for(var i = 0; i < enemies.Count; i++) {
       var panel = enemyPanels.Where(ep => ep.enemy == enemies[i]).Single();
-      if (panel.enemy.armorCurrent <= 0 && !panel.enemy.isArmorBroke) {
+      if (panel.enemy.armorCurrent <= -10 && !panel.enemy.isArmorBroke) {
         panel.enemy.isArmorBroke = true;
         ShakePanel(panel, SHAKE_INTENSITY * 1.5f, 1f);
         AudioManager.instance.PlaySfx("damage02");
@@ -288,6 +302,8 @@ public class BattleManager : MonoBehaviour {
         var popupText = Instantiate(popup, panel.transform, false);
         popupText.transform.localPosition += new Vector3(0f, 75f, 0f);
         popupText.DisplayMessage("Armor Break!", battleSpeed, Color.white, false);
+        panel.enemy.isStunned = true;
+        CalculateSpeedTicks(panel.enemy, 1f);
         StartCoroutine(DoFlashImage(panel.image, Color.red));
         StartCoroutine(DoPause());
       }
@@ -303,6 +319,11 @@ public class BattleManager : MonoBehaviour {
           }
           panel.crystals[m].gameObject.SetActive(true);
         }
+        var shieldColor = gray;
+        if (panel.enemy.isArmorBroke) {
+          shieldColor = Color.red;
+          panel.enemy.armorCurrent = panel.enemy.armorMax;
+        }
         var shields = panel.enemy.armorCurrent / 10;
         for (var m = 0; m < panel.shields.Length; m++) {
           if (m >= shields) {
@@ -310,6 +331,7 @@ public class BattleManager : MonoBehaviour {
             continue;
           }
           panel.shields[m].gameObject.SetActive(true);
+          panel.shields[m].shieldIcon.color = shieldColor;
         }
       }
     }
@@ -363,6 +385,7 @@ public class BattleManager : MonoBehaviour {
     for (var i = 0; i < actionMenu.actionButtons.Length; i++) {
       actionMenu.transform.position = actionMenu.initialPos;
       if (hero.currentJob.actions[i] != null) {
+        SetupTooltip(actionMenu.actionButtons[i].tooltipButton, hero.currentJob.actions[i].name, "Battle Action".ToUpper(), hero.currentJob.actions[i].mpCost.ToString(), hero.currentJob.actions[i].description);
         actionMenu.actionButtons[i].gameObject.SetActive(true);
         actionMenu.actionButtons[i].icon.sprite = hero.currentJob.actions[i].sprite;
         if (hero.currentJob.actions[i].mpCost <= hero.mpCurrent) {
@@ -387,13 +410,15 @@ public class BattleManager : MonoBehaviour {
       }
     }
 
-      // set current trait and shift action info
-      shiftMenu.traitColor.color = hero.currentJob.jobColor;
-      shiftMenu.traitName.text = hero.currentJob.trait.name;
-      shiftMenu.traitIcon.sprite = hero.currentJob.trait.sprite;
-      shiftMenu.shiftColor.color = hero.currentJob.jobColor;
-      shiftMenu.shiftName.text = hero.currentJob.shiftAction.name;
-      shiftMenu.shiftIcon.sprite = hero.currentJob.shiftAction.sprite;
+    // set current trait and shift action info
+    SetupTooltip(shiftMenu.traitTooltipButton, hero.currentJob.trait.name, "Passive Trait".ToUpper(), "NA", hero.currentJob.trait.description);
+    shiftMenu.traitColor.color = hero.currentJob.jobColor;
+    shiftMenu.traitName.text = hero.currentJob.trait.name;
+    shiftMenu.traitIcon.sprite = hero.currentJob.trait.sprite;
+    SetupTooltip(shiftMenu.shiftActionTooltipButton, hero.currentJob.shiftAction.name, "Shift Action".ToUpper(), "NA", hero.currentJob.shiftAction.description);
+    shiftMenu.shiftColor.color = hero.currentJob.jobColor;
+    shiftMenu.shiftName.text = hero.currentJob.shiftAction.name;
+    shiftMenu.shiftIcon.sprite = hero.currentJob.shiftAction.sprite;
 
     if (hero.jobs.Length > 1) {
       var jobIndex = System.Array.IndexOf(hero.jobs, hero.currentJob);
@@ -407,16 +432,26 @@ public class BattleManager : MonoBehaviour {
       shiftMenu.jobIconL.sprite = jobL.jobIcon;
       shiftMenu.colorL.color = jobL.jobColor;
       shiftMenu.jobIdL = jobLIndex;
+      SetupTooltip(shiftMenu.shiftLTooltipButton, jobL.name, "Job".ToUpper(), "NA", jobL.description, jobL);
       shiftMenu.nameR.text = jobR.name;
       shiftMenu.jobIconR.sprite = jobR.jobIcon;
       shiftMenu.colorR.color = jobR.jobColor;
       shiftMenu.jobIdR = jobRIndex;
+      SetupTooltip(shiftMenu.shiftRTooltipButton, jobR.name, "Job".ToUpper(), "NA", jobR.description, jobR);
     }
     else {
       shiftMenu.gameObject.SetActive(false);
     }
     actionMenu.gameObject.SetActive(true);
 
+  }
+
+  private void SetupTooltip(TooltipButton button, string title, string kind, string cost, string content, Job job = null) {
+    button.title = title;
+    button.kind = kind;
+    button.cost = cost;
+    button.content = content;
+    button.job = job;
   }
 
   private void ShakePanel(Panel panel, float intensity, float duration = 0.5f) {
@@ -485,27 +520,41 @@ public class BattleManager : MonoBehaviour {
   }
 
   public void ClickActionButton(int buttonId) {
-    Action actionToExecute = null;
+    Action action = null;
     var actionName = actionMenu.actionButtons[buttonId].nameText.text;
     var hero = currentCombatant as Hero;
-    foreach(var action in hero.currentJob.actions) {
-      if (action.name == actionName) {
-        actionToExecute = action;
+    foreach (var a in hero.currentJob.actions) {
+      if (a.name == actionName) {
+        action = a;
         break;
       }
     }
-    if (actionToExecute != null) {
-      if (actionToExecute.mpCost > hero.mpCurrent) {
+    if (action != null){
+      DetermineTargetType(action);
+    }
+    else {
+      Debug.Log("action is null!");
+    }
+  }
+
+  public void DetermineTargetType(Action action) {
+    
+  }
+
+  public void ClickTarget(Panel panelId) {
+    TargetChosen(action);
+  }
+
+  public void TargetChosen(Action action) {
+    var hero = currentCombatant as Hero;
+    if (action.mpCost > hero.mpCurrent) {
         var panel = heroPanels.Where(hp => hp.hero == currentCombatant).Single();
         var position = panel.gameObject.transform.position;
         position.y += panel.GetComponent<RectTransform>().rect.height;
         Instantiate(popup, position, panel.gameObject.transform.rotation, panel.transform).DisplayMessage("Not enough Mana! " + hero.mpCurrent, battleSpeed * .8f, Color.white, false);
         return;
       }
-      HeroAction(actionToExecute);
-    } else {
-      Debug.Log("action is null!");
-    }
+    HeroAction(action);
   }
 
   public void ClickShiftButton(int buttonId) {
@@ -553,6 +602,7 @@ public class BattleManager : MonoBehaviour {
       if (action.additionalDamage.Count > 0) {
         foreach (var add in action.additionalDamage) {
           yield return new WaitForSeconds(battleSpeed / 3f);
+          Debug.Log("Additional damage" + add.name);
           HeroDealDamage(add, target ?? playerTarget, hero);
         }
       }
@@ -736,7 +786,7 @@ public class BattleManager : MonoBehaviour {
 
     // check for Crit
     var critRoll = Random.Range(1, 100);
-    Debug.Log("Crit Roll: " + critRoll + "/" + attacker.crit);
+    // Debug.Log("Crit Roll: " + critRoll + "/" + attacker.crit);
     if (critRoll <= attacker.crit) {
       isCrit = true;
     }
@@ -792,6 +842,17 @@ public class BattleManager : MonoBehaviour {
     damage *= potency;
     var defense = 0f;
 
+    if (!defender.isArmorBroke && action.removesArmor)
+    {
+      defender.armorCurrent -= 10;
+      Debug.Log("Current Armor: " + defender.armorCurrent);
+      if (defender.armorCurrent <= -10)
+      {
+        defender.armorCurrent = -10;
+      }
+    }
+    UpdateUi();
+
     if (action.damageType == DamageTypes.Martial) {
       defense = (defender.isArmorBroke ? 0 : defender.martialDefense);
     }
@@ -811,14 +872,6 @@ public class BattleManager : MonoBehaviour {
     defender.hpCurrent -= (int)damage;
     if (defender.hpCurrent < 0) {
       defender.hpCurrent = 0;
-    }
-
-    if (!defender.isArmorBroke && action.removesArmor) {
-      defender.armorCurrent -= 10;
-      Debug.Log("Current Armor: " + defender.armorCurrent);
-      if (defender.armorCurrent <= 0) {
-        defender.armorCurrent = 0;
-      }
     }
     // Debug.Log(defender.name + "'s HP: " + defender.hpCurrent);
 
@@ -874,12 +927,4 @@ public class BattleManager : MonoBehaviour {
     yield return new WaitForSeconds(duration);
     paused = false;
   }
-
-  public void ShowTooltip() {
-    tooltip.gameObject.SetActive(true);
-  }
-  public void HideTooltip() {
-    tooltip.gameObject.SetActive(false);
-  }
-
 }

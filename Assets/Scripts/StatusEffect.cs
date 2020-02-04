@@ -14,7 +14,8 @@ public class StatusEffect : ScriptableObject {
 
 public enum StatusEffectTypes {
   Buff,
-  Debuff
+  Debuff,
+  Trait
 }
 
 public enum Triggers

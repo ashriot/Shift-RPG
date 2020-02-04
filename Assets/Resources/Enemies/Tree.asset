@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Tree
   m_EditorClassIdentifier: 
   name: Tree
-  hp: 200
-  armor: 40
+  hpMax: 250
+  armorMax: 40
   mp: 20
   mpRegen: 10
   attack: 20
@@ -22,18 +22,18 @@ MonoBehaviour:
   speed: 10
   crit: 10
   surge: 15
-  armorClass: 3
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0
   ticks: 0
   martialDefense: 0.75
   etherDefense: 0
-  breakBonus: 2
+  breakBonus: 1
   buffs: []
   debuffs: []
   isPlayer: 0
   isArmorBroke: 0
+  isStunned: 0
   sprite: {fileID: 21300000, guid: af1a3d68a7907b144aeb454ed7113059, type: 3}
   actions:
   - {fileID: 11400000, guid: 3a96e85440a433348abde5af0341c206, type: 2}

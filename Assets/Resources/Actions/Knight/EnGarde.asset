@@ -13,17 +13,19 @@ MonoBehaviour:
   m_Name: EnGarde
   m_EditorClassIdentifier: 
   name: En garde!
-  description: Forces all enemies to target you until you receive an armor break
-    or shift.
+  description: Attract all single-target attacks. Canceled upon suffering Armor Break
+    or shifting.
   mpCost: 0
   potency: 0
   hits: 1
   delay: 1
   splitDamage: 0
+  removesArmor: 1
   sprite: {fileID: 21300000, guid: 276dbd73eab659741b1fe7b15c3ab146, type: 3}
   targetType: 0
   damageType: 0
   powerType: 0
+  additionalDamage: []
   buffs:
   - {fileID: 11400000, guid: b11c59eb07a551f41b25f8f00a1dbc40, type: 2}
   debuffs: []

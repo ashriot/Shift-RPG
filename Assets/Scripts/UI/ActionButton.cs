@@ -7,5 +7,6 @@ public class ActionButton : MonoBehaviour {
     public Image[] crystals;
     public Image icon;
     public Image fillColor;
+    public TooltipButton tooltipButton;
 
 }

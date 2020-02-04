@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Knight
   m_EditorClassIdentifier: 
   name: Knight
-  hp: 120
-  armor: 50
+  hpMax: 120
+  armorMax: 40
   mp: 20
   mpRegen: 10
   attack: 20
@@ -22,18 +22,18 @@ MonoBehaviour:
   speed: 15
   crit: 15
   surge: 10
-  armorClass: 5
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0
   ticks: 0
   martialDefense: 0
   etherDefense: 0
-  breakBonus: 2
+  breakBonus: 1
   buffs: []
   debuffs: []
   isPlayer: 1
   isArmorBroke: 0
+  isStunned: 0
   heroName: Knight
   jobs:
   - {fileID: 11400000, guid: 947b5115b66aa5b47bb77e690a856ab7, type: 2}

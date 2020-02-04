@@ -9,7 +9,7 @@ public class Panel : MonoBehaviour {
 
   public Image hpFillImage, image;
   public Image[] crystals;
-  public Image[] shields;
+  public ShieldIcon[] shields;
 
   public float moveLifetime;
   public float initialSpeed;

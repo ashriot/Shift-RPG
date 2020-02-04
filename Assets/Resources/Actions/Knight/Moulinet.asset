@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Moulinet
   m_EditorClassIdentifier: 
   name: Moulinet
-  description: PHY damage split between all enemies.
+  description: Deal [120% ATK] martial damage split between all enemies. Gain 1 Mana
+    per enemy with a debuff.
   mpCost: 20
   potency: 1.2
   hits: 1

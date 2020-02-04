@@ -24,8 +24,7 @@ MonoBehaviour:
   targetType: 5
   damageType: 0
   powerType: 0
-  additionalDamage:
-  - {fileID: 11400000, guid: 655a1d64d6b07b7499aef299c35bcc4c, type: 2}
+  additionalDamage: []
   buffs: []
   debuffs: []
   sfxName: 
