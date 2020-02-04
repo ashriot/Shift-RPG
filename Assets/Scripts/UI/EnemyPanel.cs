@@ -3,9 +3,8 @@
 public class EnemyPanel : Panel {
 
   public Image targetCursor;
-  public Enemy enemy;
 
   public void OnClick() {
-    BattleManager.instance.UpdatePlayerTarget(enemy);
+    BattleManager.instance.UpdatePlayerTarget(this);
   }
 }

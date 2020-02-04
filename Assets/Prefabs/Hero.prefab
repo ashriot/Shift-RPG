@@ -648,7 +648,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: FENCER
+  m_Text: JOB NAME
 --- !u!1 &1622406791233683077
 GameObject:
   m_ObjectHideFlags: 0
@@ -1463,7 +1463,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Hero
+  m_Text: Hero Name
 --- !u!114 &3482929545565627306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1591,6 +1591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e949a2adf10b79946a91147bd10d3dce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unit: {fileID: 0}
   currentHp: {fileID: 3941993896779814042}
   shaker: {fileID: 317367886972995844}
   panelMoved: 0
@@ -1618,17 +1619,24 @@ MonoBehaviour:
   - {fileID: 4933904849490894465}
   - {fileID: 2714180015132935642}
   - {fileID: 7358996760768094702}
+  buffsPanel: {fileID: 3476848310767469471}
+  debuffsPanel: {fileID: 7708201296786214043}
+  buffs:
+  - {fileID: 0}
+  debuffs:
+  - {fileID: 0}
   moveLifetime: 1
   initialSpeed: 150
   notificationText: {fileID: 0}
   updateHpBar: 0
-  heroName: {fileID: 3482929545565627300}
+  isArmorBroke: 0
+  isStunned: 0
+  isTaunting: 0
+  ticks: 0
+  unitNameText: {fileID: 3482929545565627300}
   currentJobName: {fileID: 1891597759748308383}
   jobColor: {fileID: 7310043241136128172}
   jobIcon: {fileID: 354630587143405331}
-  hero: {fileID: 11400000, guid: cc8493c08fd5e88468ce7f177a1b7889, type: 2}
-  buffs: {fileID: 3476848310767469471}
-  debuffs: {fileID: 7708201296786214043}
 --- !u!114 &4290354253607154250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1770,7 +1778,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4, y: 10}
+  m_AnchoredPosition: {x: -4, y: 12}
   m_SizeDelta: {x: 142, y: 41.735}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3450036679138499105
@@ -1812,7 +1820,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1,000
+  m_Text: 99,999
 --- !u!114 &2561077344560653022
 MonoBehaviour:
   m_ObjectHideFlags: 0

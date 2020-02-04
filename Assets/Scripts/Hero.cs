@@ -3,9 +3,9 @@
 [CreateAssetMenu(fileName = "Hero", menuName = "Hero")]
 public class Hero : Unit {
 
-  public string heroName;
   public Job[] jobs;
   public Job currentJob;
 
-  public bool isTaunting;
+  public new float martialDefense { get { return currentJob.martialDefense; } }
+  public new float etherDefense { get { return currentJob.etherDefense; } }
 }

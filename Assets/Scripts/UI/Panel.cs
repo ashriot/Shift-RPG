@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Panel : MonoBehaviour {
 
+  public Unit unit;
   public Text currentHp;
   public ShakeObject shaker;
   public bool panelMoved;
@@ -11,11 +13,18 @@ public class Panel : MonoBehaviour {
   public Image[] crystals;
   public ShieldIcon[] shields;
 
+  public GameObject buffsPanel;
+  public GameObject debuffsPanel;
+
+  public List<StatusEffect> buffs;
+  public List<StatusEffect> debuffs;
+
   public float moveLifetime;
   public float initialSpeed;
   public Text notificationText;
 
-  public bool updateHpBar;
+  public bool updateHpBar, isArmorBroke, isStunned, isTaunting;
+  public int ticks;
 
   private Vector3 movePosition;
   private Vector3 initialPos;
