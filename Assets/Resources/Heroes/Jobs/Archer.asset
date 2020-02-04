@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Archer
   m_EditorClassIdentifier: 
   name: Archer
-  description: 
+  description: Specializes in high single-target damage.
   jobIcon: {fileID: 21300000, guid: 6841d1e8a7a49904582e06057072cab5, type: 3}
   jobColor: {r: 0.4218495, g: 0.8773585, b: 0.3517711, a: 1}
-  martialDefense: 0
-  etherDefense: 0
+  defense: 0.5
+  resist: 0.25
   actions:
   - {fileID: 11400000, guid: d06464835dc24d8488a99433dc85d421, type: 2}
   - {fileID: 11400000, guid: 06ad26e560df5cc46b0998f9e3959403, type: 2}

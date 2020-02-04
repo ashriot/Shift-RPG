@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Unit : ScriptableObject {
+public abstract class Unit : ScriptableObject {
     
   public new string name;
   public string description;
@@ -9,8 +9,11 @@ public class Unit : ScriptableObject {
   public int hpCurrent, armorCurrent, mpCurrent;
 
   public float hpPercent { get { return (float)hpCurrent / hpMax; } }
-  public float martialDefense, etherDefense, breakBonus;
+  public float defense, resist, breakBonus;
     
   public bool isPlayer;
   public bool isDead { get { return hpCurrent <= 0; } }
+
+  public abstract float Defense { get; }
+  public abstract float Resist { get; }
 }

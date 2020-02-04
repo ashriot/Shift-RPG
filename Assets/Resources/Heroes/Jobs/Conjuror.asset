@@ -16,6 +16,8 @@ MonoBehaviour:
   description: 
   jobIcon: {fileID: 21300000, guid: 137d2d0c2cecee64480a58df85c51172, type: 3}
   jobColor: {r: 0.8312734, g: 0.5254902, b: 0.93333334, a: 1}
-  martialDefense: 0
-  etherDefense: 0.75
+  defense: 0.25
+  resist: 0.75
   actions: []
+  trait: {fileID: 0}
+  shiftAction: {fileID: 0}

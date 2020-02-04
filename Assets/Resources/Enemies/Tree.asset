@@ -26,10 +26,10 @@ MonoBehaviour:
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0
-  martialDefense: 0.75
-  etherDefense: 0
+  defense: 0.75
+  resist: 0
   breakBonus: 1
   isPlayer: 0
   sprite: {fileID: 21300000, guid: af1a3d68a7907b144aeb454ed7113059, type: 3}
   actions:
-  - {fileID: 11400000, guid: 3a96e85440a433348abde5af0341c206, type: 2}
+  - {fileID: 11400000, guid: 7bcd09069c07091419a99f39f967ce04, type: 2}

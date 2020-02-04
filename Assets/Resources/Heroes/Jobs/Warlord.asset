@@ -16,8 +16,8 @@ MonoBehaviour:
   description: A master tactician that focuses on bolstering his allies.
   jobIcon: {fileID: 21300000, guid: f72085a1279405f45b3655194607ad56, type: 3}
   jobColor: {r: 0.83921576, g: 0.3372549, b: 0.3372549, a: 1}
-  martialDefense: 0
-  etherDefense: 0.75
+  defense: 0.25
+  resist: 0.75
   actions:
   - {fileID: 11400000, guid: 4530398766ec02e41b15d354adb61112, type: 2}
   - {fileID: 11400000, guid: 45bffefcb6ce46f48b510577f42e261b, type: 2}

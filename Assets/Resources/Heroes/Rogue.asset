@@ -13,31 +13,25 @@ MonoBehaviour:
   m_Name: Rogue
   m_EditorClassIdentifier: 
   name: Rogue
+  description: 
   hpMax: 90
   armorMax: 30
   mp: 30
   mpRegen: 10
   attack: 20
   willpower: 15
-  speed: 9
+  speed: 16
   crit: 25
   surge: 25
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0
-  ticks: 0
-  martialDefense: 0
-  etherDefense: 0
-  breakBonus: 1
-  buffs: []
-  debuffs: []
+  defense: 0
+  resist: 0
+  breakBonus: 1.5
   isPlayer: 1
-  isArmorBroke: 0
-  isStunned: 0
-  heroName: Rogue
   jobs:
   - {fileID: 11400000, guid: 284e77ec2a430e64897942cdd81bf51e, type: 2}
   - {fileID: 11400000, guid: ab307c02ef8ad17448699dda9a514650, type: 2}
   - {fileID: 11400000, guid: 6f8b30c3c1420e04da6374fc6a69136b, type: 2}
   currentJob: {fileID: 11400000, guid: 284e77ec2a430e64897942cdd81bf51e, type: 2}
-  isTaunting: 0

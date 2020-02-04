@@ -17,8 +17,8 @@ MonoBehaviour:
     whittling them down.
   jobIcon: {fileID: 21300000, guid: 0c503d50cf6db264aa28c5c8e123c1e1, type: 3}
   jobColor: {r: 0.8962264, g: 0.46916127, b: 0.25787643, a: 1}
-  martialDefense: 0.75
-  etherDefense: 0
+  defense: 0.75
+  resist: 0
   actions:
   - {fileID: 11400000, guid: f2a3fcf236e4e724da3569587e294955, type: 2}
   - {fileID: 11400000, guid: 361e9beb6a126d44a8eb9753a51a9ed1, type: 2}

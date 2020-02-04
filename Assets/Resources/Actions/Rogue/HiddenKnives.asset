@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
+  m_Name: HiddenKnives
+  m_EditorClassIdentifier: 
+  name: Hidden Knives
+  description: Hurl three knives at an enemy, each dealing [33% ATK] martial damage.
+  mpCost: 0
+  potency: 0.33
+  hits: 3
+  randomHits: 0
+  delay: 1
+  splitDamage: 0
+  removesArmor: 1
+  sprite: {fileID: 21300000, guid: 3032ecfbdec1c7e418089b8d7d297a9c, type: 3}
+  targetType: 5
+  damageType: 0
+  powerType: 0
+  additionalDamage: []
+  buffs: []
+  debuffs: []
+  sfxName: 

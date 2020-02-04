@@ -15,14 +15,16 @@ MonoBehaviour:
   name: Mana Bolt
   description: 
   mpCost: 0
-  potency: 0.025
+  potency: 0.05
   hits: 1
   delay: 1
   splitDamage: 0
+  removesArmor: 1
   sprite: {fileID: 21300000, guid: c302dfc037f41fd4fb6d48510346d5ea, type: 3}
   targetType: 5
   damageType: 1
   powerType: 1
+  additionalDamage: []
   buffs: []
   debuffs: []
   sfxName: 

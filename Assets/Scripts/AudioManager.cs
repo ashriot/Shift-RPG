@@ -36,6 +36,8 @@ public class AudioManager : MonoBehaviour {
       sfxs[2].Play();
     } else if (name == "damage02") {
       sfxs[3].Play();
+    } else if (name == "click") {
+      sfxs[4].Play();
     } else {
       // Debug.LogError("SFX named '" + name + "' does not exist!");
     }

@@ -8,6 +8,7 @@ public class Panel : MonoBehaviour {
   public Text currentHp;
   public ShakeObject shaker;
   public TooltipButton tooltipButton;
+  public Image targetCursor;
   public bool panelMoved;
 
   public Image hpFillImage, image;
@@ -24,7 +25,7 @@ public class Panel : MonoBehaviour {
   public float initialSpeed;
   public Text notificationText;
 
-  public bool updateHpBar, isArmorBroke, isStunned, isTaunting;
+  public bool updateHpBar, isStaggered, isStunned, isTaunting;
   public int ticks;
 
   private Vector3 movePosition;
@@ -56,5 +57,9 @@ public class Panel : MonoBehaviour {
     speed = initialSpeed * (1 / duration);
     moveLifetime = duration;
     isMoving = true;
+  }
+
+  public void Click() {
+    BattleManager.instance.ClickTarget(this);
   }
 }

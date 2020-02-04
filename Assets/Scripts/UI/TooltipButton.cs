@@ -16,14 +16,16 @@ public class TooltipButton : Button {
   private bool isHover = false;
   private bool longPressTriggered = false;
 
+#if UNITY_STANDALONE
+
   private void Update() {
     if ((isHeld || isHover) && !longPressTriggered) {
       if (Time.time - timePressStarted > holdTime) {
-        longPressTriggered = true;
         if (isHover) {
           Tooltip.ShowTooltip(title, kind, cost, content, job);
         } else {
-        OnLongPress();
+          longPressTriggered = true;
+          OnLongPress();
         }
       }
     }
@@ -40,9 +42,9 @@ public class TooltipButton : Button {
     isHeld = false;
     isHover = false;
     if (longPressTriggered) {
-      OnRelease();
       longPressTriggered = false;
     }
+    OnRelease();
     base.OnPointerExit(eventData);
   }
 
@@ -52,7 +54,8 @@ public class TooltipButton : Button {
   }
 
   public override void OnPointerUp(PointerEventData eventData) {
-    if (!longPressTriggered || !isHeld) {
+    if (!interactable) return;
+    if (!longPressTriggered) {
       onClick.Invoke();
     }
       OnRelease();
@@ -72,4 +75,14 @@ public class TooltipButton : Button {
     isHeld = false;
     Tooltip.HideTooltip();
   }
+
+  #endif
+
+  #if UNITY_IOS
+
+  private void Update() {
+
+  }
+
+  #endif
 }

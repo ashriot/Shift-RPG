@@ -13,31 +13,25 @@ MonoBehaviour:
   m_Name: Mage
   m_EditorClassIdentifier: 
   name: Mage
+  description: 
   hpMax: 60
   armorMax: 20
   mp: 40
   mpRegen: 10
   attack: 25
   willpower: 20
-  speed: 10
+  speed: 14
   crit: 20
   surge: 20
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0
-  ticks: 0
-  martialDefense: 0
-  etherDefense: 0
-  breakBonus: 1
-  buffs: []
-  debuffs: []
+  defense: 0
+  resist: 0
+  breakBonus: 1.5
   isPlayer: 1
-  isArmorBroke: 0
-  isStunned: 0
-  heroName: Mage
   jobs:
   - {fileID: 11400000, guid: 6a76874a6445e5e41a498d0dc325325b, type: 2}
   - {fileID: 11400000, guid: 009f875512794fc41b398d4b4cca9f92, type: 2}
   - {fileID: 11400000, guid: 42f01d7b408fd954bad4edd9ca904b92, type: 2}
   currentJob: {fileID: 11400000, guid: 6a76874a6445e5e41a498d0dc325325b, type: 2}
-  isTaunting: 0

@@ -13,8 +13,6 @@ public class BattleManager : MonoBehaviour {
   public ActionMenu actionMenu;
   public ShiftMenu shiftMenu;
   public Tooltip tooltip;
-  public Image enemyTargetPanel;
-  public Image heroTargetPanel;
 
   [Header("Prefabs")]
   public PopupText popup;
@@ -27,21 +25,19 @@ public class BattleManager : MonoBehaviour {
   public EnemyPanel[] enemyPanels;
   public List<HeroPanel> heroes;
   public List<EnemyPanel> enemies;
-  public List<Enemy> enemyLoadList = new List<Enemy>();
+  public List<Enemy> enemyLoadList;
 
   [Header("Control Vars")]
   public float battleSpeed;
   public bool battleActive;
   public bool battleWaiting;
-  public bool choosingEnemyTarget;
-  public bool choosingAllyOnlyTarget;
-  public bool choosingSelfOrAllyTarget;
+  public bool choosingTarget;
   public bool delaying;
   public bool paused;
   public bool pausedForTriggers;
   public List<Panel> combatants = new List<Panel>();
   public Panel currentPanel;
-  public EnemyPanel playerTarget;
+  public Panel playerTarget;
   public HeroPanel enemyTarget;
   public Action currentAction;  // TODO: hook this up
 
@@ -50,7 +46,9 @@ public class BattleManager : MonoBehaviour {
   public Color purple;
   public Color yellow;
   public Color gray;
-  public Color translucentYellow;
+  public Color black;
+  public Color blue;
+  public Color green;
 
   private const float INITIATIVE_GROWTH = .05f;
   private const float SHAKE_INTENSITY = 20f;
@@ -67,16 +65,6 @@ public class BattleManager : MonoBehaviour {
 
     shiftMenu.gameObject.SetActive(false);
     Tooltip.HideTooltip();
-    // TEMPORARY BATTLE START
-    var enemyName = "Bat";
-    var newEnemy = Instantiate(Resources.Load<Enemy>("Enemies/" + enemyName));
-    enemyLoadList.Add(newEnemy);
-    enemyName = "Tree";
-    var newEnemy2 = Instantiate(Resources.Load<Enemy>("Enemies/" + enemyName));
-    enemyLoadList.Add(newEnemy2);
-    enemyName = "Wolf";
-    var newEnemy3 = Instantiate(Resources.Load<Enemy>("Enemies/" + enemyName));
-    enemyLoadList.Add(newEnemy3);
     InitializeBattle();
   }
 
@@ -85,9 +73,6 @@ public class BattleManager : MonoBehaviour {
 
     AudioManager.instance.PlayBgm("battle-conflict");
     battleActive = true;
-
-    enemyTargetPanel.color = Color.clear;
-    heroTargetPanel.color = Color.clear;
 
     for (var i = 0; i < heroPanels.Length; i++) {
       if (i >= GameManager.instance.heroes.Count) { 
@@ -135,12 +120,10 @@ public class BattleManager : MonoBehaviour {
     heroes = heroPanels.Where(p => p.gameObject.activeInHierarchy).ToList();
     enemies = enemyPanels.Where(p => p.gameObject.activeInHierarchy).ToList();
 
-    foreach (var panel in enemies) {
-      panel.targetCursor.gameObject.SetActive(false);
-    }
     combatants.AddRange(heroes);
     combatants.AddRange(enemies);
 
+    ClearAllTargetting();
     StartCoroutine(DoDelay(0.5f));
     SetInitialTicks();
     NextTurn();
@@ -156,7 +139,7 @@ public class BattleManager : MonoBehaviour {
       panel.crystals[m].gameObject.SetActive(true);
     }
     var shieldColor = gray;
-    if (panel.isArmorBroke) {
+    if (panel.isStaggered) {
       shieldColor = Color.red;
       panel.unit.armorCurrent = panel.unit.armorMax;
     }
@@ -185,8 +168,7 @@ public class BattleManager : MonoBehaviour {
   }
 
   void FixedUpdate() {
-    if (!battleActive || !battleWaiting || delaying || paused || pausedForTriggers) { return; }
-    if (choosingEnemyTarget || choosingAllyOnlyTarget || choosingSelfOrAllyTarget) { return; }
+    if (!battleActive || !battleWaiting || delaying || paused || pausedForTriggers || choosingTarget) { return; }
     battleWaiting = false;
 
     // check status effects
@@ -196,27 +178,37 @@ public class BattleManager : MonoBehaviour {
     currentPanel.unit.mpCurrent += currentPanel.unit.mpRegen;
     UpdateUi();
 
+    if (currentPanel.isStunned) {
+      CalculateSpeedTicks(currentPanel, 1f);
+      currentPanel.isStunned = false;
+      if (currentPanel.isStaggered) {
+        currentPanel.isStaggered = false;
+      }
+      var position = currentPanel.gameObject.transform.position;
+      position.y += currentPanel.GetComponent<RectTransform>().rect.height;
+      Instantiate(popup, position, currentPanel.gameObject.transform.rotation, canvas.transform).DisplayMessage("Recovered", battleSpeed * 0.8f, Color.white, false);
+      UpdateUi();
+      NextTurn();
+      return;
+    }
+    var buffs = currentPanel.buffs.Where(b => b.trigger == Triggers.StartOfTurn).ToList();
+    if (buffs.Count > 0) {
+      StartCoroutine(DoHandleStatusEffects(buffs, currentPanel));
+    }
+
     if (currentPanel.unit.isPlayer) {
       // Debug.Log("Player turn");
-      // PLAYER TURN
+      // HERO TURN
       var hero = currentPanel.unit as Hero;
+      hero.shiftedThisTurn = false;
+      shiftMenu.shiftLTooltipButton.interactable = true;
+      shiftMenu.shiftRTooltipButton.interactable = true;
       MovePanel(currentPanel, true);
       SlideHeroMenus(hero, true);
 
     } else {
       // Debug.Log("Enemy turn");
       // ENEMY TURN
-      if (currentPanel.isStunned) {
-        CalculateSpeedTicks(currentPanel, 1f);
-        Debug.Log("Stunned");
-        currentPanel.isStunned = false;
-        if (currentPanel.isArmorBroke) {
-          currentPanel.isArmorBroke = false;
-        }
-        UpdateUi();
-        NextTurn();
-        return;
-      }
 
       var taunters = heroes.Where(h => h.isTaunting).ToList();
       if (taunters.Count > 0) {
@@ -238,6 +230,8 @@ public class BattleManager : MonoBehaviour {
   }
 
   private void NextTurn() {
+    ResetActions();
+    playerTarget = null;
     actionMenu.gameObject.SetActive(false);
     shiftMenu.gameObject.SetActive(false);
     // check for battle end
@@ -250,44 +244,47 @@ public class BattleManager : MonoBehaviour {
 
   private void UpdateUi() {
     for (var i = 0; i < heroes.Count; i++) {
-      if (heroes[i].unit.armorCurrent < 0 && !heroes[i].isArmorBroke) {
-        heroes[i].isArmorBroke = true;
-        ShakePanel(heroes[i], SHAKE_INTENSITY * 1.5f, 1f);
+      var panel = heroPanels[i];
+      if (panel.unit.armorCurrent < 0 && !panel.isStaggered && !panel.unit.isDead) {
+        panel.isStaggered = true;
+        ShakePanel(heroes[i], SHAKE_INTENSITY, 1.5f);
         AudioManager.instance.PlaySfx("damage02");
-        Debug.Log("Armor Break!");
-        var position = heroes[i].gameObject.transform.position;
-        position.y += heroes[i].GetComponent<RectTransform>().rect.height;
-        Instantiate(popup, position, heroes[i].gameObject.transform.rotation, canvas.transform).DisplayMessage("Armor Break!", battleSpeed * .8f, Color.white, false);
-        StartCoroutine(DoFlashImage(heroes[i].image, Color.red));
+        Debug.Log("Stagger!");
+        var position = panel.gameObject.transform.position;
+        position.y += panel.GetComponent<RectTransform>().rect.height;
+        Instantiate(popup, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage("Stagger!", battleSpeed * 0.8f, Color.white, false);
+        panel.isStunned = true;
+        CalculateSpeedTicks(panel, 1f);
+        StartCoroutine(DoFlashImage(panel.image, Color.red));
         StartCoroutine(DoPause());
       }
-      var hero = heroes[i].unit as Hero;
-      heroes[i].currentJobName.text = hero.currentJob.name.ToUpper();
-      heroes[i].jobColor.color = hero.currentJob.jobColor;
-      heroes[i].jobIcon.sprite = hero.currentJob.jobIcon;
+      var hero = panel.unit as Hero;
+      panel.currentJobName.text = hero.currentJob.name.ToUpper();
+      panel.jobColor.color = hero.currentJob.jobColor;
+      panel.jobIcon.sprite = hero.currentJob.jobIcon;
 
-      if (!heroes[i].buffs.Contains(hero.currentJob.trait)) {
-        heroes[i].buffs.Add(hero.currentJob.trait);
+      if (!panel.buffs.Contains(hero.currentJob.trait)) {
+        panel.buffs.Add(hero.currentJob.trait);
       }
-      heroes[i].updateHpBar = true;
-      heroes[i].currentHp.text = heroes[i].unit.hpCurrent.ToString();
-      UpdateCrystalsAndShields(heroes[i]);
+      panel.updateHpBar = true;
+      panel.currentHp.text = panel.unit.hpCurrent.ToString();
+      UpdateCrystalsAndShields(panel);
 
-      foreach(var buff in heroes[i].buffs) {
+      foreach(var buff in panel.buffs) {
         // TODO finish
       }
     }
 
     for(var i = 0; i < enemies.Count; i++) {
-      var panel = enemyPanels[i];
-      if (panel.unit.armorCurrent <= -10 && !panel.isArmorBroke) {
-        panel.isArmorBroke = true;
-        ShakePanel(panel, SHAKE_INTENSITY * 1.5f, 1f);
+      var panel = enemies[i];
+      if (panel.unit.armorCurrent <= -10 && !panel.isStaggered && !panel.unit.isDead) {
+        panel.isStaggered = true;
+        ShakePanel(panel, SHAKE_INTENSITY, 1.5f);
         AudioManager.instance.PlaySfx("damage02");
-        Debug.Log("Armor Break!");
+        Debug.Log("Stagger!");
         var popupText = Instantiate(popup, panel.transform, false);
         popupText.transform.localPosition += new Vector3(0f, 75f, 0f);
-        popupText.DisplayMessage("Armor Break!", battleSpeed, Color.white, false);
+        popupText.DisplayMessage("Stagger!", battleSpeed, Color.white, false);
         panel.isStunned = true;
         CalculateSpeedTicks(panel, 1f);
         StartCoroutine(DoFlashImage(panel.image, Color.red));
@@ -300,6 +297,7 @@ public class BattleManager : MonoBehaviour {
         UpdateCrystalsAndShields(panel);
       }
     }
+    enemies = enemies.Where(e => !e.unit.isDead).ToList();
   }
 
   private void SmoothHpBar(Panel panel, float newAmount) {
@@ -423,23 +421,6 @@ public class BattleManager : MonoBehaviour {
     panel.shaker.Shake(intensity, duration * battleSpeed);
   }
 
-  public void UpdatePlayerTarget(EnemyPanel enemy = null) {
-    // Debug.Log("Updating player target");
-    if (enemy != null) {
-      playerTarget = enemy;
-    } else if (playerTarget.unit.isDead) {
-      playerTarget = combatants.Where(c => !c.unit.isPlayer && !c.unit.isDead).Cast<EnemyPanel>().First();
-    }
-
-    foreach (var panel in enemyPanels) {
-      if (panel.unit == playerTarget) {
-        panel.targetCursor.GetComponentInParent<Button>().Select();
-      } else {
-        panel.targetCursor.gameObject.SetActive(true);
-      }
-    }
-  }
-
   private void CalculateSpeedTicks(Panel panel, float delay) {
     var inverse = Mathf.Pow((1 + INITIATIVE_GROWTH), panel.unit.speed);
     var result = 1000 / inverse;
@@ -484,11 +465,50 @@ public class BattleManager : MonoBehaviour {
     }
   }
 
+  public void ClickTarget(Panel target) {
+    AudioManager.instance.PlaySfx("click");
+    ClearAllTargetting();
+    Debug.Log("Clicked target: " + target.unit.name);
+    if (target.GetType() == typeof(EnemyPanel)) {
+      playerTarget = target as EnemyPanel;
+    } else {
+      playerTarget = target as HeroPanel;
+    }
+
+    TargetChosen(currentAction);
+
+    // } else if (playerTarget.unit.isDead) {
+    //   playerTarget = combatants.Where(c => !c.unit.isPlayer && !c.unit.isDead).Cast<EnemyPanel>().First();
+
+    // foreach (var panel in enemyPanels) {
+    //   if (panel.unit == playerTarget) {
+    //     panel.targetCursor.GetComponentInParent<Button>().Select();
+    //   } else {
+    //     panel.targetCursor.gameObject.SetActive(true);
+    //   }
+    // }
+  }
+
   public void ClickActionButton(int buttonId) {
+    if (!battleActive || delaying || paused || pausedForTriggers) return;
+
+    AudioManager.instance.PlaySfx("click");
     Action action = null;
+    var hero = currentPanel.unit as Hero;
+    if (currentAction != null) {
+      if (currentAction.name == actionMenu.actionButtons[buttonId].nameText.text) {
+        ClearAllTargetting();
+        ResetActions();
+        return;
+      }
+        for (var i = 0; i < actionMenu.actionButtons.Length; i++) {
+        if (actionMenu.actionButtons[i].nameText.text == currentAction.name) {
+          actionMenu.actionButtons[i].GetComponent<Image>().color = Color.black;
+        }
+      }
+    }
     actionMenu.actionButtons[buttonId].GetComponent<Image>().color = yellow;
     var actionName = actionMenu.actionButtons[buttonId].nameText.text;
-    var hero = currentPanel.unit as Hero;
     foreach (var a in hero.currentJob.actions) {
       if (a.name == actionName) {
         action = a;
@@ -496,12 +516,17 @@ public class BattleManager : MonoBehaviour {
       }
     }
     if (action != null){
-      if (action.targetType == TargetTypes.AllEnemies || action.targetType == TargetTypes.OneEnemy) {
-        foreach(var panel in enemyPanels) {
-          panel.targetCursor.gameObject.SetActive(true);
-        }
-        enemyTargetPanel.color = translucentYellow;
-        choosingEnemyTarget = true;
+      currentAction = action;
+      Debug.Log("Current action: " + currentAction.name);
+
+      if (action.targetType == TargetTypes.AllEnemies || action.targetType == TargetTypes.OneEnemy || action.targetType == TargetTypes.RandomEnemies) {
+        ShowEnemyTargetting();
+      } else if (action.targetType == TargetTypes.Self) {
+        ShowSelfTargetting();
+      } else if (action.targetType == TargetTypes.AlliesOnly || action.targetType == TargetTypes.SelfOrAllies || action.targetType == TargetTypes.WholeParty) {
+        ShowAllyTargetting();
+      } else if (action.targetType == TargetTypes.WholeParty) {
+        ShowAllyOnlyTargetting();
       }
     }
     else {
@@ -509,29 +534,86 @@ public class BattleManager : MonoBehaviour {
     }
   }
 
-  public void ClickTarget(Panel panelId) {
-    TargetChosen(currentAction);
+  private void ShowEnemyTargetting() {
+    ClearAllTargetting();
+    foreach(var panel in enemies) {
+      panel.tooltipButton.interactable = true;
+    }
+    choosingTarget = true;
+  }
+
+  private void ShowSelfTargetting() {
+    ClearAllTargetting();
+    foreach(var panel in heroes) {
+      if (panel == currentPanel) {
+        panel.tooltipButton.interactable = true;
+        break;
+      }
+    }
+    choosingTarget = true;
+  }
+
+  private void ShowAllyTargetting() {
+    ClearAllTargetting();
+    foreach(var panel in heroes) {
+      panel.tooltipButton.interactable = true;
+    }
+    choosingTarget = true;
+  }
+
+  private void ShowAllyOnlyTargetting() {
+    ClearAllTargetting();
+    foreach(var panel in heroes) {
+      panel.tooltipButton.interactable = true;
+    }
+    choosingTarget = true;
+  }
+
+  private void ClearAllTargetting() {
+    foreach(var panel in combatants) {
+      panel.tooltipButton.interactable = false;
+    }
+    choosingTarget = false;
+  }
+
+  private void ResetActions() {
+    if (currentAction == null) return;
+    currentAction = null;
+    for (var i = 0; i < actionMenu.actionButtons.Length; i++) {
+        actionMenu.actionButtons[i].GetComponent<Image>().color = Color.black;
+      }
   }
 
   public void TargetChosen(Action action) {
     if (action.mpCost > currentPanel.unit.mpCurrent) {
         var position = currentPanel.gameObject.transform.position;
         position.y += currentPanel.GetComponent<RectTransform>().rect.height;
-        Instantiate(popup, position, currentPanel.gameObject.transform.rotation, currentPanel.transform).DisplayMessage("Not enough Mana! " + currentPanel.unit.mpCurrent, battleSpeed * .8f, Color.white, false);
+        Instantiate(popup, position, currentPanel.gameObject.transform.rotation, currentPanel.transform).DisplayMessage("Not enough Mana!", battleSpeed * .8f, Color.white, false);
         return;
       }
     HeroAction(action);
   }
 
   public void ClickShiftButton(int buttonId) {
-    StartCoroutine(DoShiftJobs(buttonId));
+    var hero = currentPanel.unit as Hero;
+    if (hero.shiftedThisTurn) {
+      var position = currentPanel.gameObject.transform.position;
+      position.y += currentPanel.GetComponent<RectTransform>().rect.height;
+      Instantiate(popup, position, currentPanel.gameObject.transform.rotation, currentPanel.transform).DisplayMessage("Already Shifted", battleSpeed * .8f, Color.white, false);
+    } else {
+      AudioManager.instance.PlaySfx("click");
+      shiftMenu.shiftLTooltipButton.interactable = false;
+      shiftMenu.shiftRTooltipButton.interactable = false;
+      StartCoroutine(DoShiftJobs(buttonId));
+    }
   }
 
   public IEnumerator DoShiftJobs(int jobId) {
     var hero = currentPanel.unit as Hero;
+    hero.shiftedThisTurn = true;
     SlideHeroMenus(hero, false);
     hero.currentJob = hero.jobs[jobId];
-    yield return new WaitForSeconds(battleSpeed);
+    yield return new WaitForSeconds(battleSpeed / 3f);
 
     SlideHeroMenus(hero, true);
     UpdateUi();
@@ -547,7 +629,7 @@ public class BattleManager : MonoBehaviour {
 
   public IEnumerator DoHeroAction(Action action, HeroPanel heroPanel = null, EnemyPanel targetPanel = null, bool nextTurn = true) {
     if (targetPanel != null && targetPanel.unit.isDead) yield break;
-    var panel = heroes.Where(hp => hp.unit == (heroPanel ?? currentPanel)).Single();
+    var panel = heroes.Where(hp => hp == (heroPanel ?? currentPanel)).Single();
     panel.unit.mpCurrent -= action.mpCost;
     UpdateUi();
 
@@ -561,7 +643,15 @@ public class BattleManager : MonoBehaviour {
         yield return new WaitForEndOfFrame();
       }
       ExecuteActionEffects(action);
-      HandleActionTarget(action, heroPanel, targetPanel);
+
+      if (action.targetType == TargetTypes.RandomEnemies) {
+        var rand = Random.Range(0, enemies.Count - 1);
+        var randomTarget = enemies[rand];
+        HeroDealDamage(action, randomTarget, heroPanel);
+      } else {
+        HandleActionTargetting(action, heroPanel, targetPanel);
+      }
+
       if (action.hits > 1) {
         yield return new WaitForSeconds(battleSpeed / 3f);
       }
@@ -575,50 +665,39 @@ public class BattleManager : MonoBehaviour {
     }
 
     CalculateSpeedTicks(currentPanel, action.delay);
-    if (panel.panelMoved) {
-      MovePanel(panel, false);
-    }
     if (nextTurn) {
+      if (panel.panelMoved) {
+        MovePanel(panel, false);
+      }
       Debug.Log("DoDelay");
       StartCoroutine(DoDelay());
       NextTurn();
     }
   }
 
-  private void HandleActionTarget(Action action, HeroPanel heroPanel = null, EnemyPanel targetPanel = null) {
-    var enemyPanel = enemyPanels.Where(ep => ep == (targetPanel ?? playerTarget)).Single();
-    var dealsDamage = false;
+  private void HandleActionTargetting(Action action, HeroPanel heroPanel = null, EnemyPanel enemyPanel = null) {
     switch (action.targetType) {
       case TargetTypes.OneEnemy:
-        dealsDamage = action.Execute(currentPanel.unit, playerTarget.unit);
-        if (dealsDamage) {
-          HeroDealDamage(action, targetPanel ?? playerTarget, heroPanel);
-        }
+        var targetPanel = enemies.Where(ep => ep == (enemyPanel ?? playerTarget)).Single();
+        HeroDealDamage(action, targetPanel, heroPanel);
         break;
       case TargetTypes.AllEnemies:
-        dealsDamage = action.Execute(currentPanel.unit, playerTarget.unit);
-        if (dealsDamage) {
-          foreach(var panel in enemyPanels.Where(ep => ep.gameObject.activeInHierarchy)) {
-            HeroDealDamage(action, targetPanel ?? panel, heroPanel);
-            if (action.additionalDamage.Count > 0) {
-              foreach (var add in action.additionalDamage) {
-                HeroDealDamage(add, targetPanel ?? playerTarget, heroPanel);
-              }
+        foreach(var panel in enemies) {
+          HeroDealDamage(action, panel, heroPanel);
+          if (action.additionalDamage.Count > 0) {
+            foreach (var add in action.additionalDamage) {
+              HeroDealDamage(add, panel, heroPanel);
             }
           }
         }
         break;
-      case TargetTypes.EntireParty:
-        break;
-      case TargetTypes.OneAlly:
-        break;
-      case TargetTypes.OtherAllies:
-        break;
       case TargetTypes.Self:
-        break;
-      case TargetTypes.SelfOrAlly:
+      case TargetTypes.SelfOrAllies:
+      case TargetTypes.AlliesOnly:
+        HeroHeal(action, playerTarget as HeroPanel);
         break;
       default:
+        Debug.LogError("Invalid action type! " + action.targetType);
         break;
     }
     // BUFFS
@@ -631,6 +710,52 @@ public class BattleManager : MonoBehaviour {
         }
       }
     }
+  }
+
+  public void HeroHeal(Action action, HeroPanel targetPanel, HeroPanel hero = null) {
+    var user = hero ?? currentPanel;
+    var isCrit = false;
+    var color = Color.white;
+
+    var power = 0f;
+
+    if (action.powerType == PowerTypes.Attack) {
+      power = user.unit.attack;
+    }
+    else if (action.powerType == PowerTypes.Willpower) {
+      power = user.unit.willpower;
+    }
+    else {
+      Debug.LogError("Missing power type!");
+    }
+
+    var amount = power;
+    
+    if (action.damageType == DamageTypes.ArmorGain) {
+      color = gray;
+      if (targetPanel.isStaggered) {
+        amount = 0;
+      } else {
+        amount = action.potency;
+        targetPanel.unit.armorCurrent = Mathf.Clamp(targetPanel.unit.armorCurrent + (int)amount, 0, 100);
+        amount /= 10;
+      }
+    } else if (action.damageType == DamageTypes.ManaGain) {
+      color = blue;
+      amount = action.potency;
+      targetPanel.unit.mpCurrent = Mathf.Clamp(targetPanel.unit.mpCurrent + (int)amount, 0, 100);
+      amount /= 10;
+    } else if (action.damageType == DamageTypes.HealthGain) {
+      color = green;
+      amount *= action.potency;
+    }
+
+    var panel = heroes.Where(hp => hp == targetPanel).Single();
+    var position = panel.image.transform.position;
+
+    Instantiate(damagePopup, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage("+" + amount.ToString("N0"), battleSpeed * 0.8f, color, isCrit, true);
+
+    UpdateUi();
   }
 
   public void HeroDealDamage(Action action, Panel defender, Panel hero = null) {
@@ -654,7 +779,7 @@ public class BattleManager : MonoBehaviour {
 
     var damage = CalculateDamage(attacker, defender, action, isCrit);
 
-    var panel = enemyPanels.Where(ep => ep.unit == defender).Single();
+    var panel = enemies.Where(ep => ep == defender).Single();
     var position = panel.image.transform.position;
 
     Instantiate(damagePopup, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(damage, battleSpeed * 0.8f, color, isCrit, true);
@@ -757,15 +882,17 @@ public class BattleManager : MonoBehaviour {
 
     var damage = CalculateDamage(attacker, defender, action, isCrit);
 
-    var panel = heroes.Where(hp => hp.unit == defender).Single();
+    var panel = heroes.Where(hp => hp == defender).Single();
     var position = panel.gameObject.transform.position + new Vector3(0f, 50f, 0f);
     Instantiate(damagePopup, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(damage, battleSpeed * 0.8f, color, isCrit, true);
     ShakePanel(panel, SHAKE_INTENSITY);
 
-    var onHitEffects = defender.buffs.Where(b => b.trigger == Triggers.BeingHit).ToList();
-    onHitEffects.AddRange(defender.debuffs.Where(b => b.trigger == Triggers.BeingHit).ToList());
-    if (onHitEffects.Count > 0) {
-        StartCoroutine(DoHandleStatusEffects(onHitEffects, defender));
+    if (!defender.isStaggered) {
+      var onHitEffects = defender.buffs.Where(b => b.trigger == Triggers.BeingHit).ToList();
+      onHitEffects.AddRange(defender.debuffs.Where(b => b.trigger == Triggers.BeingHit).ToList());
+      if (onHitEffects.Count > 0) {
+          StartCoroutine(DoHandleStatusEffects(onHitEffects, defender));
+      }
     }
 
     UpdateUi();
@@ -806,10 +933,8 @@ public class BattleManager : MonoBehaviour {
     damage *= potency;
     var defense = 0f;
 
-    if (!defender.isArmorBroke && action.removesArmor)
-    {
+    if (!defender.isStaggered && action.removesArmor) {
       defender.unit.armorCurrent -= 10;
-      Debug.Log("Current Armor: " + defender.unit.armorCurrent);
       if (defender.unit.armorCurrent <= -10)
       {
         defender.unit.armorCurrent = -10;
@@ -818,16 +943,16 @@ public class BattleManager : MonoBehaviour {
     UpdateUi();
 
     if (action.damageType == DamageTypes.Martial) {
-      defense = (defender.isArmorBroke ? 0 : defender.unit.martialDefense);
+      defense = (defender.isStaggered ? 0 : defender.unit.Defense);
     }
     else if (action.damageType == DamageTypes.Ether) {
-      defense = (defender.isArmorBroke ? 0 : defender.unit.etherDefense);
+      defense = (defender.isStaggered ? 0 : defender.unit.Resist);
     }
-    // Debug.Log("Damage before def: " + damage + " def: " + defense);
+    Debug.Log(attacker.unit.name + " attacking " + defender.unit.name + " for " + damage + " * (1 - " + defense + ") = " + (int)(damage * (1f - defense)));
 
     damage = (damage * (1f - defense));
 
-    if (defender.isArmorBroke) {
+    if (defender.isStaggered) {
       damage *= attacker.unit.breakBonus;
     }
 
@@ -853,14 +978,21 @@ public class BattleManager : MonoBehaviour {
       while (paused) {
         yield return new WaitForEndOfFrame();
       }
+
+      // CHECKING EFFECTS HERE
       if (effects[i].name == "Counterattack") {
         yield return new WaitForSeconds(battleSpeed * 0.5f);
         var action = Instantiate(Resources.Load<Action>("Actions/Knight/" + "Counterattack"));
         if (effects.Where(e => e.name == "Riposte").Count() > 0) {
           action.additionalDamage.Add(Resources.Load<Action>("Actions/Knight/" + "RiposteCounter"));
         }
-        StartCoroutine(DoHeroAction(action, panel as HeroPanel, currentPanel as EnemyPanel, false));
+          StartCoroutine(DoHeroAction(action, panel as HeroPanel, currentPanel as EnemyPanel, false));
+      } else if (effects[i].name == "Arcane Nova") {
+        var action = Instantiate(Resources.Load<Action>("Actions/Mage/" + "Arcane Nova"));
+        StartCoroutine(DoHeroAction(action, panel as HeroPanel, null, false));
       }
+
+
       yield return new WaitForSeconds(battleSpeed * 0.5f);
       if (i == effects.Count - 1) {
         pausedForTriggers = false;
@@ -869,6 +1001,7 @@ public class BattleManager : MonoBehaviour {
   }
 
   private IEnumerator DoFlashImage(Image image, Color color) {
+    Debug.Log("Flashing image: " + image.name);
     var originalColor = image.color;
     for (int n = 0; n < 2; n++) {
       image.color = color;

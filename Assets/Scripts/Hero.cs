@@ -6,6 +6,8 @@ public class Hero : Unit {
   public Job[] jobs;
   public Job currentJob;
 
-  public new float martialDefense { get { return currentJob.martialDefense; } }
-  public new float etherDefense { get { return currentJob.etherDefense; } }
+  public override float Defense { get { return currentJob.defense; } }
+  public override float Resist { get { return currentJob.resist; } }
+
+  public bool shiftedThisTurn;
 }

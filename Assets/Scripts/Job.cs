@@ -7,7 +7,7 @@ public class Job : ScriptableObject {
   public string description;
   public Sprite jobIcon;
   public Color jobColor;
-  public float martialDefense, etherDefense;
+  public float defense, resist;
 
   public Action[] actions;
   public StatusEffect trait;

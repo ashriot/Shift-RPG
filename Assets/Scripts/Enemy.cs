@@ -8,6 +8,8 @@ public class Enemy : Unit {
   public Sprite sprite;
   public List<Action> actions;
 
+  public override float Defense { get { return defense; } }
+  public override float Resist { get { return resist; } }
 
   public string tooltipDescription {
     get {
@@ -15,7 +17,7 @@ public class Enemy : Unit {
         "\nHP: " + hpCurrent + "/" + hpMax + "\t\t\t\tBase Armor: " + (armorMax / 10) +
         "\nAttack: " + attack + "\t\t\t\t\tPsyche: " + willpower +
         "\nSpeed: " + speed + "\t\t\t\t\tCrit: " + crit + "%" +
-        "\nDefense: " + (martialDefense * 100) + "%\t\t\tResist: " + (etherDefense * 100) + "%" +
+        "\nDefense: " + (defense * 100) + "%\t\t\tResist: " + (resist * 100) + "%" +
         "\nActions: " + string.Join(", ", actions.Select(a => a.name));
     }
   }
