@@ -319,7 +319,7 @@ public class BattleManager : MonoBehaviour {
   }
 
   private void SlideHeroMenus(Hero hero, bool positive) {
-    if (positive) { DisplayHeroMenus(hero); }
+    if (positive) { ShowHeroMenus(hero); }
     var endPos = actionMenu.transform.position + new Vector3(0f, (positive ? 160f : -160f), 0f);
     var startSize = shiftMenu.GetComponent<RectTransform>().sizeDelta;
     var endSize = (positive ? new Vector2(1250f, startSize.y) : shiftMenu.initialSize);
@@ -343,19 +343,20 @@ public class BattleManager : MonoBehaviour {
     yield return null;
   }
 
-  private void DisplayHeroMenus(Hero hero) {
+  private void ShowHeroMenus(Hero hero) {
     AudioManager.instance.PlaySfx("end_turn");
+    var mpModifier = 0;
     for (var i = 0; i < actionMenu.actionButtons.Length; i++) {
       actionMenu.transform.position = actionMenu.initialPos;
       if (hero.currentJob.actions[i] != null) {
         SetupTooltip(actionMenu.actionButtons[i].tooltipButton, hero.currentJob.actions[i].name, "Battle Action".ToUpper(), hero.currentJob.actions[i].mpCost.ToString(), hero.currentJob.actions[i].description);
         actionMenu.actionButtons[i].gameObject.SetActive(true);
         actionMenu.actionButtons[i].icon.sprite = hero.currentJob.actions[i].sprite;
-        if (hero.currentJob.actions[i].mpCost <= hero.mpCurrent) {
-          actionMenu.actionButtons[i].fillColor.color = hero.currentJob.jobColor;
+        actionMenu.actionButtons[i].fillColor.color = hero.currentJob.jobColor;
+        if (hero.currentJob.actions[i].mpCost - mpModifier <= hero.mpCurrent) {
+          actionMenu.actionButtons[i].tooltipButton.interactable = true;
         } else {
-          var color = hero.currentJob.jobColor;
-          actionMenu.actionButtons[i].fillColor.color = new Color(color.r, color.g, color.b, color.a / 2f);
+          actionMenu.actionButtons[i].tooltipButton.interactable = false;
         }
         actionMenu.actionButtons[i].nameText.text = hero.currentJob.actions[i].name;
         actionMenu.actionButtons[i].mpCost = hero.currentJob.actions[i].mpCost;
@@ -991,7 +992,6 @@ public class BattleManager : MonoBehaviour {
         var action = Instantiate(Resources.Load<Action>("Actions/Mage/" + "Arcane Nova"));
         StartCoroutine(DoHeroAction(action, panel as HeroPanel, null, false));
       }
-
 
       yield return new WaitForSeconds(battleSpeed * 0.5f);
       if (i == effects.Count - 1) {
