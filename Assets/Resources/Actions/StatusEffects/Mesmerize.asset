@@ -15,7 +15,9 @@ MonoBehaviour:
   name: Mesmerize
   description: Slows all enemies by 15%.
   duration: 0
+  fadesOnCasterTrigger: 1
   sprite: {fileID: 21300000, guid: 2d9734f21525e1e47968dc838109beaf, type: 3}
   statusEffectType: 0
   targetType: 0
-  trigger: 0
+  activationTrigger: 10
+  fadeTrigger: 10

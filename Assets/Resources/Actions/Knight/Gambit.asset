@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gambit
   m_EditorClassIdentifier: 
   name: Gambit
-  description: 
+  description: Swaps an ally's Armor and Mana values.
   mpCost: 10
   potency: 0
   hits: 1
@@ -22,8 +22,8 @@ MonoBehaviour:
   removesArmor: 1
   sprite: {fileID: 21300000, guid: bcb8138b90bbd574ab6c33f86a27e6fd, type: 3}
   targetType: 1
-  damageType: 0
-  powerType: 0
+  damageType: 6
+  powerType: 2
   additionalDamage: []
   buffs: []
   debuffs: []

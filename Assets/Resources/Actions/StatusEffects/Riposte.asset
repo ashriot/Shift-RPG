@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Riposte
   m_EditorClassIdentifier: 
   name: Riposte
-  description: 
+  description: Add damage to Counterattack.
   duration: 0
   sprite: {fileID: 0}
   statusEffectType: 0
   targetType: 0
-  trigger: 3
+  activationTrigger: 4
+  fadeTrigger: 0

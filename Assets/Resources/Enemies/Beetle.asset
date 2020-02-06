@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Beetle
   description: A small beetle with high Defense.
   hpMax: 80
-  armorMax: 50
+  armorMax: 70
   mp: 20
   mpRegen: 10
   attack: 15

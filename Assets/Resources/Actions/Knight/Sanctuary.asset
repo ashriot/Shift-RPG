@@ -22,7 +22,7 @@ MonoBehaviour:
   removesArmor: 0
   sprite: {fileID: 21300000, guid: b1ee09eb64306684fa8245d058517f24, type: 3}
   targetType: 1
-  damageType: 1
+  damageType: 6
   powerType: 1
   additionalDamage: []
   buffs: []

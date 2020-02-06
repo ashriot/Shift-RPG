@@ -20,8 +20,8 @@ MonoBehaviour:
   delay: 1
   splitDamage: 0
   removesArmor: 1
-  sprite: {fileID: 21300000, guid: deb4971e44f1cfd48a4c6ee81165a750, type: 3}
-  targetType: 5
+  sprite: {fileID: 21300000, guid: a061a43686ac9fd41b141274812ec41a, type: 3}
+  targetType: 6
   damageType: 0
   powerType: 0
   additionalDamage: []

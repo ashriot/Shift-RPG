@@ -15,7 +15,9 @@ MonoBehaviour:
   name: Arcane Nova
   description: Every turn, each enemy takes [30% ATK] ether damage.
   duration: 0
+  fadesOnCasterTrigger: 0
   sprite: {fileID: 21300000, guid: b3363b98e5a05c042b1c808ecf38f787, type: 3}
   statusEffectType: 0
   targetType: 0
-  trigger: 1
+  activationTrigger: 0
+  fadeTrigger: 7

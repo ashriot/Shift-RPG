@@ -15,14 +15,16 @@ MonoBehaviour:
   name: Shatter
   description: 
   mpCost: 0
-  potency: 0.2
-  hits: 0
+  potency: 0.1
+  hits: 1
   delay: 1
   splitDamage: 1
+  removesArmor: 1
   sprite: {fileID: 21300000, guid: b6857e13b4b167448adfe0c102033d02, type: 3}
-  targetType: 6
+  targetType: 7
   damageType: 1
-  powerType: 1
+  powerType: 0
+  additionalDamage: []
   buffs: []
   debuffs: []
-  sfxName: 
+  sfxName: damage02

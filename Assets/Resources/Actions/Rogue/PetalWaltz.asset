@@ -18,12 +18,11 @@ MonoBehaviour:
   mpCost: 30
   potency: 0.5
   hits: 3
-  randomHits: 0
   delay: 1
   splitDamage: 0
   removesArmor: 1
   sprite: {fileID: 21300000, guid: b00613ac1466b3547bc0bd01fceab559, type: 3}
-  targetType: 5
+  targetType: 6
   damageType: 1
   powerType: 1
   additionalDamage: []

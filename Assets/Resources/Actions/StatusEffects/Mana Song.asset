@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
+  m_Name: Mana Song
+  m_EditorClassIdentifier: 
+  name: Mana Song
+  description: Next Mana cost reduced by half.
+  duration: 0
+  fadesOnCasterTrigger: 0
+  sprite: {fileID: 21300000, guid: a9b07f813bb26d244bff80176d3510ed, type: 3}
+  statusEffectType: 0
+  targetType: 1
+  activationTrigger: 10
+  fadeTrigger: 10

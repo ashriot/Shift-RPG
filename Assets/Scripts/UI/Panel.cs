@@ -7,7 +7,8 @@ public class Panel : MonoBehaviour {
   public Unit unit;
   public Text currentHp;
   public ShakeObject shaker;
-  public TooltipButton tooltipButton;
+  public TooltipButton targetButton;
+  public TooltipButton infoTooltip;
   public Image targetCursor;
   public bool panelMoved;
 
@@ -18,8 +19,10 @@ public class Panel : MonoBehaviour {
   public GameObject buffsPanel;
   public GameObject debuffsPanel;
 
-  public List<StatusEffect> buffs;
-  public List<StatusEffect> debuffs;
+  public List<StatusEffect> buffs = new List<StatusEffect>();
+  public List<StatusEffect> debuffs = new List<StatusEffect>();
+  public List<StatusEffect> buffsOnOthers = new List<StatusEffect>();
+  public List<StatusEffect> debuffsOnOthers = new List<StatusEffect>();
 
   public float moveLifetime;
   public float initialSpeed;
@@ -27,6 +30,9 @@ public class Panel : MonoBehaviour {
 
   public bool updateHpBar, isStaggered, isStunned, isTaunting;
   public int ticks;
+
+  public float damagePercentMod;
+  public int damageFlatMod;
 
   private Vector3 movePosition;
   private Vector3 initialPos;

@@ -18,4 +18,5 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 276dbd73eab659741b1fe7b15c3ab146, type: 3}
   statusEffectType: 0
   targetType: 0
-  trigger: 1
+  activationTrigger: 10
+  fadeTrigger: 9

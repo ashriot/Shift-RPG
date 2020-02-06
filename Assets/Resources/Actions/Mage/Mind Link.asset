@@ -10,21 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
-  m_Name: WarHorn
+  m_Name: Mind Link
   m_EditorClassIdentifier: 
-  name: War Horn
-  description: 
+  name: Mind Link
+  description: 'Ally gains buff: Heal for an amount equal to half the damage the
+    Illusionist deals.'
   mpCost: 0
-  potency: 0
+  potency: 0.5
   hits: 1
   delay: 1
   splitDamage: 0
-  removesArmor: 1
-  sprite: {fileID: 21300000, guid: 8b959a12e0726ed478da763740d00fab, type: 3}
-  targetType: 0
-  damageType: 0
-  powerType: 0
+  removesArmor: 0
+  sprite: {fileID: 21300000, guid: cb8b24bb5c100364fa0e31c3d45adfc4, type: 3}
+  targetType: 1
+  damageType: 6
+  powerType: 2
   additionalDamage: []
-  buffs: []
+  buffs:
+  - {fileID: 11400000, guid: 14b78d2d4db947246be6768d37193d2e, type: 2}
   debuffs: []
   sfxName: 

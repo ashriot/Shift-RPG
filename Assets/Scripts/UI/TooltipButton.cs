@@ -9,6 +9,7 @@ public class TooltipButton : Button {
 
   public string title, kind, cost, content;
   public Job job = null;
+  public bool showTooltip = true;
 
   private float holdTime = .5f;
   private float timePressStarted;
@@ -32,9 +33,11 @@ public class TooltipButton : Button {
   }
 
   public override void OnPointerEnter(PointerEventData eventData) {
-    timePressStarted = Time.time;
-    isHover = true;
-    isHeld = false;
+    if (showTooltip) {
+      timePressStarted = Time.time;
+      isHover = true;
+      isHeld = false;
+    }
     base.OnPointerEnter(eventData);
   }
 
@@ -49,8 +52,10 @@ public class TooltipButton : Button {
   }
 
   public override void OnPointerDown(PointerEventData eventData) {
-    timePressStarted = Time.time;
-    if (!isHover) { isHeld = true; }
+    if (showTooltip) {
+      timePressStarted = Time.time;
+      if (!isHover) { isHeld = true; }
+    }
   }
 
   public override void OnPointerUp(PointerEventData eventData) {

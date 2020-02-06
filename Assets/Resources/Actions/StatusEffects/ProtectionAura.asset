@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: ProtectionAura
   m_EditorClassIdentifier: 
   name: Protection Aura
-  description: 
+  description: Reduces damage taken by 15%.
   duration: 0
   sprite: {fileID: 21300000, guid: e98bda9d345d4f24dbfc168811e410fd, type: 3}
   statusEffectType: 0
   targetType: 0
-  trigger: 0
+  activationTrigger: 2
+  fadeTrigger: 10

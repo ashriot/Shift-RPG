@@ -10,16 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
-  m_Name: HuntersMark
+  m_Name: Hunters Mark
   m_EditorClassIdentifier: 
   name: Hunter's Mark
-  description: 
+  description: Marks an enemy for death, increasing the party's crit chance against
+    this enemy by 10%.
   mpCost: 0
-  hits: 1
   potency: 0
+  hits: 1
   delay: 1
+  splitDamage: 0
+  removesArmor: 1
   sprite: {fileID: 21300000, guid: db27f64c1bcab8b42970c4d8527ba304, type: 3}
-  targetType: 5
-  damageType: 0
+  targetType: 6
+  damageType: 6
   powerType: 0
+  additionalDamage: []
+  buffs: []
+  debuffs: []
   sfxName: 

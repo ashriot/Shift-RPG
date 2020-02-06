@@ -6,10 +6,12 @@ public class StatusEffect : ScriptableObject {
   public new string name;
   public string description;
   public int duration;
+  public bool fadesOnCasterTrigger;
   public Sprite sprite;
   public StatusEffectTypes statusEffectType;
   public TargetTypes targetType;
-  public Triggers trigger;
+  public TriggerTypes activationTrigger;
+  public TriggerTypes fadeTrigger;
 }
 
 public enum StatusEffectTypes {
@@ -18,13 +20,17 @@ public enum StatusEffectTypes {
   Trait
 }
 
-public enum Triggers
-{
-  Constant,
+public enum TriggerTypes {
   StartOfTurn,
   EndOfTurn,
-  BeingHit,
-  BeingAttacked,
-  PerHit,
-  PerAttack
+  OnBeingHit,
+  OnBeingAttacked,
+  OnHit,
+  OnAttack,
+  AfterAttack,
+  OnShift,
+  OnStagger,
+  OnShiftOrStagger,
+  InstantOrConstant,
+  AfterBeingAttacked
 }

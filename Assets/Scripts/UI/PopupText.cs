@@ -6,6 +6,7 @@ public class PopupText : MonoBehaviour {
   public float lifetime;
   public float initialDistance;
   public Text text;
+  public Image icon;
 
   private float distance;
   private float timer;
@@ -26,7 +27,13 @@ public class PopupText : MonoBehaviour {
     transform.localPosition += new Vector3(0f, direction * distance * Time.deltaTime, 0f);
   }
 
-  public void DisplayMessage(string message, float duration, Color color, bool isCrit, bool shouldMove = false) {
+  public void DisplayMessage(string message, Sprite sprite, float duration, Color color, bool isCrit, bool shouldMove = false) {
+    if (sprite == null) {
+      icon.gameObject.SetActive(false);
+    } else {
+      icon.sprite = sprite;
+      icon.color = color;
+    }
     text.color = color;
     // Debug.Log("Popup pos: " + transform.position);
     if (shouldMove) {

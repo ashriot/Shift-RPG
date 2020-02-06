@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: HuntingParty
   m_EditorClassIdentifier: 
   name: Hunting Party
-  description: 
+  description: Increases party damage against debuffed enemies.
   duration: 0
   sprite: {fileID: 21300000, guid: 81b399213327a3d4db6ac8dec41d1469, type: 3}
   statusEffectType: 0
-  targetType: 0
-  trigger: 0
+  targetType: 3
+  activationTrigger: 10
+  fadeTrigger: 10

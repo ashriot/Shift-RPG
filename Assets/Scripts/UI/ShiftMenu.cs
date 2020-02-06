@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class ShiftMenu : MonoBehaviour {
 
   public Image colorL, colorR, traitColor, shiftColor;
-  public Text nameL, nameR, traitName, shiftName;
+  public Text nameL, nameR, traitName, shiftName, selectTarget;
   public Image jobIconL, jobIconR, traitIcon, shiftIcon;
   public int jobIdL, jobIdR;
   public TooltipButton traitTooltipButton, shiftActionTooltipButton, shiftLTooltipButton, shiftRTooltipButton;

@@ -13,16 +13,19 @@ MonoBehaviour:
   m_Name: Potshot
   m_EditorClassIdentifier: 
   name: Potshot
-  description: 
-  mpCost: 10
-  potency: 1.5
+  description: Enemy takes [60% ATK] martial damage. Gain 2 Mana if the enemy is
+    Staggered.
+  mpCost: 0
+  potency: 0.6
   hits: 1
   delay: 1
   splitDamage: 0
+  removesArmor: 1
   sprite: {fileID: 21300000, guid: 0a488788e0edcaf429bcc2d6f43e22a6, type: 3}
-  targetType: 5
+  targetType: 6
   damageType: 0
   powerType: 0
+  additionalDamage: []
   buffs: []
   debuffs: []
   sfxName: 

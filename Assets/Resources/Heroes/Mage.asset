@@ -16,11 +16,11 @@ MonoBehaviour:
   description: 
   hpMax: 60
   armorMax: 20
-  mp: 40
+  mp: 90
   mpRegen: 10
   attack: 25
   willpower: 20
-  speed: 14
+  speed: 22
   crit: 20
   surge: 20
   hpCurrent: 0
@@ -30,8 +30,9 @@ MonoBehaviour:
   resist: 0
   breakBonus: 1.5
   isPlayer: 1
+  currentJob: {fileID: 11400000, guid: 6a76874a6445e5e41a498d0dc325325b, type: 2}
   jobs:
   - {fileID: 11400000, guid: 6a76874a6445e5e41a498d0dc325325b, type: 2}
   - {fileID: 11400000, guid: 009f875512794fc41b398d4b4cca9f92, type: 2}
   - {fileID: 11400000, guid: 42f01d7b408fd954bad4edd9ca904b92, type: 2}
-  currentJob: {fileID: 11400000, guid: 6a76874a6445e5e41a498d0dc325325b, type: 2}
+  shiftedThisTurn: 0

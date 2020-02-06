@@ -6,6 +6,7 @@ public class DamageText : MonoBehaviour {
   public float lifetime;
   public float initialDistance;
   public Text text;
+  public Image icon;
 
   private float distance;
   private float timer;

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: DrumsOfWar
   m_EditorClassIdentifier: 
   name: Drums of War
-  description: 
+  description: Party's speed increased by 15%.
   duration: 0
   sprite: {fileID: 21300000, guid: 1ee224edcb7cbf0488830fb26f2fb5e4, type: 3}
   statusEffectType: 0
-  targetType: 4
-  trigger: 0
+  targetType: 3
+  activationTrigger: 10
+  fadeTrigger: 10

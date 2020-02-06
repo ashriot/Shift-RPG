@@ -10,21 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
-  m_Name: DivineShield
+  m_Name: Iron Maiden
   m_EditorClassIdentifier: 
-  name: Divine Shield
-  description: 
-  mpCost: 60
+  name: Iron Maiden
+  description: 'Enemy gains Debuff: Next time they would gain Armor, they instead
+    take [75% PSY] piercing damage per point of Armor.'
+  mpCost: 0
   potency: 0
   hits: 1
   delay: 1
   splitDamage: 0
   removesArmor: 1
-  sprite: {fileID: 21300000, guid: 76185ebf7278b364491b2b83464a181a, type: 3}
-  targetType: 4
-  damageType: 0
-  powerType: 0
+  sprite: {fileID: 21300000, guid: 6cf2edcb237cbfb49b818dec9651efdc, type: 3}
+  targetType: 6
+  damageType: 6
+  powerType: 1
   additionalDamage: []
   buffs: []
-  debuffs: []
+  debuffs:
+  - {fileID: 0}
   sfxName: 

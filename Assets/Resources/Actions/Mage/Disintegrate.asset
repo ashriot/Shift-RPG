@@ -21,7 +21,7 @@ MonoBehaviour:
   splitDamage: 0
   removesArmor: 1
   sprite: {fileID: 21300000, guid: 35cf17f4ac2f5a34b81cb730b2f3bfe0, type: 3}
-  targetType: 5
+  targetType: 6
   damageType: 1
   powerType: 0
   additionalDamage: []

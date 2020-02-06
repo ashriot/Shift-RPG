@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
+  m_Name: Mind Wrack
+  m_EditorClassIdentifier: 
+  name: Mind Wrack
+  description: 'Enemy gains debuff: Cannot spend or gain Mana. At the end of your
+    next turn, take [150% PSY] piercing damage.'
+  mpCost: 20
+  potency: 0
+  hits: 1
+  delay: 1
+  splitDamage: 0
+  removesArmor: 1
+  sprite: {fileID: 21300000, guid: fdd769d1d4b887e43b67812c8611cabd, type: 3}
+  targetType: 6
+  damageType: 6
+  powerType: 0
+  additionalDamage: []
+  buffs: []
+  debuffs:
+  - {fileID: 0}
+  sfxName: 

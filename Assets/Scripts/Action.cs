@@ -31,12 +31,13 @@ public class Action : ScriptableObject {
 
 public enum TargetTypes {
   Self,
-  AlliesOnly,
-  SelfOrAllies,
+  OnlyAnAlly,
+  BothAllies,
+  SelfOrAnAlly,
   WholeParty,
   RandomEnemies,
   OneEnemy,
-  AllEnemies,
+  AllEnemies
 }
 
 public enum DamageTypes {
@@ -45,10 +46,12 @@ public enum DamageTypes {
   Piercing,
   ArmorGain,
   ManaGain,
-  HealthGain
+  HealthGain,
+  EffectOnly
 }
 
 public enum PowerTypes {
   Attack,
-  Willpower
+  Willpower,
+  None
 }

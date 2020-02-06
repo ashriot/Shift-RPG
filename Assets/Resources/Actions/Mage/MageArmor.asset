@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: MageArmor
   m_EditorClassIdentifier: 
   name: Mage Armor
-  description: 
+  description: 'Self or Ally gains up to 3 Armor and Buff: Next attack received deals
+    [30% PSY] less damage and reflects the damage back to the attacker.'
   mpCost: 10
-  potency: 10
+  potency: 30
   hits: 1
   delay: 1
   splitDamage: 0
   removesArmor: 0
   sprite: {fileID: 21300000, guid: 2dca1317511e2264aa0cc5fe770e48ed, type: 3}
-  targetType: 2
+  targetType: 3
   damageType: 3
   powerType: 0
   additionalDamage: []

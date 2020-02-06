@@ -17,15 +17,15 @@ MonoBehaviour:
   mpCost: 0
   potency: 0
   hits: 0
-  randomHits: 0
   delay: 1
   splitDamage: 0
   removesArmor: 0
   sprite: {fileID: 21300000, guid: a9b07f813bb26d244bff80176d3510ed, type: 3}
   targetType: 1
-  damageType: 1
+  damageType: 6
   powerType: 1
   additionalDamage: []
-  buffs: []
+  buffs:
+  - {fileID: 11400000, guid: 12ca679bef02e984e8839c5895e1473e, type: 2}
   debuffs: []
   sfxName: 

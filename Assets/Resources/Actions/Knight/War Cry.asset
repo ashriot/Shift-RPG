@@ -10,16 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
-  m_Name: DeadlyShot
+  m_Name: War Cry
   m_EditorClassIdentifier: 
-  name: Deadly Shot
-  description: 
-  mpCost: 50
-  hits: 1
+  name: War Cry
+  description: Your allies' next attack deals 50% increased damage.
+  mpCost: 0
   potency: 0
+  hits: 1
   delay: 1
-  sprite: {fileID: 21300000, guid: d159771656bce4e4eb769486f6031441, type: 3}
-  targetType: 5
-  damageType: 0
+  splitDamage: 0
+  removesArmor: 1
+  sprite: {fileID: 21300000, guid: 8b959a12e0726ed478da763740d00fab, type: 3}
+  targetType: 2
+  damageType: 6
   powerType: 0
+  additionalDamage: []
+  buffs:
+  - {fileID: 11400000, guid: d87d181e7630933438a58b517fa6d938, type: 2}
+  debuffs: []
   sfxName: 
