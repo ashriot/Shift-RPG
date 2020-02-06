@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
+  m_Name: Mesmerized
+  m_EditorClassIdentifier: 
+  name: Mesmerized
+  description: The dancer's allure is slowing you by 15%.
+  duration: 0
+  fadesOnCasterTrigger: 1
+  sprite: {fileID: 21300000, guid: 2d9734f21525e1e47968dc838109beaf, type: 3}
+  statusEffectType: 1
+  targetType: 7
+  activationTrigger: 10
+  fadeTrigger: 7

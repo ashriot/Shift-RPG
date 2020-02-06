@@ -1409,11 +1409,15 @@ MonoBehaviour:
   - {fileID: 4305169645703239524}
   - {fileID: 361525422914369386}
   - {fileID: 7187934399548420887}
+  hud: {fileID: 923806464786372022}
   buffsPanel: {fileID: 0}
   debuffsPanel: {fileID: 0}
   buffs: []
   debuffs: []
+  buffsOnOthers: []
+  debuffsOnOthers: []
   moveLifetime: 1
+  fadeLifetime: 0
   initialSpeed: 150
   notificationText: {fileID: 0}
   updateHpBar: 0
@@ -1421,6 +1425,8 @@ MonoBehaviour:
   isStunned: 0
   isTaunting: 0
   ticks: 0
+  damagePercentMod: 0
+  damageFlatMod: 0
 --- !u!114 &904493892120254639
 MonoBehaviour:
   m_ObjectHideFlags: 0

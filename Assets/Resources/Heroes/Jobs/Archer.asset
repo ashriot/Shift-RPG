@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Archer
   description: Specializes in high single-target damage.
   jobIcon: {fileID: 21300000, guid: 6841d1e8a7a49904582e06057072cab5, type: 3}
-  jobColor: {r: 0.4218495, g: 0.8773585, b: 0.3517711, a: 1}
+  jobColor: {r: 0.3449571, g: 0.8509804, b: 0.2745098, a: 1}
   defense: 0.5
   resist: 0.25
   actions:

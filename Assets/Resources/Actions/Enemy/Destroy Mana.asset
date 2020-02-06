@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
-  m_Name: Aimed Shot
+  m_Name: Destroy Mana
   m_EditorClassIdentifier: 
-  name: Aimed Shot
-  description: Enemy takes [150% ATK] martial damage.
-  mpCost: 10
-  potency: 1.5
+  name: Destroy Mana
+  description: Destroys target's Mana
+  mpCost: 0
+  potency: 10
   hits: 1
   delay: 1
   splitDamage: 0
-  removesArmor: 1
-  sprite: {fileID: 21300000, guid: 3eb9fa479fb21ca4e8d96b2f25fdfb4b, type: 3}
+  removesArmor: 0
+  sprite: {fileID: 21300000, guid: b6857e13b4b167448adfe0c102033d02, type: 3}
   targetType: 6
-  damageType: 0
-  powerType: 0
-  additionalAction: []
+  damageType: 4
+  powerType: 1
+  additionalDamage: []
   buffs: []
   debuffs: []
-  sfxName: swish_04
+  sfxName: 

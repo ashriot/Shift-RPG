@@ -19,7 +19,7 @@ MonoBehaviour:
   mp: 20
   mpRegen: 10
   attack: 20
-  willpower: 15
+  willpower: 20
   speed: 20
   crit: 15
   surge: 10

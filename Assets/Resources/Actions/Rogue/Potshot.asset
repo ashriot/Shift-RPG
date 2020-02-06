@@ -25,7 +25,7 @@ MonoBehaviour:
   targetType: 6
   damageType: 0
   powerType: 0
-  additionalDamage: []
+  additionalAction: []
   buffs: []
   debuffs: []
-  sfxName: 
+  sfxName: swish_02

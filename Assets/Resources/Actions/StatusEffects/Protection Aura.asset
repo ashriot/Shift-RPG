@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
-  m_Name: ProtectionAura
+  m_Name: Protection Aura
   m_EditorClassIdentifier: 
   name: Protection Aura
   description: Reduces damage taken by 15%.
   duration: 0
+  fadesOnCasterTrigger: 1
   sprite: {fileID: 21300000, guid: e98bda9d345d4f24dbfc168811e410fd, type: 3}
-  statusEffectType: 0
+  statusEffectType: 2
   targetType: 0
-  activationTrigger: 2
-  fadeTrigger: 10
+  activationTrigger: 10
+  fadeTrigger: 7

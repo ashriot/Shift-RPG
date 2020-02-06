@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Shatter
   description: 
   mpCost: 0
-  potency: 0.1
+  potency: 0.08
   hits: 1
   delay: 1
   splitDamage: 1
@@ -24,7 +24,7 @@ MonoBehaviour:
   targetType: 7
   damageType: 1
   powerType: 0
-  additionalDamage: []
+  additionalAction: []
   buffs: []
   debuffs: []
-  sfxName: damage02
+  sfxName: shatter

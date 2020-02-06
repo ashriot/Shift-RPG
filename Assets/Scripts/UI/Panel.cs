@@ -16,32 +16,29 @@ public class Panel : MonoBehaviour {
   public Image[] crystals;
   public ShieldIcon[] shields;
 
-  public GameObject buffsPanel;
-  public GameObject debuffsPanel;
+  public GameObject hud, buffsPanel, debuffsPanel;
 
   public List<StatusEffect> buffs = new List<StatusEffect>();
   public List<StatusEffect> debuffs = new List<StatusEffect>();
   public List<StatusEffect> buffsOnOthers = new List<StatusEffect>();
   public List<StatusEffect> debuffsOnOthers = new List<StatusEffect>();
 
-  public float moveLifetime;
+  public float moveLifetime, fadeLifetime;
   public float initialSpeed;
   public Text notificationText;
 
   public bool updateHpBar, isStaggered, isStunned, isTaunting;
   public int ticks;
 
-  public float damagePercentMod;
-  public int damageFlatMod;
+  public float dmgIncreasePercentMod, dmgReductionPercentMod;
+  public int dmgIncreaseFlatMod;
 
   private Vector3 movePosition;
   private Vector3 initialPos;
 
-  private bool isMoving;
+  private bool isMoving, isFading;
 
-  private float intensity;
-  private float speed;
-  private float timer;
+  private float intensity, speed, timer;
   private Color fade;
 
   private void Update() {
@@ -49,9 +46,17 @@ public class Panel : MonoBehaviour {
       if (timer >= moveLifetime) {
         isMoving = false;
       }
-      // Debug.Log("sliding... " + transform.localPosition + " towards: " + movePosition + " at speed: " + speed);
       transform.localPosition = Vector3.MoveTowards(transform.localPosition, movePosition, speed * Time.deltaTime);
       timer += Time.deltaTime;
+    } else if (isFading) {
+      image.color = new Color(image.color.r, image.color.g, image.color.b,
+          Mathf.MoveTowards(image.color.a, 0f, ( 1 / fadeLifetime) * Time.deltaTime));
+          
+      if (image.color.a == 0f) {
+          isFading = false;
+          image.gameObject.SetActive(false);
+          hud.SetActive(false);
+      }
     }
   }
 
@@ -67,5 +72,11 @@ public class Panel : MonoBehaviour {
 
   public void Click() {
     BattleManager.instance.ClickTarget(this);
+  }
+
+  public void FadeOut(float duration) {
+    timer = 0f;
+    fadeLifetime = duration;
+    isFading = true;
   }
 }

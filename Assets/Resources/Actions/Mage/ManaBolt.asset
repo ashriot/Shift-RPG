@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Mana Bolt
   description: 
   mpCost: 0
-  potency: 0.05
+  potency: 0.02
   hits: 1
   delay: 1
   splitDamage: 0

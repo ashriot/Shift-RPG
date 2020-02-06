@@ -24,7 +24,7 @@ MonoBehaviour:
   targetType: 6
   damageType: 3
   powerType: 1
-  additionalDamage: []
+  additionalAction: []
   buffs: []
   debuffs: []
-  sfxName: spell
+  sfxName: shatter

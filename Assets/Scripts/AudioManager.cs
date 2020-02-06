@@ -38,6 +38,16 @@ public class AudioManager : MonoBehaviour {
       sfxs[3].Play();
     } else if (name == "click") {
       sfxs[4].Play();
+    } else if (name == "cancel") {
+      sfxs[5].Play();
+    } else if (name == "shatter") {
+      sfxs[6].Play();
+    } else if (name == "swish_02") {
+      sfxs[7].Play();
+    } else if (name == "swish_04") {
+      sfxs[8].Play();
+    } else if (name == "fwoosh") {
+      sfxs[9].Play();
     } else {
       // Debug.LogError("SFX named '" + name + "' does not exist!");
     }
