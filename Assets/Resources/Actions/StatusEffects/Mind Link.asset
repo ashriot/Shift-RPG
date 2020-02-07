@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
   m_Name: Mind Link
   m_EditorClassIdentifier: 
-  name: Mind Link
+  effectName: Mind Link
   description: Healing for half of the damage dealt by the Illusionist.
   duration: 0
   fadesOnCasterTrigger: 1

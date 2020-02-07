@@ -10,6 +10,6 @@ public class Job : ScriptableObject {
   public float defense, resist;
 
   public Action[] actions;
-  public StatusEffect trait;
+  public Trait trait;
   public Action shiftAction;
 }

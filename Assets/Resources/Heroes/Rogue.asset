@@ -20,7 +20,7 @@ MonoBehaviour:
   mpRegen: 10
   attack: 25
   willpower: 15
-  speed: 24
+  speed: 14
   crit: 25
   surge: 25
   hpCurrent: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
   resist: 0
   breakBonus: 1.5
   isPlayer: 1
-  currentJob: {fileID: 11400000, guid: ab307c02ef8ad17448699dda9a514650, type: 2}
+  currentJob: {fileID: 11400000, guid: 284e77ec2a430e64897942cdd81bf51e, type: 2}
   jobs:
   - {fileID: 11400000, guid: 284e77ec2a430e64897942cdd81bf51e, type: 2}
   - {fileID: 11400000, guid: ab307c02ef8ad17448699dda9a514650, type: 2}

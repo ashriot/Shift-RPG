@@ -20,7 +20,7 @@ MonoBehaviour:
   mpRegen: 10
   attack: 25
   willpower: 20
-  speed: 22
+  speed: 12
   crit: 20
   surge: 20
   hpCurrent: 0

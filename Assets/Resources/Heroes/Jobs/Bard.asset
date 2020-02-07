@@ -23,5 +23,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d87e0e5034944884a932773588112443, type: 2}
   - {fileID: 11400000, guid: 7dc9c71bea4ea3546a4a66d43ec1ffa0, type: 2}
   - {fileID: 11400000, guid: a53661e9803dd5746b402b4109addecd, type: 2}
-  trait: {fileID: 11400000, guid: 4ce02700545c3d841849b81475bfb409, type: 2}
+  trait: {fileID: 11400000, guid: d23a8095bc5686849b68e78685732040, type: 2}
   shiftAction: {fileID: 11400000, guid: 0dfe74d7c50a0684dbb802276c728e93, type: 2}

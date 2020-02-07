@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Aimed Shot
   description: Enemy takes [150% ATK] martial damage.
   mpCost: 10
-  potency: 1.5
+  potency: 2
   hits: 1
   delay: 1
   splitDamage: 0

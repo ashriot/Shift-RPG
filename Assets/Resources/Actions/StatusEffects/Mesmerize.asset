@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
   m_Name: Mesmerize
   m_EditorClassIdentifier: 
-  name: Mesmerize
+  effectName: Mesmerize
   description: Slows all enemies by 15%.
   duration: 0
   fadesOnCasterTrigger: 1

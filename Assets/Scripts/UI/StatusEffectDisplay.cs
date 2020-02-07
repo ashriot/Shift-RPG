@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 
 public class StatusEffectDisplay : MonoBehaviour {
-    public Image image;
-    public int duration;
-    public TriggerTypes trigger;
+    public Image icon;
+    public StatusEffect effect;
 }

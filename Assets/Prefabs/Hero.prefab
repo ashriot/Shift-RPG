@@ -1408,6 +1408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3113195153689678732}
   - component: {fileID: 8143206345956427359}
+  - component: {fileID: 3313465652108410578}
   m_Layer: 5
   m_Name: Buffs
   m_TagString: Untagged
@@ -1431,7 +1432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -46}
+  m_AnchoredPosition: {x: 0, y: -55}
   m_SizeDelta: {x: 240, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8143206345956427359
@@ -1458,6 +1459,19 @@ MonoBehaviour:
   m_Spacing: {x: 3, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &3313465652108410578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3476848310767469471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5ebb62563cbf14ca176ac10f9391a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effects: []
 --- !u!1 &3482929545565627302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,11 +1711,13 @@ MonoBehaviour:
   - {fileID: 4933904849490894465}
   - {fileID: 2714180015132935642}
   - {fileID: 7358996760768094702}
-  buffsPanel: {fileID: 3476848310767469471}
-  debuffsPanel: {fileID: 7708201296786214043}
-  buffs: []
-  debuffs: []
+  hud: {fileID: 0}
+  buffs: {fileID: 3313465652108410578}
+  debuffs: {fileID: 6877898201140374731}
+  buffsOnOthers: []
+  debuffsOnOthers: []
   moveLifetime: 1
+  fadeLifetime: 0
   initialSpeed: 150
   notificationText: {fileID: 0}
   updateHpBar: 0
@@ -1709,6 +1725,9 @@ MonoBehaviour:
   isStunned: 0
   isTaunting: 0
   ticks: 0
+  dmgIncreasePercentMod: 0
+  dmgReductionPercentMod: 0
+  dmgIncreaseFlatMod: 0
   unitNameText: {fileID: 3482929545565627300}
   currentJobName: {fileID: 1891597759748308383}
   jobColor: {fileID: 7310043241136128172}
@@ -3483,6 +3502,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5903440401423838605}
   - component: {fileID: 5554337611820278924}
+  - component: {fileID: 6877898201140374731}
   m_Layer: 5
   m_Name: Debuffs
   m_TagString: Untagged
@@ -3506,7 +3526,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -46}
+  m_AnchoredPosition: {x: 0, y: -55}
   m_SizeDelta: {x: 240, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5554337611820278924
@@ -3533,6 +3553,19 @@ MonoBehaviour:
   m_Spacing: {x: 3, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &6877898201140374731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7708201296786214043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5ebb62563cbf14ca176ac10f9391a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effects: []
 --- !u!1 &7805786302255629119
 GameObject:
   m_ObjectHideFlags: 0

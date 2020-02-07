@@ -16,10 +16,9 @@ public class Panel : MonoBehaviour {
   public Image[] crystals;
   public ShieldIcon[] shields;
 
-  public GameObject hud, buffsPanel, debuffsPanel;
+  public GameObject hud;
+  public StatusEffectPanel buffs, debuffs;
 
-  public List<StatusEffect> buffs = new List<StatusEffect>();
-  public List<StatusEffect> debuffs = new List<StatusEffect>();
   public List<StatusEffect> buffsOnOthers = new List<StatusEffect>();
   public List<StatusEffect> debuffsOnOthers = new List<StatusEffect>();
 

@@ -9,14 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
-  m_Name: DrumsOfWar
+  m_Script: {fileID: 11500000, guid: 310c21f242fbaa149bde34c89760f8ff, type: 3}
+  m_Name: War Drums
   m_EditorClassIdentifier: 
-  name: Drums of War
-  description: Party's speed increased by 15%.
-  duration: 0
+  name: War Drums
+  description: Party haste increased by 20%.
   sprite: {fileID: 21300000, guid: 1ee224edcb7cbf0488830fb26f2fb5e4, type: 3}
-  statusEffectType: 0
-  targetType: 3
-  activationTrigger: 10
-  fadeTrigger: 10

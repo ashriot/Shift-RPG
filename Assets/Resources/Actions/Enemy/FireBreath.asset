@@ -20,7 +20,7 @@ MonoBehaviour:
   delay: 1
   splitDamage: 1
   removesArmor: 1
-  sprite: {fileID: 21300000, guid: 80bec1c84696e1f4b90350790f154fda, type: 3}
+  sprite: {fileID: 21300000, guid: 391438afbe0a6384484e9e3ab317313a, type: 3}
   targetType: 7
   damageType: 1
   powerType: 1

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
   m_Name: Mirror Images
   m_EditorClassIdentifier: 
-  name: Mirror Images
+  effectName: Mirror Images
   description: Party gaining 1 Armor each turn.
   duration: 0
   fadesOnCasterTrigger: 0

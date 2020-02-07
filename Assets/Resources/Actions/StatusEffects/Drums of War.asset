@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
-  m_Name: EnGarde
+  m_Name: Drums of War
   m_EditorClassIdentifier: 
-  name: En Garde!
-  description: All enemies are targetting you.
+  effectName: Drums of War
+  description: Party's speed increased by 15%.
   duration: 0
-  sprite: {fileID: 21300000, guid: 276dbd73eab659741b1fe7b15c3ab146, type: 3}
+  fadesOnCasterTrigger: 0
+  sprite: {fileID: 21300000, guid: 1ee224edcb7cbf0488830fb26f2fb5e4, type: 3}
   statusEffectType: 0
-  targetType: 0
+  targetType: 3
   activationTrigger: 10
-  fadeTrigger: 9
+  fadeTrigger: 10

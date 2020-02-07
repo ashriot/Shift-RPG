@@ -20,11 +20,11 @@ MonoBehaviour:
   delay: 1
   splitDamage: 0
   removesArmor: 0
-  sprite: {fileID: 21300000, guid: b6857e13b4b167448adfe0c102033d02, type: 3}
+  sprite: {fileID: 21300000, guid: cc9eace6432363d40918084173b5b252, type: 3}
   targetType: 6
   damageType: 4
   powerType: 1
-  additionalDamage: []
+  additionalAction: []
   buffs: []
   debuffs: []
   sfxName: 

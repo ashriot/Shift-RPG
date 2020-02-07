@@ -15,10 +15,10 @@ public class BattleManager : MonoBehaviour {
   public Tooltip tooltip;
 
   [Header("Prefabs")]
-  public PopupText popup;
-  public PopupText damagePopup;
-  public StatusEffectDisplay buffDisplay;
-  public StatusEffectDisplay debuffDisplay;
+  public PopupText popupPrefab;
+  public PopupText damagePrefab;
+  public StatusEffectDisplay buffPrefab;
+  public StatusEffectDisplay debuffPrefab;
 
   [Header("Hero/Enemy Refs")]
   public HeroPanel[] heroPanels;
@@ -40,7 +40,7 @@ public class BattleManager : MonoBehaviour {
   public Panel currentPanel;
   public Panel playerTarget;
   public HeroPanel enemyTarget;
-  public Action currentAction;  // TODO: hook this up
+  public Action currentAction;
 
   [Header("Colors & Icons")]
   public Sprite heart;
@@ -124,7 +124,9 @@ public class BattleManager : MonoBehaviour {
     ClearAllTargetting();
     StartCoroutine(DoDelay(0.5f));
     SetInitialTicks();
-    StartCoroutine(DoSetupInitialTraits());
+    foreach (var heroPanel in heroes) {
+      StartCoroutine(DoHandleTraits(heroPanel));
+    }
     NextTurn();
   }
 
@@ -166,15 +168,6 @@ public class BattleManager : MonoBehaviour {
     }
   }
 
-  private IEnumerator DoSetupInitialTraits() {
-    Debug.Log("Initial traits");
-    UpdateUi();
-    foreach (var hero in heroes) {
-      StartCoroutine(DoHandleStatusEffects(hero, TriggerTypes.InstantOrConstant));
-      yield return new WaitForSeconds(battleSpeed / 4f);
-    }
-  }
-
   void FixedUpdate() {
     if (!battleActive || !battleWaiting || delaying || pausedForStagger || pausedForTriggers || choosingTarget) { return; }
     battleWaiting = false;
@@ -189,7 +182,7 @@ public class BattleManager : MonoBehaviour {
         currentPanel.isStaggered = false;
         var position = currentPanel.gameObject.transform.position;
         position.y += currentPanel.GetComponent<RectTransform>().rect.height;
-        Instantiate(popup, position, currentPanel.gameObject.transform.rotation, canvas.transform).DisplayMessage("Recovered", shieldSprite, battleSpeed * 0.8f, Color.white, false);
+        Instantiate(popupPrefab, position, currentPanel.gameObject.transform.rotation, canvas.transform).DisplayMessage("Recovered", shieldSprite, battleSpeed * 0.8f, Color.white, false);
         UpdateUi();
       }
     if (currentPanel.isStunned) {
@@ -260,7 +253,7 @@ public class BattleManager : MonoBehaviour {
         Debug.Log("Stagger!");
         var position = panel.gameObject.transform.position;
         position.y += panel.GetComponent<RectTransform>().rect.height;
-        Instantiate(popup, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage("Staggered!", shieldSprite, battleSpeed * 0.8f, Color.white, false);
+        Instantiate(popupPrefab, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage("Staggered!", shieldSprite, battleSpeed * 0.8f, Color.white, false);
         panel.isStunned = true;
         CalculateSpeedTicks(panel, 1f);
         StartCoroutine(DoFlashImage(panel.image, Color.red));
@@ -270,18 +263,9 @@ public class BattleManager : MonoBehaviour {
       panel.currentJobName.text = hero.currentJob.name.ToUpper();
       panel.jobColor.color = hero.currentJob.jobColor;
       panel.jobIcon.sprite = hero.currentJob.jobIcon;
-
-      if (!panel.buffs.Contains(hero.currentJob.trait)) {
-        Debug.Log("Adding trait: " + hero.currentJob.trait.name);
-        panel.buffs.Add(hero.currentJob.trait);
-      }
       panel.updateHpBar = true;
       panel.currentHp.text = panel.unit.hpCurrent.ToString();
       UpdateCrystalsAndShields(panel);
-
-      foreach(var buff in panel.buffs) {
-        // TODO finish
-      }
     }
 
     for(var i = 0; i < enemies.Count; i++) {
@@ -292,7 +276,7 @@ public class BattleManager : MonoBehaviour {
         if (!panel.unit.isDead) { AudioManager.instance.PlaySfx("damage02"); }
 
         Debug.Log("Stagger!");
-        var popupText = Instantiate(popup, panel.transform, false);
+        var popupText = Instantiate(popupPrefab, panel.transform, false);
         popupText.transform.localPosition += new Vector3(0f, 75f, 0f);
         popupText.DisplayMessage("Staggered!", shieldSprite, battleSpeed, Color.white, false);
         panel.isStunned = true;
@@ -309,6 +293,43 @@ public class BattleManager : MonoBehaviour {
       }
     }
     enemies = enemies.Where(e => !e.unit.isDead).ToList();
+  }
+
+  private void AddEffect(Panel panel, StatusEffect effect) {
+    Debug.Log("Attempting to add effect: " + effect.effectName);
+    if (effect.statusEffectType == StatusEffectTypes.Buff) {
+      if (panel.buffs.effects.Any(e => e.effect?.effectName == effect.effectName)) { return; }
+      var buff = Instantiate(buffPrefab, Vector3.zero, Quaternion.identity, panel.buffs.transform);
+      Debug.Log("Adding buff to panel: " + effect.effectName);
+      buff.icon.sprite = effect.sprite;
+      buff.effect = effect;
+      panel.buffs.effects.Add(buff);
+    } else if (effect.statusEffectType == StatusEffectTypes.Debuff) {
+        if (panel.debuffs.effects.Any(e => e.effect?.effectName == effect.effectName)) { return; }
+      var debuff = Instantiate(buffPrefab, Vector3.zero, Quaternion.identity, panel.debuffs.transform);
+      Debug.Log("Adding debuff to panel: " + effect.effectName);
+      debuff.icon.sprite = effect.sprite;
+      debuff.effect = effect;
+      panel.debuffs.effects.Add(debuff);
+    }
+  }
+  private void RemoveEffect(Panel panel, string effectName, StatusEffectTypes effectType) {
+    Debug.Log("Calling Remove Effect for " + effectName);
+    if (effectType == StatusEffectTypes.Buff) {
+      foreach (var buff in panel.buffs.effects.ToList()) {
+        if (!panel.buffs.effects.Any(e => e.effect.effectName == effectName)) continue;
+        panel.buffs.effects.Remove(buff);
+        Destroy(buff.gameObject);
+        Debug.Log("Removing buff from panel: " + buff.effect.effectName);
+      }
+    } else if (effectType == StatusEffectTypes.Debuff) {
+      foreach (var debuff in panel.debuffs.effects.ToList()) {
+        if (!panel.debuffs.effects.Any(e => e.effect.effectName == effectName)) continue;
+        panel.debuffs.effects.Remove(debuff);
+        Destroy(debuff.gameObject);
+        Debug.Log("Removing debuff from panel: " + debuff.effect.effectName);
+      }
+    }
   }
 
   private void FadeEnemyOut(EnemyPanel enemy) {
@@ -366,7 +387,7 @@ public class BattleManager : MonoBehaviour {
       AudioManager.instance.PlaySfx("end_turn");
     }
     var mpModifier = 1f;
-    if (currentPanel.buffs.Any(b => b.name == "Mana Song")) {
+    if (currentPanel.buffs.effects.Any(b => b.effect.effectName == "Mana Song")) {
           mpModifier = 0.5f;
         }
     for (var i = 0; i < actionMenu.actionButtons.Length; i++) {
@@ -613,10 +634,11 @@ public class BattleManager : MonoBehaviour {
 
   public void ClickShiftButton(int buttonId) {
     var hero = currentPanel.unit as Hero;
+    var heroPanel = currentPanel as HeroPanel;
     if (hero.shiftedThisTurn) {
       var position = currentPanel.gameObject.transform.position;
       position.y += currentPanel.GetComponent<RectTransform>().rect.height;
-      Instantiate(popup, position, currentPanel.gameObject.transform.rotation, currentPanel.transform).DisplayMessage("Already Shifted", null, battleSpeed * .8f, Color.white, false);
+      Instantiate(popupPrefab, position, currentPanel.gameObject.transform.rotation, currentPanel.transform).DisplayMessage("Already Shifted", null, battleSpeed * .8f, Color.white, false);
     } else {
       AudioManager.instance.PlaySfx("click");
       ClearAllTargetting();
@@ -630,9 +652,12 @@ public class BattleManager : MonoBehaviour {
 
   public IEnumerator DoShiftJobs(int jobId) {
     var hero = currentPanel.unit as Hero;
+    var heroPanel = currentPanel as HeroPanel;
     hero.shiftedThisTurn = true;
     SlideHeroMenus(hero, false);
+    RemoveEffect(heroPanel, hero.currentJob.trait.name, StatusEffectTypes.Buff);
     hero.currentJob = hero.jobs[jobId];
+    StartCoroutine(DoHandleTraits(heroPanel));
     yield return new WaitForSeconds(battleSpeed / 3f);
 
     SlideHeroMenus(hero, true);
@@ -681,10 +706,11 @@ public class BattleManager : MonoBehaviour {
     if (optionalTarget != null && optionalTarget.unit.isDead) yield break;
     var targetPanel = optionalTarget ?? playerTarget;
     var panel = heroes.Where(hp => hp == (heroPanel ?? currentPanel)).Single();
-    if (action.mpCost > 0 && panel.buffs.Any(b => b.name == "Mana Song")) {
+    if (action.mpCost > 0 && panel.buffs.effects.Any(b => b.effect.effectName == "Mana Song")) {
       Debug.Log("Mana Song working");
       panel.unit.mpCurrent -= action.mpCost / 2;
-      panel.buffs.RemoveAll(b => b.name == "Mana Song");
+      // panel.buffsPanel.effects.RemoveAll(b => b.name == "Mana Song");
+      RemoveEffect(panel, "Mana Song", StatusEffectTypes.Buff);
     } else {
       panel.unit.mpCurrent -= action.mpCost;
     }
@@ -692,7 +718,7 @@ public class BattleManager : MonoBehaviour {
 
     var position = panel.gameObject.transform.position;
     position.y += panel.GetComponent<RectTransform>().rect.height * 0.8f;
-    Instantiate(popup, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(action.name, action.sprite, battleSpeed * .8f, Color.white, false);
+    Instantiate(popupPrefab, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(action.name, action.sprite, battleSpeed * .8f, Color.white, false);
     yield return new WaitForSeconds(battleSpeed / 3f);
 
     if (!panel.isStaggered && action.damageType != DamageTypes.EffectOnly) {
@@ -733,7 +759,7 @@ public class BattleManager : MonoBehaviour {
       }
     }
 
-    if (action.buffs.Count > 0) {
+    if (action.damageType == DamageTypes.EffectOnly && action.buffs.Count > 0) {
       foreach(var buff in action.buffs) {
         if (buff.targetType == TargetTypes.Self) {
           HeroApplyBuff(buff, panel);
@@ -744,7 +770,7 @@ public class BattleManager : MonoBehaviour {
             HeroApplyBuff(buff, hero);
           }
         } else if (buff.targetType == TargetTypes.BothAllies) {
-          foreach(var hero in heroes.Where(h => h.name != panel.name)) {
+          foreach(var hero in heroes.Where(h => h.unit.name != panel.unit.name)) {
             HeroApplyBuff(buff, hero);
           }  
         }
@@ -776,7 +802,7 @@ public class BattleManager : MonoBehaviour {
       NextTurn();
     } else {
       shiftMenu.shiftActionTooltipButton.GetComponent<Image>().color = black;
-      shiftMenu.traitTooltipButton.GetComponent<Image>().color = black;
+      // shiftMenu.traitTooltipButton.GetComponent<Image>().color = black;
     }
   }
 
@@ -809,7 +835,7 @@ public class BattleManager : MonoBehaviour {
         break;
       case TargetTypes.BothAllies:
         var allies = heroes.Where(h => h != currentPanel);
-        foreach(var panel in allies) {
+        foreach(var panel in allies.Where(a => a.unit.name != currentPanel.unit.name)) {
           HeroHeal(action, panel);
         }
         break;
@@ -823,10 +849,21 @@ public class BattleManager : MonoBehaviour {
         break;
     }
     
+    if (action.damageType != DamageTypes.EffectOnly && action.buffs.Count > 0) {
+      foreach(var buff in action.buffs) {
+        if (!currentPanel.buffs.effects.Any(b => b.effect.effectName == buff.effectName)) {
+          Debug.Log("Added buff: " + buff.effectName);
+          // currentPanel.buffs.Add(buff);
+          AddEffect(currentPanel, buff);
+        }
+      }
+    }
+    
     if (action.damageType == DamageTypes.Martial) {
-      var takeAim = currentPanel.buffs.Where(b => b.name == "Take Aim").SingleOrDefault();
+      var takeAim = currentPanel.buffs.effects.Where(b => b.effect.effectName == "Take Aim").Select(b => b.effect).FirstOrDefault();
       if (takeAim != null) {
-        currentPanel.buffs.Remove(takeAim);
+        // currentPanel.buffs.Remove(takeAim);
+        RemoveEffect(currentPanel, takeAim.effectName, takeAim.statusEffectType);
       }
     }
     if (action.name == "Shatter") {
@@ -891,22 +928,13 @@ public class BattleManager : MonoBehaviour {
         targetPanel.unit.armorCurrent = swap;
       }
     }
-    
-    if (action.buffs.Count > 0) {
-      foreach(var buff in action.buffs) {
-        if (!targetPanel.buffs.Contains(buff)) {
-          Debug.Log("Added buff: " + buff.name);
-          currentPanel.buffs.Add(buff);
-        }
-      }
-    }
 
     var panel = heroes.Where(hp => hp == targetPanel).Single();
     var position = panel.image.transform.position;
 
     if (action.damageType != DamageTypes.EffectOnly) {
       message = amount.ToString("N0");
-      Instantiate(damagePopup, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, color, isCrit, true);
+      Instantiate(damagePrefab, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, color, isCrit, true);
     }
     UpdateUi();
   }
@@ -919,8 +947,8 @@ public class BattleManager : MonoBehaviour {
     var sprite = action.sprite;
 
     if (damageType == DamageTypes.Martial) {
-      var takeAim = currentPanel.buffs.Where(b => b.name == "Take Aim").SingleOrDefault();
-      if (takeAim != null) {
+      var isTakingAim = currentPanel.buffs?.effects?.Any(b => b.effect.effectName == "Take Aim");
+      if (isTakingAim == true) {
         damageType = DamageTypes.Piercing;
       }
     }
@@ -947,7 +975,7 @@ public class BattleManager : MonoBehaviour {
     
     if (action.damageType != DamageTypes.EffectOnly) {
       var position = defender.image.transform.position;
-      Instantiate(damagePopup, position, defender.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, color, isCrit, true);
+      Instantiate(damagePrefab, position, defender.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, color, isCrit, true);
       ShakePanel(defender, SHAKE_INTENSITY);
     }
 
@@ -962,18 +990,14 @@ public class BattleManager : MonoBehaviour {
   }
 
   public void HeroApplyBuff(StatusEffect effect, Panel target, HeroPanel user = null) {
-    if (target.buffs.Contains(effect)) { return; }
-    
-    target.buffs.Add(effect);
+    AddEffect(target, effect);
     var color = Color.white;
     var position = target.image.transform.position;
-    Instantiate(popup, position, target.gameObject.transform.rotation, canvas.transform).DisplayMessage(effect.name, effect.sprite, battleSpeed * 0.5f, color, false, true);
+    Instantiate(popupPrefab, position, target.gameObject.transform.rotation, canvas.transform).DisplayMessage(effect.effectName, effect.sprite, battleSpeed * 0.5f, color, false, true);
   }
 
   public void HeroApplyDebuff(StatusEffect effect, Panel defender, HeroPanel user = null) {
-    if (defender.debuffs.Contains(effect)) { return; }
-    
-    defender.debuffs.Add(effect);
+    AddEffect(defender, effect);
     if (effect.fadesOnCasterTrigger) {
       var hero = user ?? currentPanel as HeroPanel;
       hero.debuffsOnOthers.Add(effect);
@@ -981,7 +1005,7 @@ public class BattleManager : MonoBehaviour {
     }
     var color = Color.white;
     var position = defender.image.transform.position;
-    Instantiate(popup, position, defender.gameObject.transform.rotation, canvas.transform).DisplayMessage(effect.name, effect.sprite, battleSpeed * 0.5f, color, false, true);
+    Instantiate(popupPrefab, position, defender.gameObject.transform.rotation, canvas.transform).DisplayMessage(effect.effectName, effect.sprite, battleSpeed * 0.5f, color, false, true);
     ShakePanel(defender, SHAKE_INTENSITY);
   }
 
@@ -1008,7 +1032,7 @@ public class BattleManager : MonoBehaviour {
     // Debug.Log("Enemy pos: " + position);
     position.y += currentPanel.GetComponent<RectTransform>().rect.height * 2;
 
-    var popupText = Instantiate(popup, currentPanel.transform, false);
+    var popupText = Instantiate(popupPrefab, currentPanel.transform, false);
     popupText.transform.localPosition += new Vector3(0f, 75f, 0f);
     popupText.DisplayMessage(action.name, action.sprite, battleSpeed * 0.8f, Color.white, false);
 
@@ -1113,10 +1137,10 @@ public class BattleManager : MonoBehaviour {
 
     var panel = heroes.Where(hp => hp == defender).Single();
     var position = panel.gameObject.transform.position + new Vector3(0f, 50f, 0f);
-    Instantiate(damagePopup, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(damage, sprite, battleSpeed * 0.8f, color, isCrit, true);
+    Instantiate(damagePrefab, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(damage, sprite, battleSpeed * 0.8f, color, isCrit, true);
     ShakePanel(panel, SHAKE_INTENSITY);
 
-    if (!defender.isStaggered) {
+    if (!defender.isStaggered && damageType == DamageTypes.Martial) {
       StartCoroutine(DoHandleStatusEffects(defender, TriggerTypes.OnBeingHit));
     }
 
@@ -1222,7 +1246,7 @@ public class BattleManager : MonoBehaviour {
       // Debug.Log(defender.name + "'s HP: " + defender.hpCurrent);
     }
 
-    Debug.Log(attacker.unit.name + " -> " + defender.unit.name + " for " + damage + " * (1 - " + defense + ") = " + (int)(damage * (1f - defense)) + " potency: " + potency);
+    // Debug.Log(attacker.unit.name + " -> " + defender.unit.name + " for " + damage + " * (1 - " + defense + ") = " + (int)(damage * (1f - defense)) + " potency: " + potency);
 
     var result = ((int)damage).ToString("N0");
     if (isCrit) {
@@ -1235,39 +1259,40 @@ public class BattleManager : MonoBehaviour {
   }
 
   private IEnumerator DoHandleStatusEffects(Panel panel, TriggerTypes trigger) {
-    // Remove fading effects
-    var buffs = panel.buffs.Where(b => b.activationTrigger == trigger);
-    var debuffs = panel.debuffs.Where(b => b.activationTrigger == trigger);
+    // Debug.Log(panel.unit.name + " triggering: " + trigger.ToString());
+    var buffs = panel.buffs?.effects?.Where(b => b.effect?.activationTrigger == trigger).Select(b => b.effect);
+    var debuffs = panel.debuffs?.effects?.Where(b => b.effect?.activationTrigger == trigger).Select(b => b.effect);
     var effects = new List<StatusEffect>();
-    effects.AddRange(buffs);
-    effects.AddRange(debuffs);
+    if (buffs != null && buffs.Any()) { effects.AddRange(buffs); }
+    if (debuffs != null && debuffs.Any()) { effects.AddRange(debuffs); }
     if (effects.Count > 0) {
       pausedForTriggers = true;
       for(var i = 0; i < effects.Count; i++) {
+      Debug.Log(panel.unit.name + " Effect name: " + effects[i].effectName + " " + effects.Count);
         while (pausedForStagger) {
           yield return new WaitForEndOfFrame();
         }
         // Begin Checking Effects
         if (trigger == TriggerTypes.OnAttack) {
-          if (effects[i].name == "War Cry") {
+          if (effects[i].effectName == "War Cry") {
             Debug.Log("Triggering War Cry!");
             panel.dmgIncreasePercentMod += .5f;
           }
         }
 
         if (trigger == TriggerTypes.OnBeingAttacked) {
-          if (effects[i].name == "Protected") {
+          if (effects[i].effectName == "Protected") {
             Debug.Log("Triggering Protected!");
             panel.dmgReductionPercentMod += .15f;
           }
         }
 
         if (trigger == TriggerTypes.OnBeingHit) {
-          if (effects[i].name == "Counterattack") {
+          if (effects[i].effectName == "Counterattack") {
             yield return new WaitForSeconds(battleSpeed * 0.5f);
             var action = Instantiate(Resources.Load<Action>("Actions/Knight/" + "Counterattack"));
             Debug.Log("Counterattack!");
-            if (effects.Where(e => e.name == "Riposte").Count() > 0) {
+            if (effects.Any(e => e.effectName == "Riposte")) {
               Debug.Log("Riposte!");
               action.additionalAction.Add(Instantiate(Resources.Load<Action>("Actions/Knight/" + "RiposteCounter")));
             }
@@ -1278,34 +1303,26 @@ public class BattleManager : MonoBehaviour {
         else if (trigger == TriggerTypes.StartOfTurn) {
           if (panel.GetType() == typeof(HeroPanel)){
             var hero = panel.unit as Hero;
-            if (hero.currentJob.trait.name == effects[i].name) {
+            if (hero.currentJob.trait.name == effects[i].effectName) {
               shiftMenu.traitTooltipButton.GetComponent<Image>().color = yellow;
             }
           }
-          if (effects[i].name == "Arcane Nova") {
-            var action = Instantiate(Resources.Load<Action>("Actions/Mage/" + effects[i].name));
+          // KNIGHT
+          if (effects[i].effectName == "Healing Aura") {
+            var action = Instantiate(Resources.Load<Action>("Actions/Knight/" + effects[i].effectName));
             StartCoroutine(DoHeroAction(action, panel as HeroPanel, null, false));
             yield return new WaitForSeconds(battleSpeed * 0.5f);
           }
-          if (effects[i].name == "Mirror Images") {
-            var action = Instantiate(Resources.Load<Action>("Actions/Mage/" + effects[i].name));
+
+          if (effects[i].effectName == "Arcane Nova") {
+            var action = Instantiate(Resources.Load<Action>("Actions/Mage/" + effects[i].effectName));
             StartCoroutine(DoHeroAction(action, panel as HeroPanel, null, false));
             yield return new WaitForSeconds(battleSpeed * 0.5f);
           }
-        }
-
-        else if (trigger == TriggerTypes.InstantOrConstant) {
-          if (effects[i].name == "Protection Aura") {
-
-            Debug.Log("Protection Aura activating!");
-            var action = Instantiate(Resources.Load<Action>("Actions/Knight/" + effects[i].name));
+          if (effects[i].effectName == "Mirror Images") {
+            var action = Instantiate(Resources.Load<Action>("Actions/Mage/" + effects[i].effectName));
             StartCoroutine(DoHeroAction(action, panel as HeroPanel, null, false));
-          }
-          if (effects[i].name == "Mesmerize") {
-
-            Debug.Log("Mesmerize activating!");
-            var action = Instantiate(Resources.Load<Action>("Actions/Rogue/" + effects[i].name));
-            StartCoroutine(DoHeroAction(action, panel as HeroPanel, null, false));
+            yield return new WaitForSeconds(battleSpeed * 0.5f);
           }
         }
 
@@ -1317,17 +1334,65 @@ public class BattleManager : MonoBehaviour {
         }
       }
     }
-    panel.buffs.RemoveAll(b => b.fadeTrigger == trigger);
-    panel.debuffs.RemoveAll(d => d.fadeTrigger == trigger);
-    panel.buffsOnOthers.RemoveAll(b => b.fadeTrigger == trigger);
+
+    // panel.buffs.RemoveAll(b => b.fadeTrigger == trigger);
+    // panel.debuffs.RemoveAll(d => d.fadeTrigger == trigger);
+    // panel.buffsOnOthers.RemoveAll(b => b.fadeTrigger == trigger);
     var debuffsToRemove = panel.debuffsOnOthers.Where(d => d.fadeTrigger == trigger);
     foreach (var enemy in enemyPanels) {
       foreach(var db in debuffsToRemove) {
-        Debug.Log("Debuff removing: " + db.name);
-        enemy.debuffs.RemoveAll(d => d.name == db.name);
+        Debug.Log("Debuff removing: " + db.effectName);
+        // enemy.debuffs.RemoveAll(d => d.name == db.name);
       }
     }
-    panel.debuffsOnOthers.RemoveAll(d => d.fadeTrigger == trigger);
+    // panel.debuffsOnOthers.RemoveAll(d => d.fadeTrigger == trigger);
+    yield break;
+  }
+  
+  private IEnumerator DoHandleTraits(HeroPanel heroPanel) {
+    // Remove fading effects
+    var hero = heroPanel.unit as Hero;
+    var trait = hero.currentJob.trait;
+    pausedForTriggers = true;
+    while (pausedForStagger) {
+      yield return new WaitForEndOfFrame();
+    }
+
+    // KNIGHT
+    if (trait.name == "Counterattack") {
+      var buff = Instantiate(Resources.Load<StatusEffect>("Actions/StatusEffects/" + trait.name));
+      // heroPanel.buffs.Add(buff);
+      HeroApplyBuff(buff, heroPanel);
+      yield return new WaitForSeconds(battleSpeed * 0.5f);
+    }
+    if (trait.name == "Protection Aura") {
+      Debug.Log("Protection Aura activating! NYI");
+    }
+    // MAGE
+    if (trait.name == "Arcane Nova") {
+      var buff = Instantiate(Resources.Load<StatusEffect>("Actions/StatusEffects/" + trait.name));
+      AddEffect(heroPanel, buff);
+      yield return new WaitForSeconds(battleSpeed * 0.5f);
+    }
+    if (trait.name == "Mirror Images") {
+      var buff = Instantiate(Resources.Load<StatusEffect>("Actions/StatusEffects/" + trait.name));
+      AddEffect(heroPanel, buff);
+      yield return new WaitForSeconds(battleSpeed * 0.5f);
+    }
+    // ROGUE
+    if (trait.name == "Mesmerize") {
+      Debug.Log("Mesmerize activating! NYI");
+    }
+
+    yield return new WaitForSeconds(battleSpeed * 0.5f);
+    pausedForTriggers = false;
+    if (trait.traitType == TraitTypes.Passive) {
+      Debug.Log("Yellow Trait " + trait.name);
+      shiftMenu.traitTooltipButton.GetComponent<Image>().color = yellow;
+    } else {
+      Debug.Log("Black Trait " + trait.name);
+      shiftMenu.traitTooltipButton.GetComponent<Image>().color = black;
+    }
     yield break;
   }
 
