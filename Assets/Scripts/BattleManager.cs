@@ -121,13 +121,6 @@ public class BattleManager : MonoBehaviour {
     combatants.AddRange(heroes);
     combatants.AddRange(enemies);
 
-    foreach (var hero in heroes) {
-      var unit = hero.unit as Hero;
-      for (var i = 0; i < unit.currentJob.actions.Length; i++) {
-        unit.currentJob.actions[i].additionalActions.
-      }
-    }
-
     ClearAllTargetting();
     StartCoroutine(DoDelay(0.5f));
     SetInitialTicks();
@@ -210,7 +203,14 @@ public class BattleManager : MonoBehaviour {
           RemoveEffect(currentPanel, buff.effect.effectName, buff.effect.statusEffectType);
         } else if (buff.effect.activationTrigger == TriggerTypes.StartOfTurn && buff.effect.actionToTrigger != null) {
           Debug.Log(currentPanel.unit.name + " is using " + buff.effect.effectName);
-          StartCoroutine(DoHeroAction(buff.effect.actionToTrigger, null, null, false));
+          if (!string.IsNullOrEmpty(buff.effect.actionNameToTrigger)) {
+            if (buff.effect.actionToTrigger == null) {
+            Debug.Log(currentPanel.unit.name + " is also using " + buff.effect.actionToTrigger.name);
+              var action = Instantiate(Resources.Load<Action>("Actions/" + currentPanel.unit.name + "/" + buff.effect.actionNameToTrigger));
+              buff.effect.actionToTrigger = action;
+            }
+            StartCoroutine(DoHeroAction(buff.effect.actionToTrigger, null, null, false));
+          }
         }
       }
     }
@@ -322,6 +322,7 @@ public class BattleManager : MonoBehaviour {
 
     for(var i = 0; i < enemies.Count; i++) {
       var panel = enemies[i];
+      panel.updateHpBar = true;
       if (panel.unit.armorCurrent <= -10 && !panel.isStaggered) {
         panel.isStaggered = true;
         ShakePanel(panel, SHAKE_INTENSITY, 1.5f);
@@ -340,7 +341,6 @@ public class BattleManager : MonoBehaviour {
         AudioManager.instance.PlaySfx("cancel");
         FadeEnemyOut(panel);
       } else {
-        panel.updateHpBar = true;
         UpdateCrystalsAndShields(panel);
       }
     }
@@ -350,18 +350,24 @@ public class BattleManager : MonoBehaviour {
   private void AddEffect(Panel panel, StatusEffect effect) {
     Debug.Log("Attempting to add effect: " + effect.effectName);
     if (effect.statusEffectType == StatusEffectTypes.Buff) {
-      if (panel.buffs.effects.Any(e => e.effect?.effectName == effect.effectName)) { return; }
-      var buff = Instantiate(buffPrefab, Vector3.zero, Quaternion.identity, panel.buffs.transform);
-      Debug.Log("Adding buff to panel: " + effect.effectName);
-      buff.icon.sprite = effect.sprite;
-      buff.effect = effect;
-      panel.buffs.effects.Add(Instantiate(buff));
-      if (buff.effect.name == "Riposte") {
-        for (var i = 0; i < panel.buffs.effects.Count; i++) {
-          if (panel.buffs.effects[i].effect.effectName == "Counterattack") {
-            if (panel.buffs.effects[i].effect.actionToTrigger.additionalActions.Count == 0) {
-              panel.buffs.effects[i].effect.actionToTrigger.additionalActions.Add(Instantiate(Resources.Load<Action>("Actions/Knight/" + "RiposteCounter")));
-            }
+      var buffObj = panel.buffs.effects.Where(e => e.effect?.effectName == effect.effectName).SingleOrDefault();
+      if (buffObj != null) {
+        Debug.Log("Reenabling buff: " + effect.effectName + " object is enabled: " + buffObj.gameObject.activeInHierarchy);
+        if (buffObj.gameObject.activeInHierarchy) {
+          return;
+        } else {
+          buffObj.gameObject.SetActive(true);
+        }
+      } else {
+        var buff = Instantiate(buffPrefab, Vector3.zero, Quaternion.identity, panel.buffs.transform);
+        buff.icon.sprite = effect.sprite;
+        buff.effect = effect;
+        panel.buffs.effects.Add(buff);
+        if (!string.IsNullOrEmpty(buff.effect.actionNameToTrigger)) {
+          Debug.Log(panel.unit.name + " is also adding " + buff.effect.actionNameToTrigger + " from " + "Actions/" + panel.unit.name + "/" + buff.effect.actionNameToTrigger);
+          if (buff.effect.actionToTrigger == null) {
+            var action = Instantiate(Resources.Load<Action>("Actions/" + panel.unit.name + "/" + buff.effect.actionNameToTrigger));
+            buff.effect.actionToTrigger = action;
           }
         }
       }
@@ -375,29 +381,27 @@ public class BattleManager : MonoBehaviour {
     }
   }
   private void RemoveEffect(Panel panel, string effectName, StatusEffectTypes effectType) {
-    Debug.Log("Calling Remove Effect for " + effectName);
     if (effectType == StatusEffectTypes.Buff) {
       foreach (var buff in panel.buffs.effects.ToList()) {
         if (buff.effect.effectName == effectName) {
-          panel.buffs.effects.Remove(buff);
-          Destroy(buff.gameObject);
+          Debug.Log("Calling Remove Effect for " + effectName);
+          buff.gameObject.SetActive(false);
           if (buff.effect.name == "Riposte") {
             for (var i = 0; i < panel.buffs.effects.Count; i++) {
               if (panel.buffs.effects[i].effect.effectName == "Counterattack") {
-                if (panel.buffs.effects[i].effect.actionToTrigger.additionalActions.Count > 0) {
-                  panel.buffs.effects[i].effect.actionToTrigger.additionalActions.Clear();
+                if (panel.buffs.effects[i].effect.actionToTrigger?.additionalActions.Count > 0) {
+                  panel.buffs.effects[i].effect.actionToTrigger?.additionalActions.Clear();
                 }
               }
             }
           }
-          Debug.Log("Removing buff from panel: " + buff.effect.effectName);
+          Debug.Log("Removing buff from panel: " + buff.effect.effectName + " buff object is: " + buff.gameObject.activeInHierarchy);
         }
       }
     } else if (effectType == StatusEffectTypes.Debuff) {
       foreach (var debuff in panel.debuffs.effects.ToList()) {
         if (debuff.effect.effectName == effectName) {
-          panel.debuffs.effects.Remove(debuff);
-          Destroy(debuff.gameObject);
+          debuff.gameObject.SetActive(false);
           Debug.Log("Removing debuff from panel: " + debuff.effect.effectName);
         }
       }
@@ -924,11 +928,7 @@ public class BattleManager : MonoBehaviour {
     
     if (action.damageType != DamageTypes.EffectOnly && action.buffs.Count > 0) {
       foreach(var buff in action.buffs) {
-        if (!currentPanel.buffs.effects.Any(b => b.effect.effectName == buff.effectName)) {
-          Debug.Log("Added buff: " + buff.effectName);
-          // currentPanel.buffs.Add(buff);
-          AddEffect(currentPanel, buff);
-        }
+        AddEffect(currentPanel, buff);
       }
     }
     
@@ -1340,7 +1340,7 @@ public class BattleManager : MonoBehaviour {
   }
 
   private IEnumerator DoHandleStatusEffects(Panel panel, TriggerTypes trigger) {
-    var buffs = panel.buffs.effects.ToList();
+    var buffs = panel.buffs.effects.Where(e => e.gameObject.activeInHierarchy).ToList();
     if (buffs.Count == 0) { yield break; }
     pausedForTriggers = true;
 

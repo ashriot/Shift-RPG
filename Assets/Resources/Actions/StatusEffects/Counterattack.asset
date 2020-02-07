@@ -22,4 +22,5 @@ MonoBehaviour:
   targetType: 0
   activationTrigger: 2
   fadeTrigger: 10
-  actionToTrigger: {fileID: 11400000, guid: 655a1d64d6b07b7499aef299c35bcc4c, type: 2}
+  actionNameToTrigger: Counterattack
+  actionToTrigger: {fileID: 0}

@@ -12,7 +12,8 @@ public class StatusEffect : ScriptableObject {
   public TargetTypes targetType;
   public TriggerTypes activationTrigger;
   public TriggerTypes fadeTrigger;
-  public string actionToTrigger;
+  public string actionNameToTrigger;
+  public Action actionToTrigger;
 }
 
 public enum StatusEffectTypes {

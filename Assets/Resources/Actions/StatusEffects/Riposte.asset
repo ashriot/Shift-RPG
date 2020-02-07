@@ -21,3 +21,5 @@ MonoBehaviour:
   targetType: 0
   activationTrigger: 2
   fadeTrigger: 0
+  actionNameToTrigger: RiposteCounter
+  actionToTrigger: {fileID: 0}
