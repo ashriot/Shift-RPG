@@ -20,4 +20,4 @@ MonoBehaviour:
   statusEffectType: 0
   targetType: 0
   activationTrigger: 2
-  fadeTrigger: 10
+  fadeTrigger: 0

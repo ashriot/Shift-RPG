@@ -16,7 +16,7 @@ public class Action : ScriptableObject {
   public TargetTypes targetType;
   public DamageTypes damageType;
   public PowerTypes powerType;
-  public List<Action> additionalAction;
+  public List<Action> additionalActions;
   public List<StatusEffect> buffs;
   public List<StatusEffect> debuffs;
 

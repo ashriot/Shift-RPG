@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Mage
   description: 
-  hpMax: 60
+  hpMax: 6000
   armorMax: 20
   mp: 90
   mpRegen: 10
-  attack: 25
-  willpower: 20
-  speed: 12
+  attack: 2500
+  willpower: 2000
+  speed: 16
   crit: 20
-  surge: 20
+  surge: 2000
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0

@@ -25,7 +25,7 @@ MonoBehaviour:
   targetType: 6
   damageType: 2
   powerType: 0
-  additionalAction: []
+  additionalActions: []
   buffs: []
   debuffs: []
   sfxName: sword-unsheathe

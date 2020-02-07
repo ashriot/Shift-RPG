@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Baby Dragon
   description: A baby dragon with a powerful breath attack.
-  hpMax: 150
+  hpMax: 15000
   armorMax: 30
   mp: 30
   mpRegen: 10
-  attack: 20
-  willpower: 30
-  speed: 12
+  attack: 1000
+  willpower: 2000
+  speed: 10
   crit: 20
-  surge: 20
+  surge: 2000
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0

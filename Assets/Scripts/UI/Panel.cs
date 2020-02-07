@@ -55,6 +55,8 @@ public class Panel : MonoBehaviour {
           isFading = false;
           image.gameObject.SetActive(false);
           hud.SetActive(false);
+          buffs.gameObject.SetActive(false);
+          debuffs.gameObject.SetActive(false);
       }
     }
   }

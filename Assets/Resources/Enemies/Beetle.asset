@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Beetle
   description: A small beetle with high Defense.
-  hpMax: 80
+  hpMax: 10000
   armorMax: 70
   mp: 20
   mpRegen: 10
-  attack: 15
-  willpower: 10
-  speed: 8
+  attack: 1500
+  willpower: 1000
+  speed: 10
   crit: 10
-  surge: 15
+  surge: 1500
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0
