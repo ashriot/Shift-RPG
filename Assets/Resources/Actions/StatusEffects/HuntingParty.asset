@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
   m_Name: HuntingParty
   m_EditorClassIdentifier: 
-  name: Hunting Party
+  effectName: 
   description: Increases party damage against debuffed enemies.
   duration: 0
+  fadesOnCasterTrigger: 0
   sprite: {fileID: 21300000, guid: 81b399213327a3d4db6ac8dec41d1469, type: 3}
   statusEffectType: 0
   targetType: 3
   activationTrigger: 10
   fadeTrigger: 10
+  actionNameToTrigger: 
+  actionToTrigger: {fileID: 0}
+  removable: 0

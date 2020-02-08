@@ -21,3 +21,6 @@ MonoBehaviour:
   targetType: 0
   activationTrigger: 10
   fadeTrigger: 7
+  actionNameToTrigger: 
+  actionToTrigger: {fileID: 0}
+  removable: 0

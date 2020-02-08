@@ -13,7 +13,7 @@ public class Panel : MonoBehaviour {
   public bool panelMoved;
 
   public Image hpFillImage, image;
-  public Image[] crystals;
+  public Image[] crystals, crystalFills;
   public ShieldIcon[] shields;
 
   public GameObject hud;

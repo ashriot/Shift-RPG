@@ -64,10 +64,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 0f568b31aa667dc47b5c580af246138d, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 1
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -285,10 +285,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 0f568b31aa667dc47b5c580af246138d, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 1
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -804,10 +804,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 0f568b31aa667dc47b5c580af246138d, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 1
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -877,10 +877,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 0f568b31aa667dc47b5c580af246138d, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 1
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -950,10 +950,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 0f568b31aa667dc47b5c580af246138d, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 1
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -1096,10 +1096,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 0f568b31aa667dc47b5c580af246138d, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 1
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -1222,6 +1222,13 @@ MonoBehaviour:
   - {fileID: 872344274805326983}
   - {fileID: 6630630370541641852}
   - {fileID: 1609048770750814029}
+  crystalFills:
+  - {fileID: 2551832005449114903}
+  - {fileID: 4931850430814754172}
+  - {fileID: 3444073353692407968}
+  - {fileID: 4473348826130180642}
+  - {fileID: 7537491723969220560}
+  - {fileID: 3367013176690812345}
   icon: {fileID: 2256033411474798547}
   fillColor: {fileID: 6325132673520292069}
   tooltipButton: {fileID: 8945801266090518856}
@@ -1284,6 +1291,7 @@ MonoBehaviour:
   cost: 
   content: 
   job: {fileID: 0}
+  showTooltip: 1
 --- !u!1 &9025194693237312381
 GameObject:
   m_ObjectHideFlags: 0

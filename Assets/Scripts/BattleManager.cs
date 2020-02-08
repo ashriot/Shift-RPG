@@ -131,12 +131,14 @@ public class BattleManager : MonoBehaviour {
   }
 
   private void UpdateCrystalsAndShields(Panel panel) {
-    var crystals = panel.unit.mpCurrent / 10;
+    var crystals = Mathf.CeilToInt(panel.unit.mpCurrent / 10f);
     for (var m = 0; m < panel.crystals.Length; m++) {
       if (m >= crystals) {
         panel.crystals[m].gameObject.SetActive(false);
         continue;
       }
+      if (m == (crystals - 1) && (float)(panel.unit.mpCurrent % 10) > 0)
+        panel.crystalFills[m].fillAmount = (float)(panel.unit.mpCurrent % 10) / 10f;
       panel.crystals[m].gameObject.SetActive(true);
     }
     var shieldColor = gray;
@@ -338,6 +340,7 @@ public class BattleManager : MonoBehaviour {
         StartCoroutine(DoPauseForStagger());
       }
       if (panel.unit.isDead) {
+        SmoothHpBar(panel, panel.unit.hpPercent);
         AudioManager.instance.PlaySfx("cancel");
         FadeEnemyOut(panel);
       } else {
@@ -386,15 +389,6 @@ public class BattleManager : MonoBehaviour {
         if (buff.effect.effectName == effectName) {
           Debug.Log("Calling Remove Effect for " + effectName);
           buff.gameObject.SetActive(false);
-          if (buff.effect.name == "Riposte") {
-            for (var i = 0; i < panel.buffs.effects.Count; i++) {
-              if (panel.buffs.effects[i].effect.effectName == "Counterattack") {
-                if (panel.buffs.effects[i].effect.actionToTrigger?.additionalActions.Count > 0) {
-                  panel.buffs.effects[i].effect.actionToTrigger?.additionalActions.Clear();
-                }
-              }
-            }
-          }
           Debug.Log("Removing buff from panel: " + buff.effect.effectName + " buff object is: " + buff.gameObject.activeInHierarchy);
         }
       }
@@ -480,12 +474,14 @@ public class BattleManager : MonoBehaviour {
         }
         actionMenu.actionButtons[i].nameText.text = hero.currentJob.actions[i].name;
         actionMenu.actionButtons[i].mpCost = hero.currentJob.actions[i].mpCost;
-        var crystals = actionMenu.actionButtons[i].mpCost * mpModifier / 10;
+        var crystals = Mathf.CeilToInt(actionMenu.actionButtons[i].mpCost * mpModifier / 10f);
         for (var m = 0; m < actionMenu.actionButtons[i].crystals.Length; m++) {
           if (m >= crystals) {
             actionMenu.actionButtons[i].crystals[m].gameObject.SetActive(false);
             continue;
           }
+          if (m == (crystals - 1) && (float)(actionMenu.actionButtons[i].mpCost * mpModifier % 10) > 0)
+            actionMenu.actionButtons[i].crystalFills[m].fillAmount = (float)(actionMenu.actionButtons[i].mpCost * mpModifier % 10) / 10f;
           actionMenu.actionButtons[i].crystals[m].gameObject.SetActive(true);
         }
       }
@@ -732,7 +728,7 @@ public class BattleManager : MonoBehaviour {
     hero.shiftedThisTurn = true;
     SlideHeroMenus(hero, false);
     Debug.Log("Shift buff removal");
-    RemoveEffect(heroPanel, hero.currentJob.trait.name, StatusEffectTypes.Buff);
+    // RemoveEffect(heroPanel, hero.currentJob.trait.name, StatusEffectTypes.Buff);
     hero.currentJob = hero.jobs[jobId];
     StartCoroutine(DoHandleTraits(heroPanel));
     yield return new WaitForSeconds(battleSpeed / 3f);
@@ -906,6 +902,8 @@ public class BattleManager : MonoBehaviour {
         }
         break;
       case TargetTypes.Self:
+        HeroHeal(action, playerTarget as HeroPanel);
+        break;
       case TargetTypes.SelfOrAnAlly:
       case TargetTypes.OnlyAnAlly:
         HeroHeal(action, playerTarget as HeroPanel);
@@ -948,6 +946,7 @@ public class BattleManager : MonoBehaviour {
 
   public void HeroHeal(Action action, HeroPanel targetPanel, HeroPanel userPanel = null) {
     var user = userPanel ?? currentPanel;
+    var target = targetPanel ?? playerTarget ?? currentPanel;
     var isCrit = false;
     var color = Color.white;
 
@@ -968,41 +967,41 @@ public class BattleManager : MonoBehaviour {
       color = gray;
       sprite = shieldSprite;
       Debug.Log(sprite.name);
-      if (targetPanel.isStaggered) {
+      if (target.isStaggered) {
         amount = 0;
       } else {
         if (action.name == "Mage Armor") {
-          amount = Mathf.Clamp(action.potency - targetPanel.unit.armorCurrent, 0, action.potency);
-          Debug.Log("potency: " + action.potency + " Armor: " + targetPanel.unit.armorCurrent);
+          amount = Mathf.Clamp(action.potency - target.unit.armorCurrent, 0, action.potency);
+          Debug.Log("potency: " + action.potency + " Armor: " + target.unit.armorCurrent);
         } else {
           amount = action.potency;
         }
-        targetPanel.unit.armorCurrent = Mathf.Clamp(targetPanel.unit.armorCurrent + (int)amount, 0, 100);
+        target.unit.armorCurrent = Mathf.Clamp(target.unit.armorCurrent + (int)amount, 0, 100);
         amount /= 10;
       }
     } else if (action.damageType == DamageTypes.ManaGain) {
       color = blue;
       sprite = crystal;
       amount = action.potency;
-      targetPanel.unit.mpCurrent = Mathf.Clamp(targetPanel.unit.mpCurrent + (int)amount, 0, 100);
+      target.unit.mpCurrent = Mathf.Clamp(target.unit.mpCurrent + (int)amount, 0, 100);
       amount /= 10;
     } else if (action.damageType == DamageTypes.HealthGain) {
       color = green;
       sprite = heart;
-      targetPanel.unit.hpCurrent = Mathf.Clamp(targetPanel.unit.hpCurrent + (int)amount, 0, targetPanel.unit.hpMax);
+      target.unit.hpCurrent = Mathf.Clamp(target.unit.hpCurrent + (int)amount, 0, target.unit.hpMax);
       amount *= action.potency;
     } else if (action.damageType == DamageTypes.EffectOnly) {
       message = action.name;
       // Action: GAMBIT
       if (action.name == "Gambit") {
         Debug.Log("Gambit");
-        var swap = targetPanel.unit.mpCurrent;
-        targetPanel.unit.mpCurrent = targetPanel.unit.armorCurrent;
-        targetPanel.unit.armorCurrent = swap;
+        var swap = target.unit.mpCurrent;
+        target.unit.mpCurrent = target.unit.armorCurrent;
+        target.unit.armorCurrent = swap;
       }
     }
 
-    var panel = heroes.Where(hp => hp == targetPanel).Single();
+    var panel = heroes.Where(hp => hp == target).Single();
     var position = panel.image.transform.position;
 
     if (action.damageType != DamageTypes.EffectOnly) {
@@ -1277,20 +1276,20 @@ public class BattleManager : MonoBehaviour {
           Debug.Log("Adding mana gain");
           action.additionalActions.Add(Instantiate(Resources.Load<Action>("Actions/Rogue/" + "Potshot Managain")));
         }
-        defender.unit.armorCurrent = -10;
       }
     }
 
     if (damageType == DamageTypes.Martial) {
-      defense = (defender.isStaggered ? 0 : defender.unit.Defense);
+      defense = ((defender.unit.armorCurrent < 0 || defender.isStaggered) ? 0 : defender.unit.Defense);
+      Debug.Log("defense: " + defense);
     }
     else if (damageType == DamageTypes.Ether) {
-      defense = (defender.isStaggered ? 0 : defender.unit.Resist);
+      defense = ((defender.unit.armorCurrent < 0 || defender.isStaggered) ? 0 : defender.unit.Resist);
     }
 
     damage *= (1f - defense);
 
-    if (defender.isStaggered) {
+    if (defender.unit.armorCurrent < 0 || defender.isStaggered) {
       damage *= attacker.unit.breakBonus;
     }
 
@@ -1347,86 +1346,12 @@ public class BattleManager : MonoBehaviour {
     for (var i = 0; i < buffs.Count; i++) {
       if (buffs[i].effect.activationTrigger == trigger && buffs[i].effect.actionToTrigger != null) {
         StartCoroutine(DoHeroAction(buffs[i].effect.actionToTrigger, panel as HeroPanel, currentPanel as EnemyPanel, false));
-      }
-    // if (effects.Count > 0) {
-    //   var buffsToRemove = new List<StatusEffect>();
-    //   for(var i = 0; i < effects.Count; i++) {
-
-    //     if (effects[i].fadeTrigger == trigger) {
-    //       Debug.Log("Removing " + effects[i].effectName + " fade trigger: " + effects[i].fadeTrigger.ToString());
-    //       buffsToRemove.Add(effects[i]);
-    //     }
-        
-    //     while (pausedForStagger) {
-    //       yield return new WaitForEndOfFrame();
-    //     }
-    //     // Begin Checking Effects
-    //     if (trigger == TriggerTypes.OnAttack) {
-    //       if (effects[i].effectName == "War Cry") {
-    //         Debug.Log("Triggering War Cry!");
-    //         panel.dmgIncreasePercentMod += .5f;
-    //       }
-    //     }
-
-    //     if (trigger == TriggerTypes.OnBeingHit) {
-    //       if (effects[i].effectName == "Counterattack") {
-    //         yield return new WaitForSeconds(battleSpeed * 0.5f);
-    //         var action = Instantiate(Resources.Load<Action>("Actions/Knight/" + "Counterattack"));
-    //         Debug.Log("Counterattack!");
-    //         if (effects.Any(e => e.effectName == "Riposte")) {
-    //           Debug.Log("Riposte!");
-    //           action.additionalAction.Add(Instantiate(Resources.Load<Action>("Actions/Knight/" + "RiposteCounter")));
-    //         }
-    //         StartCoroutine(DoHeroAction(action, panel as HeroPanel, currentPanel as EnemyPanel, false));
-    //       }
-    //     }
-
-    //     else if (trigger == TriggerTypes.StartOfTurn) {
-    //       if (panel.GetType() == typeof(HeroPanel)){
-    //         var hero = panel.unit as Hero;
-    //         if (hero.currentJob.trait.name == effects[i].effectName) {
-    //           shiftMenu.traitTooltipButton.GetComponent<Image>().color = yellow;
-    //         }
-    //       }
-    //       // KNIGHT
-    //       if (effects[i].effectName == "Healing Aura") {
-    //         var action = Instantiate(Resources.Load<Action>("Actions/Knight/" + effects[i].effectName));
-    //         StartCoroutine(DoHeroAction(action, panel as HeroPanel, null, false));
-    //         yield return new WaitForSeconds(battleSpeed * 0.5f);
-    //       }
-
-    //       if (effects[i].effectName == "Arcane Nova") {
-    //         var action = Instantiate(Resources.Load<Action>("Actions/Mage/" + effects[i].effectName));
-    //         StartCoroutine(DoHeroAction(action, panel as HeroPanel, null, false));
-    //         yield return new WaitForSeconds(battleSpeed * 0.5f);
-    //       }
-    //       if (effects[i].effectName == "Mirror Images") {
-    //         var action = Instantiate(Resources.Load<Action>("Actions/Mage/" + effects[i].effectName));
-    //         StartCoroutine(DoHeroAction(action, panel as HeroPanel, null, false));
-    //         yield return new WaitForSeconds(battleSpeed * 0.5f);
-    //       }
-    //     }
-
+        }
         yield return new WaitForSeconds(battleSpeed * 0.5f);
         if (i == buffs.Count - 1) {
           pausedForTriggers = false;
         }
-      // foreach (var buff in buffsToRemove) {
-      //   Debug.Log("Buffs being removed: " + buff.effectName + " fadeTrigger " + buff.fadeTrigger);
-      //   RemoveEffect(panel, buff.effectName, buff.statusEffectType);
-      // }
       }
-    // panel.buffs.RemoveAll(b => b.fadeTrigger == trigger);
-    // panel.debuffs.RemoveAll(d => d.fadeTrigger == trigger);
-    // panel.buffsOnOthers.RemoveAll(b => b.fadeTrigger == trigger);
-    // var debuffsToRemove = panel.debuffsOnOthers.Where(d => d.fadeTrigger == trigger);
-    // foreach (var enemy in enemyPanels) {
-    //   foreach (var db in debuffsToRemove) {
-    //     Debug.Log("Debuff removing: " + db.effectName);
-    //     // enemy.debuffs.RemoveAll(d => d.name == db.name);
-    //   }
-    // }
-    // panel.debuffsOnOthers.RemoveAll(d => d.fadeTrigger == trigger);
     yield break;
   }
   
@@ -1455,6 +1380,11 @@ public class BattleManager : MonoBehaviour {
       yield return new WaitForSeconds(battleSpeed * 0.5f);
     }
     if (trait.name == "Mirror Images") {
+      var buff = Instantiate(Resources.Load<StatusEffect>("Actions/StatusEffects/" + trait.name));
+      AddEffect(heroPanel, buff);
+      yield return new WaitForSeconds(battleSpeed * 0.5f);
+    }
+    if (trait.name == "Clarity") {
       var buff = Instantiate(Resources.Load<StatusEffect>("Actions/StatusEffects/" + trait.name));
       AddEffect(heroPanel, buff);
       yield return new WaitForSeconds(battleSpeed * 0.5f);

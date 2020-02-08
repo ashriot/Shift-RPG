@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
-  m_Name: Mirror Images
+  m_Name: Mend Wounds
   m_EditorClassIdentifier: 
-  name: Mirror Images
-  description: Party gains 1 Armor each turn.
-  mpCost: 0
-  potency: 10
+  name: Mend Wounds
+  description: Heal an ally, healing more depending on their missing Health.
+  mpCost: 20
+  potency: 1
   hits: 1
   delay: 1
   splitDamage: 0
   removesArmor: 0
-  sprite: {fileID: 21300000, guid: 3dfe92eaf1ee6f64e8010bd6a37ac6a8, type: 3}
-  targetType: 4
-  damageType: 3
-  powerType: 2
+  sprite: {fileID: 21300000, guid: f345b4ff4a727804e93c36efc07e4933, type: 3}
+  targetType: 3
+  damageType: 5
+  powerType: 1
   additionalActions: []
   buffs: []
   debuffs: []

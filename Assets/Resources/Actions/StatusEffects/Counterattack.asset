@@ -24,3 +24,4 @@ MonoBehaviour:
   fadeTrigger: 10
   actionNameToTrigger: Counterattack
   actionToTrigger: {fileID: 0}
+  removable: 0
