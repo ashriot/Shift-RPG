@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Mend Wounds
   description: Heal an ally, healing more depending on their missing Health.
-  mpCost: 20
-  potency: 1
+  mpCost: 40
+  potency: 1.5
   hits: 1
   delay: 1
   splitDamage: 0

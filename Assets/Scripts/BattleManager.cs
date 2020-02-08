@@ -87,7 +87,7 @@ public class BattleManager : MonoBehaviour {
       var hero = panel.unit as Hero;
       panel.jobColor.color = hero.currentJob.jobColor;
       panel.jobIcon.sprite = hero.currentJob.jobIcon;
-      panel.unit.hpCurrent = panel.unit.hpMax;
+      panel.unit.hpCurrent = panel.unit.hpMax / 10;
       panel.unit.armorCurrent = panel.unit.armorMax;
       panel.unit.mpCurrent = panel.unit.mp;
       panel.unitNameText.text = panel.unit.name;
@@ -178,6 +178,25 @@ public class BattleManager : MonoBehaviour {
 
     if (combatants.All(x => x.unit.isDead && !x.unit.isPlayer)) return;
 
+    if (currentPanel.buffs != null) {
+      var effects = currentPanel.buffs.effects?.ToList();
+      foreach (var buff in effects) {
+        if (buff.effect.fadeTrigger == TriggerTypes.StartOfTurn) {
+          RemoveEffect(currentPanel, buff.effect.effectName, buff.effect.statusEffectType);
+        } else if (buff.effect.activationTrigger == TriggerTypes.StartOfTurn && buff.effect.actionToTrigger != null) {
+          Debug.Log(currentPanel.unit.name + " is using " + buff.effect.effectName);
+          if (!string.IsNullOrEmpty(buff.effect.actionNameToTrigger)) {
+            if (buff.effect.actionToTrigger == null) {
+            Debug.Log(currentPanel.unit.name + " is also using " + buff.effect.actionToTrigger.name);
+              var action = Instantiate(Resources.Load<Action>("Actions/" + currentPanel.unit.name + "/" + buff.effect.actionNameToTrigger));
+              buff.effect.actionToTrigger = action;
+            }
+            StartCoroutine(DoHeroAction(buff.effect.actionToTrigger, currentPanel as HeroPanel, null, false));
+          }
+        }
+      }
+    }
+
     currentPanel.unit.mpCurrent += currentPanel.unit.mpRegen;
     UpdateUi();
     if (currentPanel.isStaggered) {
@@ -198,24 +217,6 @@ public class BattleManager : MonoBehaviour {
     currentPanel.dmgReductionPercentMod = 0f;
     currentPanel.dmgIncreaseFlatMod = 0;
     // StartCoroutine(DoHandleStatusEffects(currentPanel, TriggerTypes.StartOfTurn));
-    if (currentPanel.buffs != null) {
-      var effects = currentPanel.buffs.effects?.ToList();
-      foreach (var buff in effects) {
-        if (buff.effect.fadeTrigger == TriggerTypes.StartOfTurn) {
-          RemoveEffect(currentPanel, buff.effect.effectName, buff.effect.statusEffectType);
-        } else if (buff.effect.activationTrigger == TriggerTypes.StartOfTurn && buff.effect.actionToTrigger != null) {
-          Debug.Log(currentPanel.unit.name + " is using " + buff.effect.effectName);
-          if (!string.IsNullOrEmpty(buff.effect.actionNameToTrigger)) {
-            if (buff.effect.actionToTrigger == null) {
-            Debug.Log(currentPanel.unit.name + " is also using " + buff.effect.actionToTrigger.name);
-              var action = Instantiate(Resources.Load<Action>("Actions/" + currentPanel.unit.name + "/" + buff.effect.actionNameToTrigger));
-              buff.effect.actionToTrigger = action;
-            }
-            StartCoroutine(DoHeroAction(buff.effect.actionToTrigger, null, null, false));
-          }
-        }
-      }
-    }
 
     if (currentPanel.unit.isPlayer) {
       // Debug.Log("Player turn");
@@ -317,14 +318,13 @@ public class BattleManager : MonoBehaviour {
       panel.currentJobName.text = hero.currentJob.name.ToUpper();
       panel.jobColor.color = hero.currentJob.jobColor;
       panel.jobIcon.sprite = hero.currentJob.jobIcon;
-      panel.updateHpBar = true;
       panel.currentHp.text = panel.unit.hpCurrent.ToString("N0");
+      panel.updateHpBar = true;
       UpdateCrystalsAndShields(panel);
     }
 
     for(var i = 0; i < enemies.Count; i++) {
       var panel = enemies[i];
-      panel.updateHpBar = true;
       if (panel.unit.armorCurrent <= -10 && !panel.isStaggered) {
         panel.isStaggered = true;
         ShakePanel(panel, SHAKE_INTENSITY, 1.5f);
@@ -339,8 +339,8 @@ public class BattleManager : MonoBehaviour {
         StartCoroutine(DoFlashImage(panel.image, Color.red));
         StartCoroutine(DoPauseForStagger());
       }
+      panel.updateHpBar = true;
       if (panel.unit.isDead) {
-        SmoothHpBar(panel, panel.unit.hpPercent);
         AudioManager.instance.PlaySfx("cancel");
         FadeEnemyOut(panel);
       } else {
@@ -408,7 +408,7 @@ public class BattleManager : MonoBehaviour {
 
   private void SmoothHpBar(Panel panel, float newAmount) {
     // Debug.Log("Smoothing HP");
-    if (panel.hpFillImage.fillAmount - newAmount > 0.001f) {
+    if (Mathf.Abs(panel.hpFillImage.fillAmount - newAmount) > 0.001f) {
       panel.hpFillImage.fillAmount = Mathf.Lerp(panel.hpFillImage.fillAmount, newAmount, Time.deltaTime * (1 / battleSpeed) * 5f);
     } else {
       if (newAmount <= 0f) {
@@ -988,8 +988,14 @@ public class BattleManager : MonoBehaviour {
     } else if (action.damageType == DamageTypes.HealthGain) {
       color = green;
       sprite = heart;
-      target.unit.hpCurrent = Mathf.Clamp(target.unit.hpCurrent + (int)amount, 0, target.unit.hpMax);
       amount *= action.potency;
+      if (action.name == "Healing Aura") {
+        amount += (target.unit.hpMax - target.unit.hpCurrent) * 0.2f;
+      } else if (action.name == "Mend Wounds") {
+        amount += (target.unit.hpMax - target.unit.hpCurrent) * 0.2f;
+        amount *= (2 - (target.unit.hpPercent * 1f));
+      }
+      target.unit.hpCurrent = Mathf.Clamp(target.unit.hpCurrent + (int)amount, 0, target.unit.hpMax);
     } else if (action.damageType == DamageTypes.EffectOnly) {
       message = action.name;
       // Action: GAMBIT
@@ -1001,7 +1007,10 @@ public class BattleManager : MonoBehaviour {
       }
     }
 
-    var panel = heroes.Where(hp => hp == target).Single();
+    var panel = heroes.Where(hp => hp == target).SingleOrDefault();
+    if (panel == null) {
+      Debug.Log(panel + " action name: " + action.name);
+    }
     var position = panel.image.transform.position;
 
     if (action.damageType != DamageTypes.EffectOnly) {

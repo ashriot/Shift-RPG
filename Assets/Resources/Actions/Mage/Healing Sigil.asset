@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Healing Sigil
   description: 'Enemy takes damage and gains debuff: Each hit from the party heals
     the attacker.'
-  mpCost: 30
+  mpCost: 20
   potency: 0.8
   hits: 1
   delay: 1
