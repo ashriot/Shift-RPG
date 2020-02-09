@@ -17,6 +17,7 @@ MonoBehaviour:
     the attacker.'
   mpCost: 20
   potency: 0.8
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -28,4 +29,4 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
-  sfxName: 
+  sfxName: spell_00

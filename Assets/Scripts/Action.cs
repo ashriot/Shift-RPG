@@ -8,6 +8,7 @@ public class Action : ScriptableObject {
   public string description;
   public int mpCost;
   public float potency;
+  public float drainPotency;
   public int hits = 1;
   public float delay = 1f;
   public bool splitDamage;
@@ -20,6 +21,7 @@ public class Action : ScriptableObject {
   public List<StatusEffect> buffs;
   public List<StatusEffect> debuffs;
 
+  public GameObject particleFx;
   public string sfxName;
 
   public virtual bool Execute(Unit attacker, Unit defender) {

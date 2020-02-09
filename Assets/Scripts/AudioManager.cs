@@ -48,6 +48,20 @@ public class AudioManager : MonoBehaviour {
       sfxs[8].Play();
     } else if (name == "fwoosh") {
       sfxs[9].Play();
+    } else if (name == "trap_00") {
+      sfxs[10].Play();
+    } else if (name == "trap_02") {
+      sfxs[11].Play();
+    } else if (name == "swing3") {
+      sfxs[12].Play();
+    } else if (name == "spell_00") {
+      sfxs[13].Play();
+    } else if (name == "knife-stab-a1") {
+      sfxs[14].Play();
+    } else if (name == "pulling-out-knife-a1") {
+      sfxs[14].Play();
+    } else if (name == "knife-stab-a5") {
+      sfxs[14].Play();
     } else {
       // Debug.LogError("SFX named '" + name + "' does not exist!");
     }

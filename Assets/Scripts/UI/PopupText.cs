@@ -24,7 +24,7 @@ public class PopupText : MonoBehaviour {
         Destroy (gameObject);
       }
     }
-    transform.localPosition += new Vector3(0f, direction * distance * Time.deltaTime, 0f);
+    transform.position += new Vector3(0f, direction * distance * Time.deltaTime, 0f);
   }
 
   public void DisplayMessage(string message, Sprite sprite, float duration, Color color, bool isCrit, bool shouldMove = false) {
@@ -40,9 +40,9 @@ public class PopupText : MonoBehaviour {
       text.fontSize = (int)(text.fontSize * (isCrit ? 1.25f : 1));
       distance = initialDistance * (1 / duration) * (isCrit ? 1.25f : 1);
     } else {
+      transform.position += new Vector3(0f, 1.25f, 0f); 
       distance = 0f;
     }
-    transform.position += new Vector3(0f, 60f, 0f); 
     lifetime = duration;
     text.text = message;
   }

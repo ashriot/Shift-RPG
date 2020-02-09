@@ -16,6 +16,7 @@ MonoBehaviour:
   description: Ally's next turn is boosted by 50% and they gain 4 Mana.
   mpCost: 40
   potency: 40
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -27,4 +28,4 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
-  sfxName: 
+  sfxName: spell_00

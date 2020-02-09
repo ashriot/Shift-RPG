@@ -16,6 +16,7 @@ MonoBehaviour:
   description: Deal [100% ATK] martial damage split between all enemies.
   mpCost: 0
   potency: 1
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 1
@@ -24,7 +25,7 @@ MonoBehaviour:
   targetType: 7
   damageType: 0
   powerType: 0
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs: []
-  sfxName: 
+  sfxName: trap_00

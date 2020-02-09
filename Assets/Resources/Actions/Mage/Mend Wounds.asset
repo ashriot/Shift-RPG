@@ -16,6 +16,7 @@ MonoBehaviour:
   description: Heal an ally, healing more depending on their missing Health.
   mpCost: 40
   potency: 1.5
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -27,4 +28,4 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
-  sfxName: 
+  sfxName: spell_00

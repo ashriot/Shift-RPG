@@ -17,6 +17,7 @@ MonoBehaviour:
     per enemy with a debuff.
   mpCost: 20
   potency: 1.2
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 1
@@ -25,7 +26,8 @@ MonoBehaviour:
   targetType: 7
   damageType: 0
   powerType: 0
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs: []
-  sfxName: 
+  particleFx: {fileID: 0}
+  sfxName: trap_00

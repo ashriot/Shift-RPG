@@ -427,7 +427,7 @@ public class BattleManager : MonoBehaviour {
 
   private void SlideHeroMenus(Hero hero, bool positive) {
     if (positive) { ShowHeroMenus(hero); }
-    var endPos = actionMenu.transform.position + new Vector3(0f, (positive ? 160f : -160f), 0f);
+    var endPos = actionMenu.transform.position + new Vector3(0f, (positive ? 1.5f : -1.5f), 0f);
     var startSize = shiftMenu.GetComponent<RectTransform>().sizeDelta;
     var endSize = (positive ? new Vector2(1250f, startSize.y) : shiftMenu.initialSize);
     StartCoroutine(DoMoveTo(actionMenu.transform, actionMenu.gameObject.transform.position, endPos, endSize, battleSpeed / 12f));
@@ -747,7 +747,7 @@ public class BattleManager : MonoBehaviour {
     targetingShiftAction = true;
     if (action != null && action.targetType == TargetTypes.OneEnemy || action.targetType == TargetTypes.OnlyAnAlly || action.targetType == TargetTypes.SelfOrAnAlly) {
       shiftMenu.selectTarget.gameObject.SetActive(true);
-      Debug.Log("Current action: " + currentAction.name);
+      // Debug.Log("Current action: " + currentAction.name);
 
       if (action.targetType == TargetTypes.OneEnemy) {
         ShowEnemyTargetting();
@@ -790,7 +790,7 @@ public class BattleManager : MonoBehaviour {
     UpdateUi(panel);
 
     var position = panel.gameObject.transform.position;
-    position.y += panel.GetComponent<RectTransform>().rect.height * 0.8f;
+    position.y += 0.5f;
     Instantiate(popupPrefab, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(action.name, action.sprite, battleSpeed * .8f, Color.white, false);
     yield return new WaitForSeconds(battleSpeed / 2f);
 
@@ -805,7 +805,7 @@ public class BattleManager : MonoBehaviour {
       }
 
       // animations
-      ExecuteActionFXs(action);
+      ExecuteActionFXs(action, targetPanel);
 
       if (action.targetType == TargetTypes.RandomEnemies) {
         var rand = Random.Range(0, enemies.Count - 1);
@@ -1040,8 +1040,13 @@ public class BattleManager : MonoBehaviour {
     }
 
     var damage = CalculateDamage(attacker, defender, action, damageType, isCrit);
-    var message = damage;
+    var message = damage.ToString();
 
+    if (isCrit) {
+      message += "!";
+    } if (defender.isStaggered || defender.unit.armorCurrent < 0) {
+      message += "!!";
+    }
     
     if (damageType == DamageTypes.Martial) {
       color = orange;
@@ -1058,6 +1063,15 @@ public class BattleManager : MonoBehaviour {
       var position = defender.image.transform.position;
       Instantiate(damagePrefab, position, defender.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, color, isCrit, true);
       ShakePanel(defender, SHAKE_INTENSITY);
+    }
+
+    if (action.drainPotency > 0) {
+      var drainAmount = (int)(damage * action.drainPotency);
+      attacker.unit.hpCurrent = Mathf.Clamp(attacker.unit.hpCurrent + drainAmount, 0, attacker.unit.hpMax);
+      Debug.Log("Draining " + drainAmount + " HP!");
+      var position = attacker.image.transform.position;
+      message = drainAmount.ToString("N0");
+      Instantiate(damagePrefab, position, attacker.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, green, false, true);
     }
 
     if (action.debuffs.Count > 0) {
@@ -1092,8 +1106,14 @@ public class BattleManager : MonoBehaviour {
     ShakePanel(defender, SHAKE_INTENSITY);
   }
 
-  public void ExecuteActionFXs(Action action) {
+  public void ExecuteActionFXs(Action action, Panel target) {
     AudioManager.instance.PlaySfx(action.sfxName);
+    if (action.particleFx != null && target != null) {
+      Debug.Log("Executing particle fx");
+      var position = target.transform.position;
+      position.x += 1f;
+      Instantiate(action.particleFx, position, target.transform.rotation, canvas.transform);
+    }
   }
 
   public void EnemyAction() {
@@ -1110,12 +1130,7 @@ public class BattleManager : MonoBehaviour {
   }
 
   private IEnumerator DoEnemyAction(Action action) {
-    var position = currentPanel.gameObject.transform.localPosition;
-    // Debug.Log("Enemy pos: " + position);
-    position.y += currentPanel.GetComponent<RectTransform>().rect.height * 2;
-
     var popupText = Instantiate(popupPrefab, currentPanel.transform, false);
-    popupText.transform.localPosition += new Vector3(0f, 75f, 0f);
     popupText.DisplayMessage(action.name, action.sprite, battleSpeed * 0.8f, Color.white, false);
 
     currentPanel.unit.mpCurrent -= action.mpCost;
@@ -1136,7 +1151,7 @@ public class BattleManager : MonoBehaviour {
         while (pausedForStagger || delaying || pausedForTriggers) {
           yield return new WaitForEndOfFrame();
         }
-        ExecuteActionFXs(action);
+        ExecuteActionFXs(action, enemyTarget);
         EnemyDealDamage(action);
         if (action.additionalActions.Count > 0) {
           foreach (var add in action.additionalActions) {
@@ -1159,7 +1174,7 @@ public class BattleManager : MonoBehaviour {
           while (pausedForStagger || delaying || pausedForTriggers) {
             yield return new WaitForEndOfFrame();
           }
-          ExecuteActionFXs(action);
+          ExecuteActionFXs(action, enemyTarget);
           EnemyDealDamage(action, heroPanel);
 
           if (action.additionalActions.Count > 0) {
@@ -1227,7 +1242,7 @@ public class BattleManager : MonoBehaviour {
 
     var panel = heroes.Where(hp => hp == defender).Single();
     var position = panel.gameObject.transform.position + new Vector3(0f, 50f, 0f);
-    Instantiate(damagePrefab, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(damage, sprite, battleSpeed * 0.8f, color, isCrit, true);
+    Instantiate(damagePrefab, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(damage.ToString("N0"), sprite, battleSpeed * 0.8f, color, isCrit, true);
     ShakePanel(panel, SHAKE_INTENSITY);
 
     if (!defender.isStaggered && damageType == DamageTypes.Martial) {
@@ -1236,7 +1251,7 @@ public class BattleManager : MonoBehaviour {
     UpdateUi();
   }
 
-  private string CalculateDamage(Panel attacker, Panel defender, Action action, DamageTypes damageType, bool isCrit) {
+  private int CalculateDamage(Panel attacker, Panel defender, Action action, DamageTypes damageType, bool isCrit) {
     var power = 0f;
 
     if (action.powerType == PowerTypes.Attack) {
@@ -1245,7 +1260,7 @@ public class BattleManager : MonoBehaviour {
     else if (action.powerType == PowerTypes.Willpower) {
       power = attacker.unit.willpower;
     } else if (action.powerType == PowerTypes.None) {
-      return "";
+      return 0;
     }
     else {
       Debug.LogError("Missing power type!");
@@ -1337,14 +1352,9 @@ public class BattleManager : MonoBehaviour {
 
     // Debug.Log(attacker.unit.name + " -> " + defender.unit.name + " for " + damage + " * (1 - " + defense + ") = " + (int)(damage * (1f - defense)) + " potency: " + potency);
 
-    var result = ((int)damage).ToString("N0");
-    if (isCrit) {
-      result += "!";
-    } if (defender.isStaggered) {
-      result += "!!";
-    }
+    
     UpdateUi();
-    return result;
+    return (int)damage;
   }
 
   private IEnumerator DoHandleStatusEffects(Panel panel, TriggerTypes trigger) {

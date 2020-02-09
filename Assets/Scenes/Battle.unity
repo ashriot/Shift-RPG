@@ -221,6 +221,18 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 661253173, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0, type: 3}
+      propertyPath: m_ReferencePixelsPerUnit
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 661253173, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 661253174, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1576112506}
     - target: {fileID: 1190238998, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
@@ -244,6 +256,14 @@ PrefabInstance:
     - target: {fileID: 1190238998, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1539930357, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1539930357, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -180
       objectReference: {fileID: 0}
     - target: {fileID: 10434006704646903, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0,
         type: 3}
@@ -1494,11 +1514,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1743056097886670496, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0,
-        type: 3}
-      propertyPath: m_Name
-      value: Enemies
       objectReference: {fileID: 0}
     - target: {fileID: 1761873465830143295, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0,
         type: 3}
@@ -4690,11 +4705,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6757933802002968548, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0,
-        type: 3}
-      propertyPath: battleSpeed
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6853967233647491069, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -5684,11 +5694,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8463059585899718786, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0,
-        type: 3}
-      propertyPath: m_Colors.m_NormalColor.a
-      value: 0.8509804
       objectReference: {fileID: 0}
     - target: {fileID: 8538470875267915133, guid: 4c852e1edbb5b8a47b8a13f918f9f8d0,
         type: 3}

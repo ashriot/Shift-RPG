@@ -16,6 +16,7 @@ MonoBehaviour:
   description: Hurl three knives at an enemy, each dealing [33% ATK] martial damage.
   mpCost: 0
   potency: 0.33
+  drainPotency: 0
   hits: 3
   delay: 1
   splitDamage: 0
@@ -24,7 +25,7 @@ MonoBehaviour:
   targetType: 6
   damageType: 0
   powerType: 0
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs: []
-  sfxName: 
+  sfxName: knife-stab-a5

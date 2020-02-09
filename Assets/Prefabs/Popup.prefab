@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 1
-  initialDistance: 100
+  initialDistance: 2
   text: {fileID: 3848669337144634133}
   icon: {fileID: 6395945133481234057}
 --- !u!114 &3007385026748939223

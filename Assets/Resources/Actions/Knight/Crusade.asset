@@ -16,6 +16,7 @@ MonoBehaviour:
   description: 
   mpCost: 10
   potency: 0.35
+  drainPotency: 0
   hits: 3
   delay: 1
   splitDamage: 0
@@ -24,7 +25,7 @@ MonoBehaviour:
   targetType: 6
   damageType: 0
   powerType: 0
-  additionalAction: []
+  additionalActions: []
   buffs: []
   debuffs: []
-  sfxName: 
+  sfxName: trap_02
