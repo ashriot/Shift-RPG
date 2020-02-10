@@ -13,18 +13,22 @@ MonoBehaviour:
   m_Name: Charge
   m_EditorClassIdentifier: 
   name: Charge!
-  description: 
+  description: Boosts an ally's next turn and increases the damage of their next
+    attack by 50%.
   mpCost: 30
   potency: 0
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
   removesArmor: 1
   sprite: {fileID: 21300000, guid: 923642fc873fcf74986124b8b35017bc, type: 3}
   targetType: 1
-  damageType: 6
-  powerType: 0
-  additionalDamage: []
-  buffs: []
+  damageType: 7
+  powerType: 2
+  additionalActions: []
+  buffs:
+  - {fileID: 11400000, guid: dc1b3c15db6961642a1bf5bab746a8cb, type: 2}
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

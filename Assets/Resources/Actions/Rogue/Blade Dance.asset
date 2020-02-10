@@ -28,4 +28,5 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
-  sfxName: 
+  particleFx: {fileID: 0}
+  sfxName: pulling-out-knife-a1

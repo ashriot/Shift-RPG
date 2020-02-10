@@ -15,22 +15,28 @@ public class Panel : MonoBehaviour {
   public Image hpFillImage, image;
   public Image[] crystals, crystalFills;
   public ShieldIcon[] shields;
+  public StaggerIcon staggerIcon;
 
   public GameObject hud;
   public StatusEffectPanel buffs, debuffs;
 
-  public List<StatusEffect> buffsOnOthers = new List<StatusEffect>();
-  public List<StatusEffect> debuffsOnOthers = new List<StatusEffect>();
+  public List<StatusEffectDisplay> buffsOnOthers = new List<StatusEffectDisplay>();
+  public List<StatusEffectDisplay> debuffsOnOthers = new List<StatusEffectDisplay>();
 
   public float moveLifetime, fadeLifetime;
   public float initialSpeed;
   public Text notificationText;
 
-  public bool updateHpBar, isStaggered, isStunned, isTaunting;
-  public int ticks;
+  public new string name { get { return unit.name; } }
+  public bool updateHpBar, isStunned, isTaunting;
+  public bool isStaggered { get { return remainingStaggeredTurns > 0; } }
+  public int remainingStaggeredTurns;
+  public int staggerDelayAmount { get { return unit.staggerDelayAmount; } }
+  public bool isDead { get { return unit.isDead; } }
+  public decimal ticks;
 
-  public float dmgIncreasePercentMod, dmgReductionPercentMod;
-  public int dmgIncreaseFlatMod;
+  public float damageDealtPercentMod, damageTakenPercentMod, speedMod;
+  public int damageDealtFlatMod;
 
   private Vector3 movePosition;
   private Vector3 initialPos;
@@ -79,5 +85,16 @@ public class Panel : MonoBehaviour {
     timer = 0f;
     fadeLifetime = duration;
     isFading = true;
+  }
+}
+
+public class PredictedPanel {
+  
+  public decimal ticks;
+  public Panel panel;
+
+  public PredictedPanel(decimal _ticks, ref Panel _panel) {
+    ticks = _ticks;
+    panel = _panel;
   }
 }

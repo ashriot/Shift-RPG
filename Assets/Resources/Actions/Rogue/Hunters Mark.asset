@@ -17,15 +17,17 @@ MonoBehaviour:
     this enemy by 10%.
   mpCost: 0
   potency: 0
+  drainPotency: 0
   hits: 1
-  delay: 1
   splitDamage: 0
   removesArmor: 1
   sprite: {fileID: 21300000, guid: db27f64c1bcab8b42970c4d8527ba304, type: 3}
   targetType: 6
   damageType: 6
-  powerType: 0
-  additionalDamage: []
+  powerType: 2
+  additionalActions: []
   buffs: []
-  debuffs: []
+  debuffs:
+  - {fileID: 11400000, guid: dc82f5b45b2b19b47a6a9bffb38887b3, type: 2}
+  particleFx: {fileID: 0}
   sfxName: 

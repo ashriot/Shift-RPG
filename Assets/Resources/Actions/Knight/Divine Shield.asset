@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Divine Shield
   m_EditorClassIdentifier: 
   name: Divine Shield
-  description: 
+  description: Gives the party 3 Armor.
   mpCost: 60
   potency: 30
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -24,7 +25,8 @@ MonoBehaviour:
   targetType: 4
   damageType: 3
   powerType: 1
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

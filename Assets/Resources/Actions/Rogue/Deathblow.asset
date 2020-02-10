@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
   m_Name: Deathblow
   m_EditorClassIdentifier: 
-  name: Deadly Shot
+  name: Deathblow
   description: Enemy takes [350%] martial damage. If they are Marked, the Mark fades
     and they are Stunned and delayed.
   mpCost: 50
   potency: 3
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -25,7 +26,8 @@ MonoBehaviour:
   targetType: 6
   damageType: 0
   powerType: 0
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

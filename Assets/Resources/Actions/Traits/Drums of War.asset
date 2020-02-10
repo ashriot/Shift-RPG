@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 310c21f242fbaa149bde34c89760f8ff, type: 3}
-  m_Name: War Drums
+  m_Name: Drums of War
   m_EditorClassIdentifier: 
-  name: War Drums
+  name: Drums of War
   description: Party haste increased by 20%.
   sprite: {fileID: 21300000, guid: 1ee224edcb7cbf0488830fb26f2fb5e4, type: 3}
+  traitType: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mana Bolt
   m_EditorClassIdentifier: 
   name: Mana Bolt
-  description: 
+  description: Deals damage based on the enemy's Mana crystals.
   mpCost: 0
   potency: 0.035
   drainPotency: 0
@@ -28,5 +28,6 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
-  particleFx: {fileID: 110298, guid: deec2987c8cae8c4a97dea31b6ddb2c5, type: 3}
+  particleFx: {fileID: 123893256353781745, guid: 45d3847456f65ca428ecf92954b803d9,
+    type: 3}
   sfxName: 

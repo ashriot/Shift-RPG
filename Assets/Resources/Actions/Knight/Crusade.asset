@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Crusade
   m_EditorClassIdentifier: 
   name: Crusade
-  description: 
+  description: Strikes an enemy 3 times.
   mpCost: 10
   potency: 0.35
   drainPotency: 0
@@ -28,4 +28,5 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: trap_02

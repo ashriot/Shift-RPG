@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Shatter
   m_EditorClassIdentifier: 
   name: Shatter
-  description: 
+  description: Destroys all armor and splits the damage between all enemies.
   mpCost: 0
   potency: 0.08
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 1
@@ -24,7 +25,8 @@ MonoBehaviour:
   targetType: 7
   damageType: 1
   powerType: 0
-  additionalAction: []
+  additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: shatter

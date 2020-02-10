@@ -9,22 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
-  m_Name: BeeSting
+  m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
+  m_Name: Bee Sting
   m_EditorClassIdentifier: 
-  name: Bee Sting
-  description: Gain 15% crit chance and 15% increased damage until you are Staggered.
-  mpCost: 20
-  potency: 0
-  hits: 1
-  delay: 1
-  splitDamage: 0
-  removesArmor: 0
+  effectName: Bee Sting
+  description: Increases damage by 30% until Staggered.
+  duration: 0
+  speedMod: 0
+  fadesOnCasterTrigger: 0
   sprite: {fileID: 21300000, guid: 43982614a157c4e469bce71ab6331a55, type: 3}
+  statusEffectType: 0
   targetType: 0
-  damageType: 6
-  powerType: 1
-  additionalDamage: []
-  buffs: []
-  debuffs: []
-  sfxName: 
+  activationTrigger: 10
+  fadeTrigger: 8
+  actionNameToTrigger: 
+  actionToTrigger: {fileID: 0}
+  removable: 1

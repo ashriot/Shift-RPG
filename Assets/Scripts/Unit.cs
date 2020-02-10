@@ -6,6 +6,7 @@ public abstract class Unit : ScriptableObject {
   public string description;
 
   public int hpMax, armorMax, mp, mpRegen, attack, willpower, speed, crit, surge;
+  public int staggerDelayAmount = 1;
   public int hpCurrent, armorCurrent, mpCurrent;
 
   public float hpPercent { get { return (float)hpCurrent / hpMax; } }

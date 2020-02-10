@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Protection Aura
   m_EditorClassIdentifier: 
   name: Protection Aura!
-  description: Protecting the party.
+  description: Reduces damage to the party.
   mpCost: 0
   potency: 0
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -24,8 +25,9 @@ MonoBehaviour:
   targetType: 4
   damageType: 6
   powerType: 2
-  additionalAction: []
+  additionalActions: []
   buffs:
-  - {fileID: 11400000, guid: 1721a3208771a6d42976eb77dfce31b8, type: 2}
+  - {fileID: 0}
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

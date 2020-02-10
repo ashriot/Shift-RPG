@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Disintegrate
   m_EditorClassIdentifier: 
   name: Disintegrate
-  description: 
-  mpCost: 40
-  potency: 2.5
+  description: Deals ether damage, dealing more damage as the enemy is injured.
+  mpCost: 30
+  potency: 1.25
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -24,7 +25,8 @@ MonoBehaviour:
   targetType: 6
   damageType: 1
   powerType: 0
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

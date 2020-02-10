@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Sanctuary
   m_EditorClassIdentifier: 
   name: Sanctuary
-  description: 
+  description: Not Yet Implemented.
   mpCost: 20
   potency: 0
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -24,7 +25,8 @@ MonoBehaviour:
   targetType: 1
   damageType: 6
   powerType: 1
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

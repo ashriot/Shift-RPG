@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
-  m_Name: Arcane Nova
+  m_Name: Hunters Mark
   m_EditorClassIdentifier: 
-  effectName: Arcane Nova
-  description: Every turn, each enemy takes [30% ATK] ether damage.
+  effectName: Hunter's Mark
+  description: Enemy is marked. Party's crit chance is increased by 15%
   duration: 0
-  speedMod: 0
-  fadesOnCasterTrigger: 0
-  sprite: {fileID: 21300000, guid: b3363b98e5a05c042b1c808ecf38f787, type: 3}
-  statusEffectType: 0
-  targetType: 0
-  activationTrigger: 0
+  fadesOnCasterTrigger: 1
+  sprite: {fileID: 21300000, guid: db27f64c1bcab8b42970c4d8527ba304, type: 3}
+  statusEffectType: 1
+  targetType: 6
+  activationTrigger: 10
   fadeTrigger: 7
-  actionNameToTrigger: Arcane Nova
+  actionNameToTrigger: 
   actionToTrigger: {fileID: 0}
-  removable: 0
+  removable: 1

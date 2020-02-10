@@ -30,6 +30,5 @@ MonoBehaviour:
   buffs:
   - {fileID: 11400000, guid: 024516af727adc54d91289bb05293f1c, type: 2}
   debuffs: []
-  particleFx: {fileID: 141749921030961434, guid: 88188da0d9d6e5f4bbee4ffed4ae1736,
-    type: 3}
+  particleFx: {fileID: 155692, guid: 77d6e8e3fa15a0b419d018e3e16931f6, type: 3}
   sfxName: trap_00

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Healing Aura
   m_EditorClassIdentifier: 
   name: Healing Aura
-  description: 
+  description: Heals the party based on their missing HP.
   mpCost: 0
   potency: 0
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -27,4 +28,5 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

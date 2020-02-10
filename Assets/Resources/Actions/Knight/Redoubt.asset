@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Redoubt
   m_EditorClassIdentifier: 
   name: Redoubt
-  description: 
+  description: Gives an ally 2 Armor.
   mpCost: 0
   potency: 20
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -24,7 +25,8 @@ MonoBehaviour:
   targetType: 3
   damageType: 3
   powerType: 0
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

@@ -62,6 +62,8 @@ public class AudioManager : MonoBehaviour {
       sfxs[14].Play();
     } else if (name == "knife-stab-a5") {
       sfxs[14].Play();
+    } else if (name == "win1") {
+      sfxs[15].Play();
     } else {
       // Debug.LogError("SFX named '" + name + "' does not exist!");
     }

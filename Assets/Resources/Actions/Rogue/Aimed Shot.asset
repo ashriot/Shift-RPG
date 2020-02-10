@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Aimed Shot
   m_EditorClassIdentifier: 
   name: Aimed Shot
-  description: Enemy takes [150% ATK] martial damage.
+  description: Enemy takes moderate physical damage.
   mpCost: 10
   potency: 2
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -24,7 +25,8 @@ MonoBehaviour:
   targetType: 6
   damageType: 0
   powerType: 0
-  additionalAction: []
+  additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: swish_04

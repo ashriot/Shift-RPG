@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Hide
   m_EditorClassIdentifier: 
   name: Hide
-  description: 'Self or ally gains 1 Armor and buff: 50% less likely to be targeted
-    by enemies until they shift.'
+  description: Self or ally gains 1 Armor.
   mpCost: 10
   potency: 10
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -25,7 +25,8 @@ MonoBehaviour:
   targetType: 3
   damageType: 3
   powerType: 1
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

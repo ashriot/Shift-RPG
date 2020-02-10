@@ -49,7 +49,8 @@ public enum DamageTypes {
   ArmorGain,
   ManaGain,
   HealthGain,
-  EffectOnly
+  EffectOnly,
+  TurnDelay
 }
 
 public enum PowerTypes {

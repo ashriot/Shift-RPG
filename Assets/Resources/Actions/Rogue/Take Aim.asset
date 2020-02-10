@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Take Aim
   m_EditorClassIdentifier: 
   name: Take Aim
-  description: Next martial attack instead deals piercing damage.
+  description: Next physical attack treats the enemy as if they were staggered and
+    gains +50% crit.
   mpCost: 10
   potency: 0
+  drainPotency: 0
   hits: 1
   delay: 0.5
   splitDamage: 0
@@ -24,8 +26,9 @@ MonoBehaviour:
   targetType: 0
   damageType: 6
   powerType: 0
-  additionalDamage: []
+  additionalActions: []
   buffs:
   - {fileID: 11400000, guid: 642a691f23f21ae459ebd4a67f215f98, type: 2}
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

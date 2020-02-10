@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Tree
   description: A tough animate treant with very high martial defense.
-  hpMax: 25000
+  hpMax: 250
   armorMax: 40
   mp: 20
   mpRegen: 10
-  attack: 1500
-  willpower: 500
-  speed: 9
+  attack: 15
+  willpower: 5
+  speed: 5
   crit: 10
-  surge: 1500
+  surge: 10
+  staggerDelayAmount: 1
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0

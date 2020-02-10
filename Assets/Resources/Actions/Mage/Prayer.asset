@@ -16,6 +16,7 @@ MonoBehaviour:
   description: Heal the party.
   mpCost: 0
   potency: 0.35
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -27,4 +28,5 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
-  sfxName: 
+  particleFx: {fileID: 0}
+  sfxName: spell_00

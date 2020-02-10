@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
-  m_Name: Redoublement
+  m_Name: Overload
   m_EditorClassIdentifier: 
-  name: Redoublement
-  description: Strikes 4 times.
-  mpCost: 30
-  potency: 0.75
+  name: Overload
+  description: Deals heavy damage, increased by each remaining point of Mana.
+  mpCost: 50
+  potency: 2.5
   drainPotency: 0
-  hits: 4
+  hits: 1
   delay: 1
   splitDamage: 0
   removesArmor: 1
-  sprite: {fileID: 21300000, guid: 04e32c06757be414fbbcdc73b672afb6, type: 3}
+  sprite: {fileID: 21300000, guid: 357761fe289dfc84b9be2eaf9be6d0e8, type: 3}
   targetType: 6
-  damageType: 0
+  damageType: 1
   powerType: 0
   additionalActions: []
   buffs: []

@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Bat
   description: A small bat with low martial defense and deals high ether damage.
-  hpMax: 8000
+  hpMax: 80
   armorMax: 20
   mp: 50
   mpRegen: 10
-  attack: 1000
-  willpower: 1000
+  attack: 10
+  willpower: 20
   speed: 5
   crit: 15
-  surge: 1000
+  surge: 15
+  staggerDelayAmount: 1
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0
