@@ -59,11 +59,13 @@ public class AudioManager : MonoBehaviour {
     } else if (name == "knife-stab-a1") {
       sfxs[14].Play();
     } else if (name == "pulling-out-knife-a1") {
-      sfxs[14].Play();
-    } else if (name == "knife-stab-a5") {
-      sfxs[14].Play();
-    } else if (name == "win1") {
       sfxs[15].Play();
+    } else if (name == "knife-stab-a5") {
+      sfxs[16].Play();
+    } else if (name == "win1") {
+      sfxs[17].Play();
+    } else if (name == "spell_weird") {
+      sfxs[18].Play();
     } else {
       // Debug.LogError("SFX named '" + name + "' does not exist!");
     }

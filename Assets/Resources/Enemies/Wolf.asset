@@ -18,9 +18,9 @@ MonoBehaviour:
   armorMax: 30
   mp: 30
   mpRegen: 10
-  attack: 18
-  willpower: 14
-  speed: 5
+  attack: 22
+  willpower: 25
+  speed: 14
   crit: 25
   surge: 25
   staggerDelayAmount: 1

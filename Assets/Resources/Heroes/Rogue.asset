@@ -20,7 +20,7 @@ MonoBehaviour:
   mpRegen: 10
   attack: 25
   willpower: 15
-  speed: 30
+  speed: 15
   crit: 25
   surge: 25
   staggerDelayAmount: 1

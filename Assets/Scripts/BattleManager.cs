@@ -44,6 +44,10 @@ public class BattleManager : MonoBehaviour {
   public Action currentAction;
 
   [Header("Colors & Icons")]
+  public Texture2D cursorTexture;
+  public Texture2D targetTexture;
+  public Vector2 hotSpot = Vector2.zero;
+  public CursorMode cursorMode = CursorMode.Auto;
   public Sprite heart;
   public Sprite crystal, shieldSprite;
   public Color orange, purple, yellow, gray, black, blue, green;
@@ -475,7 +479,7 @@ public class BattleManager : MonoBehaviour {
 
   private void SlideHeroMenus(Hero hero, bool positive) {
     if (positive) { ShowHeroMenus(hero); }
-    var endPos = actionMenu.transform.position + new Vector3(0f, (positive ? 2.8f : -2.8f), 0f);
+    var endPos = actionMenu.transform.position + new Vector3(0f, (positive ? 1.8f : -1.8f), 0f);
     Debug.Log(endPos);
     var startSize = shiftMenu.GetComponent<RectTransform>().sizeDelta;
     var endSize = (positive ? new Vector2(1900f, startSize.y) : shiftMenu.initialSize);
@@ -622,8 +626,9 @@ public class BattleManager : MonoBehaviour {
 
   public void CountdownTicks() {
     while(true) {
-      var nextTickDown = combatants.Where(c => !c.isDead).OrderBy(c => c.ticks).First().ticks;
-      foreach(var combatant in combatants) {
+      var livingCombatants = combatants.Where(c => !c.isDead);
+      var nextTickDown = livingCombatants.OrderBy(c => c.ticks).First().ticks;
+      foreach(var combatant in livingCombatants) {
         // Debug.Log(combatant.name + ": " + combatant.ticks.ToString("#.###") + " - nextTickDown: " + nextTickDown.ToString("#.###"));
         combatant.ticks -= nextTickDown;
         if (combatant.ticks <= 0) {
@@ -631,7 +636,7 @@ public class BattleManager : MonoBehaviour {
           currentPanel = combatant;
         }
       }
-      Debug.Log("Current combatant: " + currentPanel.name + " ticks: " + currentPanel.ticks);
+      // Debug.Log("Current combatant: " + currentPanel.name + " ticks: " + currentPanel.ticks);
       battleWaiting = true;
       return;
     }
@@ -690,11 +695,15 @@ public class BattleManager : MonoBehaviour {
       currentAction = action;
       Debug.Log("Current action: " + currentAction.name);
 
-      if (action.targetType == TargetTypes.AllEnemies || action.targetType == TargetTypes.OneEnemy || action.targetType == TargetTypes.RandomEnemies) {
+      if (action.targetType == TargetTypes.Self || action.targetType == TargetTypes.AllEnemies || action.targetType == TargetTypes.RandomEnemies || action.targetType == TargetTypes.WholeParty) {
+        ClearAllTargetting();
+        ResetActions();
+        HeroAction(action);
+      }
+
+      if (action.targetType == TargetTypes.OneEnemy) {
         ShowEnemyTargetting();
-      } else if (action.targetType == TargetTypes.Self) {
-        ShowSelfTargetting();
-      } else if (action.targetType == TargetTypes.SelfOrAnAlly || action.targetType == TargetTypes.WholeParty) {
+      } else if (action.targetType == TargetTypes.SelfOrAnAlly) {
         ShowAllyTargetting();
       } else if (action.targetType == TargetTypes.OnlyAnAlly) {
         ShowAllyOnlyTargetting();
@@ -821,7 +830,8 @@ public class BattleManager : MonoBehaviour {
   public void HandleShiftAction() {
     var hero = currentPanel.unit as Hero;
     var action = hero.currentJob.shiftAction;
-    shiftMenu.shiftActionTooltipButton.GetComponent<Image>().color = yellow;
+    shiftMenu.shiftActionTooltipButton.interactable = true;
+    Cursor.SetCursor(targetTexture, hotSpot, cursorMode);
     Tooltip.ShowTooltip(hero.currentJob.shiftAction.name, "Shift Action".ToUpper(), "NA", hero.currentJob.shiftAction.description);
     currentAction = action;
     targetingShiftAction = true;
@@ -954,8 +964,8 @@ public class BattleManager : MonoBehaviour {
       StartCoroutine(DoDelay());
       NextTurn();
     } else {
-      shiftMenu.shiftActionTooltipButton.GetComponent<Image>().color = black;
-      // shiftMenu.traitTooltipButton.GetComponent<Image>().color = black;
+      shiftMenu.shiftActionTooltipButton.interactable = false;
+      Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
     }
   }
 
@@ -1110,7 +1120,7 @@ public class BattleManager : MonoBehaviour {
 
     if (action.damageType != DamageTypes.EffectOnly) {
       message = amount.ToString("N0");
-      if (amount > 0) {
+      if (amount > 0 || action.damageType == DamageTypes.HealthGain) {
         Instantiate(damagePrefab, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, color, isCrit, true);
       }
     }

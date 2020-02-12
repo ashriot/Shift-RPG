@@ -7,6 +7,6 @@ public class ActionMenu : MonoBehaviour {
   public Vector3 initialPos;
 
   private void Start() {
-    initialPos = transform.position;
+    // initialPos = transform.position;
   }
 }

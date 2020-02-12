@@ -12,7 +12,7 @@ public class ShiftMenu : MonoBehaviour {
   public Vector2 initialSize;
 
   private void Start() {
-    initialSize = GetComponent<RectTransform>().sizeDelta;
+    // initialSize = GetComponent<RectTransform>().sizeDelta;
   }
 
   public void Click(int buttonId) {

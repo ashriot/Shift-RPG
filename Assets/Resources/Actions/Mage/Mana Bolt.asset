@@ -30,4 +30,4 @@ MonoBehaviour:
   debuffs: []
   particleFx: {fileID: 123893256353781745, guid: 45d3847456f65ca428ecf92954b803d9,
     type: 3}
-  sfxName: 
+  sfxName: spell_weird
