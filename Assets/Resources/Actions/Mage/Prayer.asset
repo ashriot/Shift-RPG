@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Prayer
   description: Heal the party.
   mpCost: 0
-  potency: 0.35
+  potency: 0.5
   drainPotency: 0
   hits: 1
   delay: 1

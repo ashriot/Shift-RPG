@@ -16,6 +16,7 @@ public class StatusEffect : ScriptableObject {
   public string actionNameToTrigger;
   public Action actionToTrigger;
   public bool removable = true;
+  public bool readyToFade = false;
 }
 
 public enum StatusEffectTypes {

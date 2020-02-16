@@ -23,6 +23,7 @@ MonoBehaviour:
   speed: 12
   crit: 20
   surge: 10
+  mpModifier: 0
   staggerDelayAmount: 2
   hpCurrent: 0
   armorCurrent: 0

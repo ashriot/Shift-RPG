@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Illusionary Thorns
   m_EditorClassIdentifier: 
   name: Illusionary Thorns
-  description: 'Enemy gains debuff: During next attack, take [100% PSY] piercing
-    damage plus an additional [50%] piercing damage for each hit.'
+  description: '[NYI]'
   mpCost: 10
   potency: 0
   drainPotency: 0

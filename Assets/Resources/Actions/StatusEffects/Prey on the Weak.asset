@@ -10,17 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
-  m_Name: Resonance
+  m_Name: Prey on the Weak
   m_EditorClassIdentifier: 
-  effectName: Resonance
-  description: Party gains 1/2 Mana each time they hit an enemy.
+  effectName: Prey on the Weak
+  description: Increases the party's crit chance by 5% per debuff on the target.
   duration: 0
+  speedMod: 0
   fadesOnCasterTrigger: 0
-  sprite: {fileID: 21300000, guid: 3ec60ac065709764fa6572adca3c9072, type: 3}
+  sprite: {fileID: 21300000, guid: 4ffb4f91923a9964e9c78199297434ec, type: 3}
   statusEffectType: 0
   targetType: 0
-  activationTrigger: 5
-  fadeTrigger: 10
+  activationTrigger: 10
+  fadeTrigger: 7
   actionNameToTrigger: 
   actionToTrigger: {fileID: 0}
   removable: 0
+  readyToFade: 0

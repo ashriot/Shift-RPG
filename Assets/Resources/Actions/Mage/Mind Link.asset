@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Mind Link
   m_EditorClassIdentifier: 
   name: Mind Link
-  description: 'Ally gains buff: Heal for an amount equal to half the damage the
-    Illusionist deals.'
+  description: '[NYI]'
   mpCost: 0
   potency: 0.5
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -25,8 +25,9 @@ MonoBehaviour:
   targetType: 1
   damageType: 6
   powerType: 2
-  additionalDamage: []
+  additionalActions: []
   buffs:
   - {fileID: 11400000, guid: 14b78d2d4db947246be6768d37193d2e, type: 2}
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

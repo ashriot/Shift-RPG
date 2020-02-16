@@ -16,6 +16,7 @@ public class Panel : MonoBehaviour {
   public Image[] crystals, crystalFills;
   public ShieldIcon[] shields;
   public StaggerIcon staggerIcon;
+  public PulsingText exposedText;
 
   public GameObject hud;
   public StatusEffectPanel buffs, debuffs;
@@ -23,13 +24,13 @@ public class Panel : MonoBehaviour {
   public List<StatusEffectDisplay> buffsOnOthers = new List<StatusEffectDisplay>();
   public List<StatusEffectDisplay> debuffsOnOthers = new List<StatusEffectDisplay>();
 
-  public float moveLifetime, fadeLifetime;
+  public float moveLifetime, fadeLifetime, flashLifetime;
   public float initialSpeed;
   public Text notificationText;
 
   public new string name { get { return unit.name; } }
   public bool updateHpBar, isStunned, isTaunting;
-  public bool isStaggered { get { return remainingStaggeredTurns > 0; } }
+  public bool isExposed { get { return remainingStaggeredTurns > 0; } }
   public int remainingStaggeredTurns;
   public int staggerDelayAmount { get { return unit.staggerDelayAmount; } }
   public bool isDead { get { return unit.isDead; } }
@@ -38,15 +39,18 @@ public class Panel : MonoBehaviour {
   public float damageDealtPercentMod, damageTakenPercentMod, speedMod;
   public int damageDealtFlatMod;
 
+  public Color red, gray;
+  public Sprite shield, brokenShield;
+
   private Vector3 movePosition;
   private Vector3 initialPos;
 
   private bool isMoving, isFading;
 
-  private float intensity, speed, timer;
+  private float intensity, speed, timer, alpha, exposedTimer;
   private Color fade;
 
-  private void Update() {
+  void Update() {
     if (isMoving) {
       if (timer >= moveLifetime) {
         isMoving = false;
@@ -64,6 +68,48 @@ public class Panel : MonoBehaviour {
           buffs.gameObject.SetActive(false);
           debuffs.gameObject.SetActive(false);
       }
+    }
+  }
+
+  public virtual void Setup() {
+    unit.hpCurrent = unit.hpMax;
+    unit.armorCurrent = unit.armorMax;
+    unit.mpCurrent = unit.mp;
+    hpFillImage.fillAmount = unit.hpPercent;
+    UpdateCrystalsAndShields();
+  }
+
+  public void UpdateCrystalsAndShields() {
+    var mpCrystals = Mathf.CeilToInt(unit.mpCurrent / 10f);
+    for (var m = 0; m < crystals.Length; m++) {
+      if (m >= mpCrystals) {
+        crystals[m].gameObject.SetActive(false);
+        continue;
+      }
+      if (m == (mpCrystals - 1) && (float)(unit.mpCurrent % 10) > 0)
+        crystalFills[m].fillAmount = (float)(unit.mpCurrent % 10) / 10f;
+      crystals[m].gameObject.SetActive(true);
+    }
+    var shieldColor = gray;
+    var shieldIcon = shield;
+    if (isExposed) {
+      shieldColor = red;
+      shieldIcon = brokenShield;
+      exposedText.gameObject.SetActive(true);
+      exposedText.Pulse(BattleManager.instance.battleSpeed * 0.33f);
+      unit.armorCurrent = unit.armorMax;
+    } else {
+      exposedText.gameObject.SetActive(false);
+    }
+    var armorShields = unit.armorCurrent / 10;
+    for (var m = 0; m < shields.Length; m++) {
+      if (m >= armorShields) {
+        shields[m].gameObject.SetActive(false);
+        continue;
+      }
+      shields[m].gameObject.SetActive(true);
+      shields[m].shieldIcon.color = shieldColor;
+      shields[m].shieldIcon.sprite = shieldIcon;
     }
   }
 

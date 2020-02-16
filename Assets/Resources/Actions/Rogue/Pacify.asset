@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Pacify
   m_EditorClassIdentifier: 
   name: Pacify
-  description: 'Enemy gains debuff: Next attack deals up to [50% PSY] less damage
-    and cannot crit.'
+  description: NYI
   mpCost: 20
   potency: 0
+  drainPotency: 0
   hits: 0
   delay: 1
   splitDamage: 0
@@ -25,7 +25,8 @@ MonoBehaviour:
   targetType: 6
   damageType: 6
   powerType: 1
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

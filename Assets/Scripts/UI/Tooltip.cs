@@ -30,8 +30,7 @@ public class Tooltip : MonoBehaviour {
     objectWidth = instance.GetComponent<RectTransform>().sizeDelta.x;
     objectHeight = instance.GetComponent<RectTransform>().sizeDelta.y;
     var pt = Input.mousePosition - new Vector3(1900f/2f, 1000f/2f);
-    pt.x = Mathf.Clamp(pt.x, -1920f, Screen.width - (objectWidth * 1.5f + 10f) / 2);
-    // Debug.Log(Screen.width - (objectWidth * 1.5f + 10f) / 2);
+    pt.x = Mathf.Clamp(pt.x, -1920f, (Screen.width - (objectWidth * 2f + 10f)) / 2);
     pt.y = Mathf.Clamp(pt.y, -1080f,  Screen.height - (objectHeight * 1.5f + 10) / 2);
     transform.localPosition = pt;
   }

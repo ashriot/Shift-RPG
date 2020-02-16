@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Deathblow
   m_EditorClassIdentifier: 
   name: Deathblow
-  description: Enemy takes [350%] martial damage. If they are Marked, the Mark fades
-    and they are Stunned and delayed.
+  description: Enemy takes [350%] martial damage.
   mpCost: 50
   potency: 3
   drainPotency: 0

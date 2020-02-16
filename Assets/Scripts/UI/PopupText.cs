@@ -19,6 +19,8 @@ public class PopupText : MonoBehaviour {
       fade = text.color;
       fade.a = fade.a /1.1f;
       text.color = fade;
+      if (icon != null)
+        icon.color = fade;
 
       if(fade.a <=.1) {
         Destroy (gameObject);

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Mind Wrack
   m_EditorClassIdentifier: 
   name: Mind Wrack
-  description: 'Enemy gains debuff: Cannot spend or gain Mana. At the end of your
-    next turn, take [150% PSY] piercing damage.'
+  description: '[NYI]'
   mpCost: 20
   potency: 0
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -25,8 +25,9 @@ MonoBehaviour:
   targetType: 6
   damageType: 6
   powerType: 0
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs:
   - {fileID: 0}
+  particleFx: {fileID: 0}
   sfxName: 

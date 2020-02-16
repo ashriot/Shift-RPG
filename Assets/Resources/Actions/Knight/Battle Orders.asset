@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
-  m_Name: MageArmor
+  m_Name: Battle Orders
   m_EditorClassIdentifier: 
-  name: Mage Armor
-  description: 'Self or Ally gains up to 3 Armor and Buff: Next attack received deals
-    [30% PSY] less damage and reflects the damage back to the attacker.'
-  mpCost: 10
-  potency: 30
+  name: Battle Orders
+  description: Gives an ally 1 Mana and boosts their next turn by 30%.
+  mpCost: 0
+  potency: 10
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
-  removesArmor: 0
-  sprite: {fileID: 21300000, guid: 2dca1317511e2264aa0cc5fe770e48ed, type: 3}
-  targetType: 3
-  damageType: 3
-  powerType: 0
-  additionalDamage: []
+  removesArmor: 1
+  sprite: {fileID: 21300000, guid: dfa44a44af9d66844a26ac55161cb4c9, type: 3}
+  targetType: 1
+  damageType: 4
+  powerType: 2
+  additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

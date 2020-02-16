@@ -5,25 +5,31 @@ using UnityEngine.UI;
 [System.Serializable]
 public class TooltipButton : Button {
 
-  // public Color normalColor, highlightedColor, pressedColor, disabledColor;
-
-  public string title, kind, cost, content;
-  public Job job = null;
   public bool showTooltip = true;
 
-  private float holdTime = .5f;
-  private float timePressStarted;
-  private bool isHeld = false;
-  private bool isHover = false;
-  private bool longPressTriggered = false;
+  string _title, _kind, _cost, _content;
+  Job _job = null;
+  float holdTime = .5f;
+  float timePressStarted;
+  bool isHeld = false;
+  bool isHover = false;
+  bool longPressTriggered = false;
+
+  public void SetupTooltip(string title, string kind, string cost, string content, Job job = null) {
+    _title = title;
+    _kind = kind;
+    _cost = cost;
+    _content = content;
+    _job = job;
+  }
 
 #if UNITY_STANDALONE
 
-  private void Update() {
+  void Update() {
     if ((isHeld || isHover) && !longPressTriggered) {
       if (Time.time - timePressStarted > holdTime) {
         if (isHover) {
-          Tooltip.ShowTooltip(title, kind, cost, content, job);
+          Tooltip.ShowTooltip(_title, _kind, _cost, _content, _job);
         } else {
           longPressTriggered = true;
           OnLongPress();
@@ -71,12 +77,12 @@ public class TooltipButton : Button {
     return;
   }
 
-  private void OnLongPress(){
+  void OnLongPress(){
     isHeld = true;
-    Tooltip.ShowTooltip(title, kind, cost, content, job);
+    Tooltip.ShowTooltip(_title, _kind, _cost, _content, _job);
   }
 
-  private void OnRelease() {
+  void OnRelease() {
     isHeld = false;
     Tooltip.HideTooltip();
   }
@@ -85,7 +91,7 @@ public class TooltipButton : Button {
 
   #if UNITY_IOS
 
-  private void Update() {
+  void Update() {
 
   }
 

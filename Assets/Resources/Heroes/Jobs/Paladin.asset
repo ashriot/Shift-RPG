@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Paladin
   m_EditorClassIdentifier: 
   name: Paladin
-  description: A holy warrior that specializes in protecting the party.
+  description: Specializes in protecting the party with some light healing.
   jobIcon: {fileID: 21300000, guid: 6c44655c910bf6d4790fd5e7c9639e45, type: 3}
   jobColor: {r: 0.83921576, g: 0.3372549, b: 0.4901961, a: 1}
   defense: 0.5
@@ -23,5 +23,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 876eef7e5eb326e428c0fdb8324698ad, type: 2}
   - {fileID: 11400000, guid: be77e35dc29181d41a6de6a0f98cb1af, type: 2}
   - {fileID: 11400000, guid: cd810059a9742a54e8dab58b131880f2, type: 2}
-  trait: {fileID: 11400000, guid: 29d45e50b7f3e9b4e9abecd7b44f3d7b, type: 2}
+  trait: {fileID: 11400000, guid: 85694d5821c528d488afbad252ca9549, type: 2}
   shiftAction: {fileID: 11400000, guid: 9d9ddb7f76db5fe4a9c26120cf435c7c, type: 2}

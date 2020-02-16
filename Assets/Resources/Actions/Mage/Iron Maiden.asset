@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Iron Maiden
   m_EditorClassIdentifier: 
   name: Iron Maiden
-  description: 'Enemy gains Debuff: Next time they would gain Armor, they instead
-    take [75% PSY] piercing damage per point of Armor.'
+  description: '[NYI]'
   mpCost: 0
   potency: 0
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -25,8 +25,9 @@ MonoBehaviour:
   targetType: 6
   damageType: 6
   powerType: 1
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs:
   - {fileID: 0}
+  particleFx: {fileID: 0}
   sfxName: 

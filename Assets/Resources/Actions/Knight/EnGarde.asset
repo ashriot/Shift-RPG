@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: EnGarde
   m_EditorClassIdentifier: 
   name: En garde!
-  description: Attract all single-target attacks. Canceled upon suffering Armor Break
-    or shifting.
+  description: '[NYI] Taunt'
   mpCost: 0
   potency: 0
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -25,8 +25,9 @@ MonoBehaviour:
   targetType: 0
   damageType: 6
   powerType: 0
-  additionalDamage: []
+  additionalActions: []
   buffs:
   - {fileID: 11400000, guid: b11c59eb07a551f41b25f8f00a1dbc40, type: 2}
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: sword-unsheathe

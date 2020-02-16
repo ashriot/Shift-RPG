@@ -10,23 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
-  m_Name: BattleOrders
+  m_Name: Mana Song
   m_EditorClassIdentifier: 
-  name: Battle Orders
-  description: Gives an ally 1 Mana and boosts their next turn by 30%.
+  name: Mana Song
+  description: 'Ally gains buff: Next Mana cost is halved.'
   mpCost: 0
-  potency: 10
+  potency: 0
   drainPotency: 0
-  hits: 1
+  hits: 0
   delay: 1
   splitDamage: 0
-  removesArmor: 1
-  sprite: {fileID: 21300000, guid: dfa44a44af9d66844a26ac55161cb4c9, type: 3}
+  removesArmor: 0
+  sprite: {fileID: 21300000, guid: a9b07f813bb26d244bff80176d3510ed, type: 3}
   targetType: 1
-  damageType: 4
-  powerType: 2
+  damageType: 6
+  powerType: 1
   additionalActions: []
-  buffs: []
+  buffs:
+  - {fileID: 11400000, guid: 12ca679bef02e984e8839c5895e1473e, type: 2}
   debuffs: []
   particleFx: {fileID: 0}
   sfxName: 

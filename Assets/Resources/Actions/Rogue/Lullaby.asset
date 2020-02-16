@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Lullaby
   m_EditorClassIdentifier: 
   name: Lullaby
-  description: 'Enemy''s turn is delayed by 50% and they gain debuff: Slowed by 50%
-    until their next turn.'
+  description: NYI
   mpCost: 30
   potency: 0
+  drainPotency: 0
   hits: 0
   delay: 1
   splitDamage: 0
@@ -25,7 +25,8 @@ MonoBehaviour:
   targetType: 6
   damageType: 6
   powerType: 1
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 
