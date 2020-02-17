@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class ActionMenu : MonoBehaviour {
 
@@ -9,11 +10,10 @@ public class ActionMenu : MonoBehaviour {
   public void DisplayActionMenu(Hero hero) {
     var mpModifier = (1 + hero.mpModifier);
     for (var i = 0; i < actionButtons.Length; i++) {
-      transform.position = initialPos;
       if (hero.currentJob.actions[i] != null) {
         actionButtons[i].tooltipButton.SetupTooltip(hero.currentJob.actions[i].name, "Battle Action".ToUpper(), hero.currentJob.actions[i].mpCost.ToString(), hero.currentJob.actions[i].description);
         actionButtons[i].gameObject.SetActive(true);
-        actionButtons[i].icon.sprite = hero.currentJob.actions[i].sprite;
+        actionButtons[i].icon.GetComponent<Image>().sprite = hero.currentJob.actions[i].sprite;
         actionButtons[i].fillColor.color = hero.currentJob.jobColor;
         if (hero.currentJob.actions[i].mpCost * mpModifier <= hero.mpCurrent) {
           actionButtons[i].tooltipButton.interactable = true;

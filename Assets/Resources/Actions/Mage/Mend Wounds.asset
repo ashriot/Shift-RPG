@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Mend Wounds
   description: Heal an ally, healing more depending on their missing Health.
   mpCost: 40
-  potency: 1.5
+  potency: 2
   drainPotency: 0
   hits: 1
   delay: 1
@@ -28,4 +28,5 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: spell_00

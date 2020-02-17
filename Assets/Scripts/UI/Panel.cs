@@ -30,7 +30,7 @@ public class Panel : MonoBehaviour {
 
   public new string name { get { return unit.name; } }
   public bool updateHpBar, isStunned, isTaunting;
-  public bool isExposed { get { return remainingStaggeredTurns > 0; } }
+  public bool exposed { get { return remainingStaggeredTurns > 0; } }
   public int remainingStaggeredTurns;
   public int staggerDelayAmount { get { return unit.staggerDelayAmount; } }
   public bool isDead { get { return unit.isDead; } }
@@ -92,11 +92,11 @@ public class Panel : MonoBehaviour {
     }
     var shieldColor = gray;
     var shieldIcon = shield;
-    if (isExposed) {
+    if (exposed) {
       shieldColor = red;
       shieldIcon = brokenShield;
       exposedText.gameObject.SetActive(true);
-      exposedText.Pulse(BattleManager.instance.battleSpeed * 0.33f);
+      exposedText.Pulse(BattleManager.instance.battleSpeed);
       unit.armorCurrent = unit.armorMax;
     } else {
       exposedText.gameObject.SetActive(false);

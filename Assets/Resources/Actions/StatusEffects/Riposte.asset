@@ -15,11 +15,14 @@ MonoBehaviour:
   effectName: Riposte
   description: Add damage to Counterattack.
   duration: 0
+  speedMod: 0
   fadesOnCasterTrigger: 0
   sprite: {fileID: 21300000, guid: 4c8fc5b792bccd44287499ff5d870051, type: 3}
   statusEffectType: 0
   targetType: 0
-  activationTrigger: 2
+  activationTrigger: 10
   fadeTrigger: 0
-  actionNameToTrigger: RiposteCounter
+  actionNameToTrigger: Counterattack
   actionToTrigger: {fileID: 0}
+  removable: 1
+  readyToFade: 1

@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Boosts an ally's next turn and increases the damage of their next
     attack by 50%.
   mpCost: 30
-  potency: 0
+  potency: 0.5
   drainPotency: 0
   hits: 1
   delay: 1

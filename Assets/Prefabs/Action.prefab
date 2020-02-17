@@ -453,6 +453,7 @@ GameObject:
   - component: {fileID: 5862932519120480916}
   - component: {fileID: 7269702459713877575}
   - component: {fileID: 6325132673520292069}
+  - component: {fileID: 3476194802577262229}
   m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
@@ -515,6 +516,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3476194802577262229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2596990756437924714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036aa0e2fe5d8894dad8d396f943be97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3463118405679588415
 GameObject:
   m_ObjectHideFlags: 0
@@ -1286,11 +1299,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  title: 
-  kind: 
-  cost: 
-  content: 
-  job: {fileID: 0}
   showTooltip: 1
 --- !u!1 &9025194693237312381
 GameObject:

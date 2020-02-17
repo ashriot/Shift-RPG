@@ -50,9 +50,16 @@ public class StatusEffectPanel : MonoBehaviour {
 
   void AddActionToEffect(StatusEffect effect) {
     if (effect.actionToTrigger == null) {
-      var action = Instantiate(Resources.Load<Action>($"Actions/{ parentPanel.name }/{ effect.actionNameToTrigger }"));
+      var actionNameToGet = effect.actionNameToTrigger == effect.name ? effect.actionNameToTrigger : effect.name;
+      var action = Instantiate(Resources.Load<Action>($"Actions/{ parentPanel.name }/{ actionNameToGet }"));
+      if (effect.actionNameToTrigger != effect.name) {
+        var parentAction = currentDisplays.Where(cd => cd.name == effect.actionNameToTrigger).FirstOrDefault();
+          if (parentAction != null) {
+            Debug.Log($"Adding { effect.name } to { parentAction.name }.");
+            parentAction.effect.actionToTrigger.additionalActions.Add(action);
+          }
+        }
       effect.actionToTrigger = action;
-      Debug.Log($"{ parentPanel.name } is adding { effect.actionToTrigger.name } to { effect.effectName }.");
     }
   }
 
@@ -67,9 +74,9 @@ public class StatusEffectPanel : MonoBehaviour {
   }
 
   void FadeEffects(TriggerTypes trigger) {
-    for (var i = 0; i < currentDisplays.Count; i++) {
-      if (currentDisplays[i].effect.fadeTrigger == trigger && currentDisplays[i].effect.readyToFade) {
-        Debug.Log($"Effect name: { currentDisplays[i].name } faded at { trigger.ToString() }.");
+    for (var i = currentDisplays.Count - 1; i >= 0; --i) {
+      if (currentDisplays[i].effect.fadeTrigger == trigger) {
+        Debug.Log($"Effect name: { currentDisplays[i].name } faded at { trigger.ToString() }. Total effects: { currentDisplays.Count }");
         EnqueueEntry(currentDisplays[i]);
       }
     }
@@ -87,7 +94,7 @@ public class StatusEffectPanel : MonoBehaviour {
 			entry.gameObject.SetActive(true);
 			return entry;
 		}
-    Debug.Log($"Creating new entry.");
+    // Debug.Log($"Creating new entry.");
 		var instance = Instantiate(effectPrefab);
 		instance.gameObject.transform.SetParent(transform, false);
 		return instance;

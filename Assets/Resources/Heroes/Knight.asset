@@ -15,14 +15,15 @@ MonoBehaviour:
   name: Knight
   description: 
   hpMax: 200
-  armorMax: 40
+  armorMax: 100
   mp: 20
   mpRegen: 10
   attack: 20
   willpower: 20
-  speed: 10
+  speed: 20
   crit: 15
-  surge: 10
+  critBonus: 0
+  mpModifier: 0
   staggerDelayAmount: 1
   hpCurrent: 0
   armorCurrent: 0

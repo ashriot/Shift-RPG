@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: Riposte
   m_EditorClassIdentifier: 
   name: Riposte
-  description: 'Deal [30% ATK] x 2 martial damage. Gain self-buff: Next Counterattack
-    deals an additional [30% ATK] martial damage per hit.'
+  description: Deal 30% BRV damage.
   mpCost: 10
-  potency: 0.5
+  potency: 0.3
   drainPotency: 0
   hits: 2
   delay: 1
@@ -30,5 +29,5 @@ MonoBehaviour:
   buffs:
   - {fileID: 11400000, guid: 024516af727adc54d91289bb05293f1c, type: 2}
   debuffs: []
-  particleFx: {fileID: 155692, guid: 77d6e8e3fa15a0b419d018e3e16931f6, type: 3}
+  particleFx: {fileID: 0}
   sfxName: trap_00
