@@ -666,7 +666,7 @@ public class BattleManager : MonoBehaviour {
       if (action.additionalActions.Count > 0) {
         foreach (var add in action.additionalActions) {
           yield return new WaitForSeconds(battleSpeed / 3f);
-          // Debug.Log("Additional damage " + add.name);
+          Debug.Log($"Additional damage from { add.name }.");
           if (add.targetType == TargetTypes.Self) {
             HeroHeal(add, actor);
           } else {
@@ -1048,7 +1048,7 @@ public class BattleManager : MonoBehaviour {
 
           if (action.additionalActions.Count > 0) {
             foreach (var add in action.additionalActions) {
-              yield return new WaitForSeconds(battleSpeed / 3f);
+              yield return new WaitForSeconds(battleSpeed / 2f);
               Debug.Log("Additional damage" + add.name);
               if (add.targetType == TargetTypes.Self) {
                 Debug.Log("Add self additional damage actions");
@@ -1139,10 +1139,9 @@ public class BattleManager : MonoBehaviour {
     var potency = action.potency;
 
     if (isCrit) {
-      damage += attacker.unit.surge;
+      damage += attacker.unit.critBonus;
     }
     
-    // TODO: Fix
     if (action.name == "Mana Bolt") {
       potency *= defender.unit.mpCurrent;
       Debug.Log("Mana Bolt potency: " + potency);
@@ -1247,22 +1246,6 @@ public class BattleManager : MonoBehaviour {
 
     panel.buffs.TriggerEffects(trigger);
     panel.debuffs.TriggerEffects(trigger);
-
-    // for (var i = 0; i < buffs.Count; i++) {
-    //   if (buffs[i].effect.activationTrigger == trigger && buffs[i].effect.actionToTrigger != null) {
-    //     StartCoroutine(DoHeroAction(buffs[i].effect.actionToTrigger, panel , currentPanel as EnemyPanel, false));
-    //   }
-    //   if (buffs[i].effect.fadeTrigger == trigger) {
-    //     RemoveEffect(panel, buffs[i].effect.name, buffs[i].effect.statusEffectType);
-    //   }
-    //   yield return new WaitForSeconds(battleSpeed * 0.5f);
-    // }
-
-    // for (var i = 0; i < debuffs.Count; i++) {
-    //   if (debuffs[i].effect.fadeTrigger == trigger) {
-    //     RemoveEffect(panel, debuffs[i].effect.name, debuffs[i].effect.statusEffectType);
-    //   }
-    // }
     
     for (var i = 0; i < debuffsOnOthers.Count; i++) {
       if (debuffsOnOthers[i].effect.fadeTrigger == trigger) {

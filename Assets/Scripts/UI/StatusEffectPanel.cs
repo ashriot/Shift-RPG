@@ -20,7 +20,10 @@ public class StatusEffectPanel : MonoBehaviour {
     currentDisplays.Add(display);
     if (effect.name == "War Cry" || effect.name == "Charge!") {
       parentPanel.damageDealtPercentMod += .5f;
-    } else if (effect.name == "Bee Sting") {
+    } else if (effect.name == "Riposte") {
+      var counterattack = currentDisplays.Where(cd => cd.name == "Counterattack").First().effect.actionToTrigger;
+      // counterattack.additionalActions.Add(effect);
+    }  else if (effect.name == "Bee Sting") {
       parentPanel.damageDealtPercentMod += .3f;
     }
   }
