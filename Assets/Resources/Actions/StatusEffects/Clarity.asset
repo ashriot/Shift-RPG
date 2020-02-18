@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
   m_Name: Clarity
   m_EditorClassIdentifier: 
-  effectName: Clarity
+  name: Clarity
   description: Gaining an additional 2 Mana per turn.
   duration: 0
+  speedMod: 0
   fadesOnCasterTrigger: 0
   sprite: {fileID: 21300000, guid: 4b53f636bd4c59f4cb0c55ad8f2609b2, type: 3}
   statusEffectType: 0
@@ -24,3 +25,4 @@ MonoBehaviour:
   actionNameToTrigger: Clarity
   actionToTrigger: {fileID: 0}
   removable: 1
+  readyToFade: 1

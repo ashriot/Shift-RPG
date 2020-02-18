@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
   m_Name: Mind Link
   m_EditorClassIdentifier: 
-  effectName: Mind Link
+  name: Mind Link
   description: Healing for half of the damage dealt by the Illusionist.
   duration: 0
+  speedMod: 0
   fadesOnCasterTrigger: 1
   sprite: {fileID: 21300000, guid: cb8b24bb5c100364fa0e31c3d45adfc4, type: 3}
   statusEffectType: 0
@@ -24,3 +25,4 @@ MonoBehaviour:
   actionNameToTrigger: 
   actionToTrigger: {fileID: 0}
   removable: 0
+  readyToFade: 0

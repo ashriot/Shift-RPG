@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
   m_Name: Hunters Mark
   m_EditorClassIdentifier: 
-  effectName: Hunter's Mark
+  name: Hunter's Mark
   description: Enemy is marked. Party's crit chance is increased by 15%
   duration: 0
+  speedMod: 0
   fadesOnCasterTrigger: 1
   sprite: {fileID: 21300000, guid: db27f64c1bcab8b42970c4d8527ba304, type: 3}
   statusEffectType: 1
@@ -24,3 +25,4 @@ MonoBehaviour:
   actionNameToTrigger: 
   actionToTrigger: {fileID: 0}
   removable: 1
+  readyToFade: 0

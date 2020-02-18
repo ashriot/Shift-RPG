@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
   m_Name: Take Aim
   m_EditorClassIdentifier: 
-  effectName: Take Aim
+  name: Take Aim
   description: Next martial attack instead deals piercing damage.
   duration: 0
+  speedMod: 0
   fadesOnCasterTrigger: 0
   sprite: {fileID: 21300000, guid: 3eb9fa479fb21ca4e8d96b2f25fdfb4b, type: 3}
   statusEffectType: 0
   targetType: 0
   activationTrigger: 5
   fadeTrigger: 10
+  actionNameToTrigger: 
+  actionToTrigger: {fileID: 0}
+  removable: 1
+  readyToFade: 0

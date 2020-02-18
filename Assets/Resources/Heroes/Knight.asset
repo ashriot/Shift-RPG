@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Knight
   description: 
-  hpMax: 200
-  armorMax: 100
+  hpMax: 250
+  armorMax: 40
   mp: 20
   mpRegen: 10
-  attack: 20
-  willpower: 20
-  speed: 20
+  attack: 25
+  willpower: 25
+  speed: 10
   crit: 15
-  critBonus: 0
+  critBonus: 20
   mpModifier: 0
   staggerDelayAmount: 1
   hpCurrent: 0

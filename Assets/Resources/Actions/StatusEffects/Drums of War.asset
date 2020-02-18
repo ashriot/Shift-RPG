@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
   m_Name: Drums of War
   m_EditorClassIdentifier: 
-  effectName: Drums of War
+  name: Drums of War
   description: Party's speed increased by 15%.
   duration: 0
   speedMod: 0.15
@@ -25,3 +25,4 @@ MonoBehaviour:
   actionNameToTrigger: 
   actionToTrigger: {fileID: 0}
   removable: 0
+  readyToFade: 0

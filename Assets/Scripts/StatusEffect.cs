@@ -3,7 +3,7 @@
 [CreateAssetMenu(fileName = "StatusEffect", menuName = "StatusEffect")]
 public class StatusEffect : ScriptableObject {
   
-  public string effectName;
+  public new string name;
   public string description;
   public int duration;
   public float speedMod;

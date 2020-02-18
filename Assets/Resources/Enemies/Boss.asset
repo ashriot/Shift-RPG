@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1974fda8240f4524b9767572e4692ff4, type: 3}
+  m_Name: Boss
+  m_EditorClassIdentifier: 
+  name: Black Knight
+  description: A powerful warrior
+  hpMax: 1200
+  armorMax: 70
+  mp: 50
+  mpRegen: 10
+  attack: 40
+  willpower: 45
+  speed: 25
+  crit: 25
+  critBonus: 30
+  mpModifier: 0
+  staggerDelayAmount: 1
+  hpCurrent: 0
+  armorCurrent: 0
+  mpCurrent: 0
+  defense: 0.9
+  resist: 0.7
+  breakBonus: 1.5
+  isPlayer: 0
+  sprite: {fileID: 21300000, guid: 95a5738d276d72048be9304a872b9fe2, type: 3}
+  actions:
+  - {fileID: 11400000, guid: 52f2b125cb2bf7a448bd612efb65b50b, type: 2}
+  - {fileID: 11400000, guid: 7bcd09069c07091419a99f39f967ce04, type: 2}
+  - {fileID: 11400000, guid: 507723cf65036a946a7a5e7ce2a3c293, type: 2}
+  - {fileID: 11400000, guid: a31dc81c817d99244a58e9a1228abee2, type: 2}

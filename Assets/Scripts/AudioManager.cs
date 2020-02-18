@@ -22,6 +22,12 @@ public class AudioManager : MonoBehaviour {
     Debug.Log("Playing BGM: " + name);
     if (name == "battle-conflict") {
       PlayBgmId(0);
+    } else if (name == "battle-beast") {
+      PlayBgmId(1);
+    } else if (name == "battle-chaos") {
+      PlayBgmId(2);
+    } else if (name == "battle-devil") {
+      PlayBgmId(3);
     } else {
       Debug.LogError("BGM named '" + name + "' does not exist!");
     }

@@ -29,7 +29,7 @@ public class Panel : MonoBehaviour {
   public Text notificationText;
 
   public new string name { get { return unit.name; } }
-  public bool updateHpBar, isStunned, isTaunting;
+  public bool updateHpBar, isStunned, taunting;
   public bool exposed { get { return remainingStaggeredTurns > 0; } }
   public int remainingStaggeredTurns;
   public int staggerDelayAmount { get { return unit.staggerDelayAmount; } }
@@ -40,7 +40,6 @@ public class Panel : MonoBehaviour {
   public int damageDealtFlatMod;
 
   public Color red, gray;
-  public Sprite shield, brokenShield;
 
   private Vector3 movePosition;
   private Vector3 initialPos;
@@ -91,10 +90,8 @@ public class Panel : MonoBehaviour {
       crystals[m].gameObject.SetActive(true);
     }
     var shieldColor = gray;
-    var shieldIcon = shield;
     if (exposed) {
       shieldColor = red;
-      shieldIcon = brokenShield;
       exposedText.gameObject.SetActive(true);
       exposedText.Pulse(BattleManager.instance.battleSpeed);
       unit.armorCurrent = unit.armorMax;
@@ -109,7 +106,6 @@ public class Panel : MonoBehaviour {
       }
       shields[m].gameObject.SetActive(true);
       shields[m].shieldIcon.color = shieldColor;
-      shields[m].shieldIcon.sprite = shieldIcon;
     }
   }
 

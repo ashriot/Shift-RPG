@@ -17,7 +17,7 @@ MonoBehaviour:
   jobIcon: {fileID: 21300000, guid: fadb10bcdb13ede4591a99f15a667345, type: 3}
   jobColor: {r: 0.172549, g: 0.6708397, b: 0.78431374, a: 1}
   defense: 0
-  resist: 0.5
+  resist: 0.75
   actions:
   - {fileID: 11400000, guid: 400ea5ced35903242a8686ab2893dafc, type: 2}
   - {fileID: 11400000, guid: 2726e11a623a59c4fb8a83d72714fb4e, type: 2}

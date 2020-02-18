@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Double Swipe
   description: 
-  mpCost: 0
-  potency: 0.65
+  mpCost: 10
+  potency: 1
   drainPotency: 0
   hits: 2
   delay: 1
@@ -28,4 +28,5 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: pulling-out-knife-a1

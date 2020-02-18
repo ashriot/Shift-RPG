@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
+  m_Name: Rebuke
+  m_EditorClassIdentifier: 
+  name: Rebuke
+  description: Deals Ether damage to an enemy and gives the party 1 Armor
+  mpCost: 0
+  potency: 0.3
+  drainPotency: 0
+  hits: 1
+  delay: 1
+  splitDamage: 0
+  removesArmor: 1
+  sprite: {fileID: 21300000, guid: ff2140a8e9e391d4fb775b2f3c194c82, type: 3}
+  targetType: 6
+  damageType: 1
+  powerType: 1
+  additionalActions:
+  - {fileID: 11400000, guid: 9a5a58957d792944cb6f1d4b5eea9343, type: 2}
+  buffs: []
+  debuffs: []
+  particleFx: {fileID: 0}
+  sfxName: spell_weird

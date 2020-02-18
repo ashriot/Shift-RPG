@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
   m_Name: Riposte
   m_EditorClassIdentifier: 
-  effectName: Riposte
+  name: Riposte
   description: Add damage to Counterattack.
   duration: 0
   speedMod: 0

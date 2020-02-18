@@ -25,6 +25,9 @@ public class StatusEffectPanel : MonoBehaviour {
       // counterattack.additionalActions.Add(effect);
     }  else if (effect.name == "Bee Sting") {
       parentPanel.damageDealtPercentMod += .3f;
+    } else if (effect.name == "En Garde!") {
+      Debug.Log("Adding taunting");
+      parentPanel.taunting = true;
     }
   }
 
@@ -37,6 +40,8 @@ public class StatusEffectPanel : MonoBehaviour {
             parentPanel.damageDealtPercentMod -= .5f;
         } else if (effectName == "Bee Sting") {
           parentPanel.damageDealtPercentMod -= .3f;
+        } else if (effectName == "En Garde!") {
+          parentPanel.taunting = false;
         }
         return;
       }

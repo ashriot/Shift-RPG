@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Rogue
   description: 
-  hpMax: 140
+  hpMax: 200
   armorMax: 30
   mp: 30
   mpRegen: 10
   attack: 25
-  willpower: 15
+  willpower: 20
   speed: 14
   crit: 25
-  surge: 25
+  critBonus: 30
+  mpModifier: 0
   staggerDelayAmount: 1
   hpCurrent: 0
   armorCurrent: 0

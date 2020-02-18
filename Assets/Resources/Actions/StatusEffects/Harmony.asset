@@ -12,27 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
   m_Name: Harmony
   m_EditorClassIdentifier: 
-  effectName: 'Harmony
-
-    StatusEffectPanel.AddEffect (StatusEffect effect) (at
-    <a href="Assets/Scripts/UI/StatusEffectPanel.cs" line="13">Assets/Scripts/UI/StatusEffectPanel.cs:13</a>)
-
-    BattleManager+<DoHandleTraits>d__92.MoveNext
-    () (at <a href="Assets/Scripts/BattleManager.cs" line="1546">Assets/Scripts/BattleManager.cs:1546</a>)
-
-    UnityEngine.SetupCoroutine.InvokeMoveNext
-    (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress)
-    (at <cd36d1610edb49099a63e42167ecf462>:0)
-
-    UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
-
-    BattleManager:InitializeBattle()
-    (at <a href="Assets/Scripts/BattleManager.cs" line="137">Assets/Scripts/BattleManager.cs:137</a>)
-
-    BattleManager:Start()
-    (at <a href="Assets/Scripts/BattleManager.cs" line="74">Assets/Scripts/BattleManager.cs:74</a>)
-
-'
+  name: Harmony
   description: Party gains 1/2 Mana each time they hit an enemy.
   duration: 0
   speedMod: 0

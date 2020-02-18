@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
   m_Name: Prey on the Weak
   m_EditorClassIdentifier: 
-  effectName: Prey on the Weak
+  name: Prey on the Weak
   description: Increases the party's crit chance by 5% per debuff on the target.
   duration: 0
   speedMod: 0

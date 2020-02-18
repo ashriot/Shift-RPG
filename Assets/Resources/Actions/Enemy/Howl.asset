@@ -16,6 +16,7 @@ MonoBehaviour:
   description: 
   mpCost: 20
   potency: 1.5
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 1
@@ -27,4 +28,5 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

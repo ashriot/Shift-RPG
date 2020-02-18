@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: War Cry
   m_EditorClassIdentifier: 
   name: War Cry
-  description: Your allies' next attack deals 50% increased damage.
+  description: Your allies' next attacks deal 50% increased damage.
   mpCost: 0
   potency: 0
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -24,8 +25,9 @@ MonoBehaviour:
   targetType: 2
   damageType: 6
   powerType: 0
-  additionalDamage: []
+  additionalActions: []
   buffs:
   - {fileID: 11400000, guid: d87d181e7630933438a58b517fa6d938, type: 2}
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

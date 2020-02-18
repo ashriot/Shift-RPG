@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a9d4fa8cd174547bb4487c93c63142, type: 3}
   m_Name: En Garde
   m_EditorClassIdentifier: 
-  effectName: En Garde!
+  name: En Garde!
   description: All enemies are targetting you.
   duration: 0
+  speedMod: 0
   fadesOnCasterTrigger: 0
   sprite: {fileID: 21300000, guid: 276dbd73eab659741b1fe7b15c3ab146, type: 3}
   statusEffectType: 0
   targetType: 0
   activationTrigger: 10
   fadeTrigger: 9
+  actionNameToTrigger: 
+  actionToTrigger: {fileID: 0}
+  removable: 1
+  readyToFade: 0

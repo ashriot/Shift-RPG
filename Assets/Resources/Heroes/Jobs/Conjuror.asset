@@ -16,10 +16,10 @@ MonoBehaviour:
   description: Heals and armors the party. Can gift Mana to allies.
   jobIcon: {fileID: 21300000, guid: 137d2d0c2cecee64480a58df85c51172, type: 3}
   jobColor: {r: 0.6452474, g: 0.8396923, b: 0.9433962, a: 1}
-  defense: 0.25
-  resist: 0.75
+  defense: 0.5
+  resist: 0.5
   actions:
-  - {fileID: 11400000, guid: ade793ad04d81c446819d680acbd9acf, type: 2}
+  - {fileID: 11400000, guid: 235dd581b84ad0d4aaad263625c49429, type: 2}
   - {fileID: 11400000, guid: 30f0ef5e9ca65a64ca1e89af7caf2712, type: 2}
   - {fileID: 11400000, guid: 7c5a00b8f80f78b43b5da61707c854ed, type: 2}
   - {fileID: 11400000, guid: 4facf644aa6715448852102393f7ab6c, type: 2}
