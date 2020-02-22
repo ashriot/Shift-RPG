@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
-  m_Name: DoubleSwipe
+  m_Name: Triple Strike
   m_EditorClassIdentifier: 
-  name: Double Swipe
+  name: Triple Strike
   description: 
-  mpCost: 10
-  potency: 1
+  mpCost: 20
+  potency: 0.25
   drainPotency: 0
-  hits: 2
+  hits: 3
   delay: 1
   splitDamage: 0
   removesArmor: 1
-  sprite: {fileID: 21300000, guid: a061a43686ac9fd41b141274812ec41a, type: 3}
+  sprite: {fileID: 21300000, guid: 90fc8221c26a98f46863405a01284f77, type: 3}
   targetType: 6
   damageType: 0
   powerType: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
   m_Name: Armor Up
   m_EditorClassIdentifier: 
-  name: Rebuke
+  name: 
   description: Gain 1 Armor
   mpCost: 0
   potency: 10

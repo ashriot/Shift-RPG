@@ -82,7 +82,7 @@ public class StatusEffectPanel : MonoBehaviour {
     for (var i = currentDisplays.Count - 1; i >= 0; --i) {
       if (currentDisplays[i].effect.fadeTrigger == trigger) {
         Debug.Log($"Effect name: { currentDisplays[i].name } faded at { trigger.ToString() }. Total effects: { currentDisplays.Count }");
-        EnqueueEntry(currentDisplays[i]);
+        RemoveEffect(currentDisplays[i].effect.name);
       }
     }
   }

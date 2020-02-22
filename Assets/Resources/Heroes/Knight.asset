@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Knight
   description: 
-  hpMax: 250
+  hpMax: 300
   armorMax: 40
   mp: 20
   mpRegen: 10

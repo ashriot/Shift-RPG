@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Potshot
   m_EditorClassIdentifier: 
   name: Potshot
-  description: Enemy takes [60% ATK] martial damage. Gain 2 Mana if the enemy is
-    Staggered.
+  description: Enemy takes some martial damage. Gain 2 Mana if the enemy is Staggered.
   mpCost: 0
   potency: 0.6
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -25,7 +25,8 @@ MonoBehaviour:
   targetType: 6
   damageType: 0
   powerType: 0
-  additionalAction: []
+  additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: swish_02

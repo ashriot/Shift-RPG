@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Black Knight
   description: A powerful warrior
-  hpMax: 1200
-  armorMax: 70
+  hpMax: 1500
+  armorMax: 120
   mp: 50
-  mpRegen: 10
-  attack: 40
-  willpower: 45
+  mpRegen: 15
+  attack: 35
+  willpower: 35
   speed: 25
   crit: 25
-  critBonus: 30
+  critBonus: 20
   mpModifier: 0
-  staggerDelayAmount: 1
+  staggerDelayAmount: 2
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0
@@ -37,4 +37,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 52f2b125cb2bf7a448bd612efb65b50b, type: 2}
   - {fileID: 11400000, guid: 7bcd09069c07091419a99f39f967ce04, type: 2}
   - {fileID: 11400000, guid: 507723cf65036a946a7a5e7ce2a3c293, type: 2}
+  - {fileID: 11400000, guid: a183f515cb6accd4bbc016ac95f550ff, type: 2}
   - {fileID: 11400000, guid: a31dc81c817d99244a58e9a1228abee2, type: 2}

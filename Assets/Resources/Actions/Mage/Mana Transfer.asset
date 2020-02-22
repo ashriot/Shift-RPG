@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mana Transfer
   m_EditorClassIdentifier: 
   name: Mana Transfer
-  description: Ally's next turn is boosted by 50% and they gain 4 Mana.
+  description: Your next turn is boosted by 50% and an ally gains 4 Mana.
   mpCost: 40
   potency: 40
   drainPotency: 0
@@ -28,4 +28,5 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: spell_00

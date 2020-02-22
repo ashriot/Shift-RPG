@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Flash of Steel
   m_EditorClassIdentifier: 
   name: Flash of Steel
-  description: Deal [100% ATK] martial damage split between all enemies.
+  description: Deal martial damage split between all enemies.
   mpCost: 0
   potency: 1
   drainPotency: 0
@@ -28,4 +28,5 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: trap_00

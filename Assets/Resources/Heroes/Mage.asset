@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Mage
   description: 
-  hpMax: 150
+  hpMax: 200
   armorMax: 20
   mp: 40
   mpRegen: 10

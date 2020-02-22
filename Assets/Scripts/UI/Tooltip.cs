@@ -27,12 +27,12 @@ public class Tooltip : MonoBehaviour {
   }
 
   private void LateUpdate() {
-    objectWidth = instance.GetComponent<RectTransform>().sizeDelta.x;
-    objectHeight = instance.GetComponent<RectTransform>().sizeDelta.y;
-    var pt = Input.mousePosition - new Vector3(1900f/2f, 1000f/2f);
-    pt.x = Mathf.Clamp(pt.x, -1920f, (Screen.width - (objectWidth * 2f + 10f)) / 2);
-    pt.y = Mathf.Clamp(pt.y, -1080f,  Screen.height - (objectHeight * 1.5f + 10) / 2);
-    transform.localPosition = pt;
+    // objectWidth = instance.GetComponent<RectTransform>().sizeDelta.x;
+    // objectHeight = instance.GetComponent<RectTransform>().sizeDelta.y;
+    // var pt = Input.mousePosition - new Vector3(1900f/2f, 1000f/2f);
+    // pt.x = Mathf.Clamp(pt.x, -1920f, (Screen.width - (objectWidth * 2f + 10f)) / 2);
+    // pt.y = Mathf.Clamp(pt.y, -1080f,  Screen.height - (objectHeight * 1.5f + 10) / 2);
+    // transform.localPosition = pt;
   }
 
   public static void ShowTooltip(string title, string kind, string cost, string content, Job job = null) {
@@ -62,12 +62,12 @@ public class Tooltip : MonoBehaviour {
       instance.shiftText.text = job.shiftAction.name;
     }
 
-    instance.objectWidth = instance.GetComponent<RectTransform>().sizeDelta.x;
-    instance.objectHeight = instance.GetComponent<RectTransform>().sizeDelta.y; 
-    var pt = Input.mousePosition;
-    pt.x = Mathf.Clamp(pt.x, 0f, Screen.width - (instance.objectWidth * 1.5f + 10f));
-    pt.y = Mathf.Clamp(pt.y, 0f, Screen.height - (instance.objectHeight * 1.5f + 10));
-    instance.transform.localPosition = pt;
+    // instance.objectWidth = instance.GetComponent<RectTransform>().sizeDelta.x;
+    // instance.objectHeight = instance.GetComponent<RectTransform>().sizeDelta.y; 
+    // var pt = Input.mousePosition;
+    // pt.x = Mathf.Clamp(pt.x, 0f, Screen.width - (instance.objectWidth * 1.5f + 10f));
+    // pt.y = Mathf.Clamp(pt.y, 0f, Screen.height - (instance.objectHeight * 1.5f + 10));
+    // instance.transform.localPosition = pt;
     instance.gameObject.SetActive(true);
   }
 

@@ -23,13 +23,17 @@ public class ActionMenu : MonoBehaviour {
         actionButtons[i].nameText.text = hero.currentJob.actions[i].name;
         actionButtons[i].mpCost = hero.currentJob.actions[i].mpCost;
         var crystals = Mathf.CeilToInt(actionButtons[i].mpCost * mpModifier / 10f);
+        var leftover = (int)(actionButtons[i].mpCost * mpModifier) % 10;
         for (var m = 0; m < actionButtons[i].crystals.Length; m++) {
           if (m >= crystals) {
             actionButtons[i].crystals[m].gameObject.SetActive(false);
             continue;
           }
-          if (m == (crystals - 1) && (float)(actionButtons[i].mpCost * mpModifier % 10) > 0)
+          if (m == (crystals - 1) && leftover > 0) {
             actionButtons[i].crystalFills[m].fillAmount = (float)(actionButtons[i].mpCost * mpModifier % 10) / 10f;
+          } else {
+            actionButtons[i].crystalFills[m].fillAmount = 1f;
+          }
           actionButtons[i].crystals[m].gameObject.SetActive(true);
         }
       }

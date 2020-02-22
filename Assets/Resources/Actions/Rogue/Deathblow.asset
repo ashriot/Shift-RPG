@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Deathblow
   m_EditorClassIdentifier: 
   name: Deathblow
-  description: Enemy takes [350%] martial damage.
+  description: Enemy takes massive martial damage.
   mpCost: 50
   potency: 3
   drainPotency: 0

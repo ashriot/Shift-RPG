@@ -21,8 +21,8 @@ MonoBehaviour:
   statusEffectType: 0
   targetType: 0
   activationTrigger: 5
-  fadeTrigger: 10
+  fadeTrigger: 6
   actionNameToTrigger: 
   actionToTrigger: {fileID: 0}
   removable: 1
-  readyToFade: 0
+  readyToFade: 1

@@ -80,13 +80,17 @@ public class Panel : MonoBehaviour {
 
   public void UpdateCrystalsAndShields() {
     var mpCrystals = Mathf.CeilToInt(unit.mpCurrent / 10f);
+    var leftover = (int)unit.mpCurrent % 10;
     for (var m = 0; m < crystals.Length; m++) {
       if (m >= mpCrystals) {
         crystals[m].gameObject.SetActive(false);
         continue;
       }
-      if (m == (mpCrystals - 1) && (float)(unit.mpCurrent % 10) > 0)
-        crystalFills[m].fillAmount = (float)(unit.mpCurrent % 10) / 10f;
+      if (m == (mpCrystals - 1) && leftover > 0) {
+        crystalFills[m].fillAmount = (float)leftover / 10f;
+      } else {
+        crystalFills[m].fillAmount = 1f;
+      }
       crystals[m].gameObject.SetActive(true);
     }
     var shieldColor = gray;

@@ -56,7 +56,7 @@ public class BattleManager : MonoBehaviour {
   void Awake() {
     instance = this;
     DontDestroyOnLoad(gameObject);
-
+    Screen.orientation = ScreenOrientation.Landscape;
     Screen.SetResolution(1920, 1080, true, 60);
   }
   void Start() {
@@ -465,6 +465,9 @@ public class BattleManager : MonoBehaviour {
         return;
       }
 
+      // Tooltip.ShowTooltip(action.name, "Battle Action".ToUpper(), action.mpCost.ToString(), action.description);
+      Debug.Log("Showing tooltip");
+
       Cursor.SetCursor(targetTexture, hotSpot, cursorMode);
 
       if (action.targetType == TargetTypes.OneEnemy) {
@@ -617,6 +620,7 @@ public class BattleManager : MonoBehaviour {
   }
 
   public void HeroAction(Action actionToExecute) {
+    Tooltip.HideTooltip();
     var action = Instantiate(actionToExecute);
     Debug.Log("Executing: " + action.name);
     var nextTurn = true;
@@ -646,6 +650,7 @@ public class BattleManager : MonoBehaviour {
     if (action.mpCost > 0 && manaSong != null) {
       Debug.Log($"{ manaSong.name } working");
       actor.unit.mpCurrent -= action.mpCost / 2;
+      actor.unit.mpModifier = 0f;
       actor.buffs.RemoveEffect(manaSong.name);
     } else {
       actor.unit.mpCurrent -= action.mpCost;
@@ -733,6 +738,11 @@ public class BattleManager : MonoBehaviour {
       }
     }
 
+    var takeAim = currentPanel.buffs.currentDisplays.Where(b => b.effect.name == "Take Aim").Select(b => b.effect).FirstOrDefault();
+    if (takeAim != null && takeAim.readyToFade) {
+      currentPanel.buffs.RemoveEffect("Take Aim");
+    }
+
     if (nextTurn) {
       currentPanel.ticks += CalculateSpeedTicks(currentPanel, (decimal)action.delay);
       if (actor.panelMoved) {
@@ -806,7 +816,7 @@ public class BattleManager : MonoBehaviour {
     if (action.damageType == DamageTypes.Martial) {
       var takeAim = currentPanel.buffs.currentDisplays.Where(b => b.effect.name == "Take Aim").Select(b => b.effect).FirstOrDefault();
       if (takeAim != null) {
-        currentPanel.buffs.RemoveEffect(takeAim.name);
+        takeAim.readyToFade = true;
       }
     }
     if (action.name == "Shatter") {
@@ -851,7 +861,7 @@ public class BattleManager : MonoBehaviour {
         } else {
           amount = action.potency;
         }
-        target.unit.armorCurrent = Mathf.Clamp(target.unit.armorCurrent + (int)amount, 0, 100);
+        target.unit.armorCurrent = Mathf.Clamp(target.unit.armorCurrent + (int)amount, 0, 200);
         amount /= 10;
       }
     } else if (action.damageType == DamageTypes.ManaGain) {
@@ -940,14 +950,10 @@ public class BattleManager : MonoBehaviour {
     if (isCrit) {
       message += "!";
     } if (defender.exposed || defender.unit.armorCurrent < 0) {
-      message += "!!";
+      color = orange;
     }
     
-    if (damageType == DamageTypes.Martial) {
-      color = orange;
-    } else if (damageType == DamageTypes.Ether) {
-      color = purple;
-    } else if (damageType == DamageTypes.Piercing) {
+    if (damageType == DamageTypes.Piercing) {
       color = yellow;
     } else if (damageType == DamageTypes.ArmorGain) {
       color = gray;
@@ -1119,11 +1125,16 @@ public class BattleManager : MonoBehaviour {
       isCrit = true;
     }
 
-    if (action.damageType == DamageTypes.Martial) {
+    var damage = CalculateDamage(attacker, defender, action, damageType, isCrit);
+    var message = damage.ToString("N0");
+
+    if (isCrit) {
+      message += "!";
+    } if (defender.exposed || defender.unit.armorCurrent < 0) {
       color = orange;
-    } else if (action.damageType == DamageTypes.Ether) {
-      color = purple;
-    } else if (action.damageType == DamageTypes.Piercing) {
+    }
+    
+    if (damageType == DamageTypes.Piercing) {
       color = yellow;
     } else if (damageType == DamageTypes.ArmorGain) {
       color = gray;
@@ -1134,24 +1145,22 @@ public class BattleManager : MonoBehaviour {
       sprite = crystal;
       isCrit = false;
     }
-
-    var damage = CalculateDamage(attacker, defender, action, damageType, isCrit);
     
     if (action.drainPotency > 0) {
       var drainAmount = (int)(damage * action.drainPotency);
       attacker.unit.hpCurrent = Mathf.Clamp(attacker.unit.hpCurrent + drainAmount, 0, attacker.unit.hpMax);
       Debug.Log("Draining " + drainAmount + " HP!");
       var enemyPosition = attacker.image.transform.position;
-      var message = drainAmount.ToString("N0");
+      var drainMessage = drainAmount.ToString("N0");
       Instantiate(damagePrefab, enemyPosition, attacker.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, green, false, true);
     }
 
     var panel = heroes.Where(hp => hp == defender).Single();
     var position = panel.gameObject.transform.position;
-    Instantiate(damagePrefab, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(damage.ToString("N0"), sprite, battleSpeed * 0.8f, color, isCrit, true);
+    Instantiate(damagePrefab, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, color, isCrit, true);
     ShakePanel(panel, SHAKE_INTENSITY);
 
-    if (!defender.exposed && damageType == DamageTypes.Martial) {
+    if (!defender.exposed && defender.unit.armorCurrent > 0) {
       StartCoroutine(DoHandleStatusEffects(defender, TriggerTypes.OnBeingHit));
     }
     UpdateUi();

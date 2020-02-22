@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Healing Sigil
   m_EditorClassIdentifier: 
   name: Healing Sigil
-  description: 'Enemy takes damage and gains debuff: Each hit from the party heals
-    the attacker.'
+  description: NYI
   mpCost: 20
   potency: 0.8
   drainPotency: 0
@@ -29,4 +28,5 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: spell_00

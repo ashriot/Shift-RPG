@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Petal Waltz
   m_EditorClassIdentifier: 
   name: Petal Waltz
-  description: Enemy takes [50% PSY] x3 ether damage and you are healed for half
-    the damage dealt.
+  description: Enemy is hit 3 times, dealing ether damage and you are healed for
+    half the damage dealt.
   mpCost: 30
   potency: 0.4
   drainPotency: 0.5
@@ -29,4 +29,5 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: 

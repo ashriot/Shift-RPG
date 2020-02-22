@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: En Garde
   m_EditorClassIdentifier: 
   name: En Garde!
-  description: '[NYI] Taunt'
+  description: Taunt all enemies until you Shift or are Exposed.
   mpCost: 0
   potency: 0
   drainPotency: 0

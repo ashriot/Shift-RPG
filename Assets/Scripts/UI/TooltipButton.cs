@@ -12,7 +12,7 @@ public class TooltipButton : Button {
   float holdTime = .5f;
   float timePressStarted;
   bool isHeld = false;
-  bool isHover = false;
+  bool hovering = false;
   bool longPressTriggered = false;
 
   public void SetupTooltip(string title, string kind, string cost, string content, Job job = null) {
@@ -23,17 +23,12 @@ public class TooltipButton : Button {
     _job = job;
   }
 
-#if UNITY_STANDALONE
+  #if UNITY_STANDALONE
 
   void Update() {
-    if ((isHeld || isHover) && !longPressTriggered) {
+    if (hovering) {
       if (Time.time - timePressStarted > holdTime) {
-        if (isHover) {
-          Tooltip.ShowTooltip(_title, _kind, _cost, _content, _job);
-        } else {
-          longPressTriggered = true;
-          OnLongPress();
-        }
+        ShowTooltip();
       }
     }
   }
@@ -41,35 +36,56 @@ public class TooltipButton : Button {
   public override void OnPointerEnter(PointerEventData eventData) {
     if (showTooltip) {
       timePressStarted = Time.time;
-      isHover = true;
-      isHeld = false;
+      hovering = true;
     }
     base.OnPointerEnter(eventData);
   }
 
   public override void OnPointerExit(PointerEventData eventData) {
-    isHeld = false;
-    isHover = false;
-    if (longPressTriggered) {
-      longPressTriggered = false;
-    }
+    hovering = false;
     OnRelease();
     base.OnPointerExit(eventData);
   }
 
+  public override void OnPointerUp(PointerEventData eventData) {
+    ShowTooltip();
+    hovering = false;
+    if (!interactable) return;
+    OnRelease();
+  }
+
+  #endif
+
+
+  #if !UNITY_STANDALONE
+
+  void Update() {
+    if ((isHeld) && !longPressTriggered) {
+      if (Time.time - timePressStarted > holdTime) {
+        longPressTriggered = true;
+        OnLongPress();
+      }
+    }
+  }
+
   public override void OnPointerDown(PointerEventData eventData) {
+    longPressTriggered = false;
     if (showTooltip) {
       timePressStarted = Time.time;
-      if (!isHover) { isHeld = true; }
+      isHeld = true;
     }
   }
 
   public override void OnPointerUp(PointerEventData eventData) {
+    if (longPressTriggered) {
+      Tooltip.HideTooltip();
+    }
     if (!interactable) return;
     if (!longPressTriggered) {
+      ShowTooltip();
       onClick.Invoke();
     }
-      OnRelease();
+    OnRelease();
     longPressTriggered = false;
   }
 
@@ -77,23 +93,20 @@ public class TooltipButton : Button {
     return;
   }
 
+  #endif
+
+  public void ShowTooltip() {
+    if (!string.IsNullOrEmpty(_title))
+      Tooltip.ShowTooltip(_title, _kind, _cost, _content, _job);
+  }
+
   void OnLongPress(){
     isHeld = true;
-    Tooltip.ShowTooltip(_title, _kind, _cost, _content, _job);
+    ShowTooltip();
   }
 
   void OnRelease() {
     isHeld = false;
-    Tooltip.HideTooltip();
+    // Tooltip.HideTooltip();
   }
-
-  #endif
-
-  #if UNITY_IOS
-
-  void Update() {
-
-  }
-
-  #endif
 }

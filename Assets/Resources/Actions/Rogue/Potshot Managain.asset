@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
   m_Name: Potshot Managain
   m_EditorClassIdentifier: 
-  name: Potshot Managain
+  name: 
   description: Gain 2 Mana
   mpCost: 0
   potency: 20

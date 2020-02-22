@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Counterattack
   m_EditorClassIdentifier: 
   name: Counterattack
-  description: Deal [30% ATK] piercing damage to attackers each time the Fencer is
-    hit with martial damage.
+  description: Deal piercing damage to attackers each time the Fencer is hit with
+    martial damage.
   mpCost: 0
   potency: 0.5
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -28,4 +29,5 @@ MonoBehaviour:
   additionalActions: []
   buffs: []
   debuffs: []
+  particleFx: {fileID: 0}
   sfxName: sword-unsheathe

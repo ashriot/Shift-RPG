@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Blade Dance
   m_EditorClassIdentifier: 
   name: Blade Dance
-  description: Random enemies take [50% ATK] x5 martial damage.
+  description: Make 5 attacks against random enemies.
   mpCost: 40
   potency: 0.5
   drainPotency: 0

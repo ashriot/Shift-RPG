@@ -14,9 +14,9 @@ public class Enemy : Unit {
   public string tooltipDescription {
     get {
       return description +
-        "\nHP: " + hpCurrent + "/" + hpMax + "\t\tARM: " + (armorMax / 10) + "\t\tATK: " + attack + "\t\tPSY: " + willpower +
-        "\nSPD: " + speed + "\t\tCRT: " + crit + "%" + "\t\tDEF: " + (defense * 100) + "%\t\tRES: " + (resist * 100) + "%" +
-        "\nActions: " + string.Join(", ", actions.Select(a => a.name));
+        "\t\tActions: " + string.Join(", ", actions.Select(a => a.name)) +
+        "\nHP: " + hpCurrent + "/" + hpMax + "\t\tARM: " + (armorMax / 10) + "\t\tBRV: " + attack + "\t\tFTH: " + willpower +
+        "\t\tSPD: " + speed + "\t\tCRT: " + crit + "%" + "\t\tDEF: " + (defense * 100) + "%\t\tRES: " + (resist * 100) + "%";
     }
   }
 }
