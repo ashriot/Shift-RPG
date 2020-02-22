@@ -48,7 +48,7 @@ public class BattleManager : MonoBehaviour {
   public CursorMode cursorMode = CursorMode.Auto;
   public Sprite heart;
   public Sprite crystal, shieldSprite;
-  public Color orange, purple, yellow, gray, black, blue, green;
+  public Color orange, purple, yellow, gray, black, blue, green, red;
 
   const float INITIATIVE_GROWTH = .05f;
   const float SHAKE_INTENSITY = 20f;
@@ -659,7 +659,7 @@ public class BattleManager : MonoBehaviour {
     UpdateUi(actor);
 
     var position = actor.gameObject.transform.position;
-    position.y += 0.3f;
+    position.y += 0.75f;
     Instantiate(popupPrefab, position, actor.gameObject.transform.rotation, canvas.transform).DisplayMessage(action.name, action.sprite, battleSpeed * .8f, Color.white, false);
     yield return new WaitForSeconds(battleSpeed / 2f);
 
@@ -832,7 +832,7 @@ public class BattleManager : MonoBehaviour {
     }
     var user = userPanel ?? currentPanel;
     var target = targetPanel ?? playerTarget;
-    var isCrit = false;
+    var criticalHit = false;
     var color = Color.white;
 
     var power = 0f;
@@ -913,7 +913,7 @@ public class BattleManager : MonoBehaviour {
     if (action.damageType != DamageTypes.EffectOnly) {
       message = amount.ToString("N0");
       if (amount > 0 || action.damageType == DamageTypes.HealthGain) {
-        Instantiate(damagePrefab, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, color, isCrit, true);
+        Instantiate(damagePrefab, position, panel.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, color, criticalHit, true);
       }
     }
     UpdateUi();
@@ -921,7 +921,7 @@ public class BattleManager : MonoBehaviour {
 
   public void HeroDealDamage(Action action, Panel defender, Panel hero = null) {
     var attacker = hero ?? currentPanel;
-    var isCrit = false;
+    var criticalHit = false;
     var color = Color.white;
     var damageType = action.damageType;
     var sprite = action.sprite;
@@ -941,28 +941,34 @@ public class BattleManager : MonoBehaviour {
     }
     var critRoll = Random.Range(1, 100);
     if (critRoll <= critChance) {
-      isCrit = true;
+      criticalHit = true;
     }
 
-    var damage = CalculateDamage(attacker, defender, action, damageType, isCrit);
+    var damage = CalculateDamage(attacker, defender, action, damageType, criticalHit);
     var message = damage.ToString();
 
-    if (isCrit) {
+    if (criticalHit) {
       message += "!";
-    } if (defender.exposed || defender.unit.armorCurrent < 0) {
-      color = orange;
     }
     
-    if (damageType == DamageTypes.Piercing) {
+    if (damageType == DamageTypes.Martial) {
+      color = orange;
+    } else if (damageType == DamageTypes.Ether) {
+      color = purple;
+    } else if (damageType == DamageTypes.Piercing) {
       color = yellow;
     } else if (damageType == DamageTypes.ArmorGain) {
       color = gray;
       sprite = shieldSprite;
     } 
+
+    if (defender.exposed || defender.unit.armorCurrent < 0) {
+      color = red;
+    }
     
     if (action.damageType != DamageTypes.EffectOnly) {
       var position = defender.image.transform.position;
-      Instantiate(damagePrefab, position, defender.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, color, isCrit, true);
+      Instantiate(damagePrefab, position, defender.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, color, criticalHit, true);
       ShakePanel(defender, SHAKE_INTENSITY);
     }
 
@@ -995,7 +1001,7 @@ public class BattleManager : MonoBehaviour {
     target.buffs.AddEffect(effect);
     var color = Color.white;
     var position = target.image.transform.position;
-    position.y += 0.3f;
+    position.y += 0.75f;
     if (displayMessage) {
       Instantiate(popupPrefab, position, target.gameObject.transform.rotation, canvas.transform).DisplayMessage(effect.name, effect.sprite, battleSpeed * 0.5f, color, false, true);
     }
@@ -1005,7 +1011,7 @@ public class BattleManager : MonoBehaviour {
     defender.debuffs.AddEffect(effect);
     var color = Color.white;
     var position = defender.image.transform.position;
-    position.y += 0.3f;
+    position.y += 0.75f;
     Instantiate(popupPrefab, position, defender.gameObject.transform.rotation, canvas.transform).DisplayMessage(effect.name, effect.sprite, battleSpeed * 0.5f, color, false, true);
     ShakePanel(defender, SHAKE_INTENSITY / 5f);
   }
@@ -1033,7 +1039,7 @@ public class BattleManager : MonoBehaviour {
 
   IEnumerator DoEnemyAction(Action action) {
     var popupText = Instantiate(popupPrefab, currentPanel.transform, false);
-    popupText.transform.position += new Vector3(0f, 0.3f, 0f);
+    popupText.transform.position += new Vector3(0f, 1f, 0f);
     popupText.DisplayMessage(action.name, action.sprite, battleSpeed * 0.8f, Color.white, false);
 
     currentPanel.unit.mpCurrent -= action.mpCost;
@@ -1130,11 +1136,13 @@ public class BattleManager : MonoBehaviour {
 
     if (isCrit) {
       message += "!";
-    } if (defender.exposed || defender.unit.armorCurrent < 0) {
-      color = orange;
     }
     
-    if (damageType == DamageTypes.Piercing) {
+    if (damageType == DamageTypes.Martial) {
+      color = orange;
+    } else if (damageType == DamageTypes.Ether) {
+      color = purple;
+    } else if (damageType == DamageTypes.Piercing) {
       color = yellow;
     } else if (damageType == DamageTypes.ArmorGain) {
       color = gray;
@@ -1145,6 +1153,10 @@ public class BattleManager : MonoBehaviour {
       sprite = crystal;
       isCrit = false;
     }
+
+    if (defender.exposed || defender.unit.armorCurrent < 0) {
+      color = red;
+    }
     
     if (action.drainPotency > 0) {
       var drainAmount = (int)(damage * action.drainPotency);
@@ -1152,7 +1164,7 @@ public class BattleManager : MonoBehaviour {
       Debug.Log("Draining " + drainAmount + " HP!");
       var enemyPosition = attacker.image.transform.position;
       var drainMessage = drainAmount.ToString("N0");
-      Instantiate(damagePrefab, enemyPosition, attacker.gameObject.transform.rotation, canvas.transform).DisplayMessage(message, sprite, battleSpeed * 0.8f, green, false, true);
+      Instantiate(damagePrefab, enemyPosition, attacker.gameObject.transform.rotation, canvas.transform).DisplayMessage(drainMessage, sprite, battleSpeed * 0.8f, green, false, true);
     }
 
     var panel = heroes.Where(hp => hp == defender).Single();

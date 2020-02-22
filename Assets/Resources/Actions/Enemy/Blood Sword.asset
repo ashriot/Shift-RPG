@@ -15,8 +15,8 @@ MonoBehaviour:
   name: Blood Sword
   description: 
   mpCost: 10
-  potency: 1.5
-  drainPotency: 0.25
+  potency: 2
+  drainPotency: 0.5
   hits: 1
   delay: 1
   splitDamage: 0

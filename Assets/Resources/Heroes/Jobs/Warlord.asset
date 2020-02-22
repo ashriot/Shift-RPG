@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Warlord
   description: A master tactician that focuses on bolstering his allies.
   jobIcon: {fileID: 21300000, guid: f72085a1279405f45b3655194607ad56, type: 3}
-  jobColor: {r: 0.83921576, g: 0.3372549, b: 0.3372549, a: 1}
+  jobColor: {r: 0.7735849, g: 0.37012365, b: 0.30286577, a: 1}
   defense: 0.25
   resist: 0.75
   actions:

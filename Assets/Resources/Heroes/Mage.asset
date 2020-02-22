@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Mage
   m_EditorClassIdentifier: 
   name: Mage
+  heroName: Jaina
   description: 
   hpMax: 200
   armorMax: 20

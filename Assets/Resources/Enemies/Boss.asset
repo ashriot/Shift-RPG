@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: Boss
   m_EditorClassIdentifier: 
   name: Black Knight
+  heroName: 
   description: A powerful warrior
   hpMax: 1500
   armorMax: 120
-  mp: 50
-  mpRegen: 15
+  mp: 20
+  mpRegen: 10
   attack: 35
   willpower: 35
-  speed: 25
+  speed: 28
   crit: 25
   critBonus: 20
   mpModifier: 0
@@ -28,8 +29,8 @@ MonoBehaviour:
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0
-  defense: 0.9
-  resist: 0.7
+  defense: 0.7
+  resist: 0.5
   breakBonus: 1.5
   isPlayer: 0
   sprite: {fileID: 21300000, guid: 95a5738d276d72048be9304a872b9fe2, type: 3}

@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Deathblow
   description: Enemy takes massive martial damage.
   mpCost: 50
-  potency: 3
+  potency: 5
   drainPotency: 0
   hits: 1
   delay: 1

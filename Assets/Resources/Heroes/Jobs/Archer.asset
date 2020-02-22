@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Archer
   description: Specializes in high damage. Use when an enemy is staggered.
   jobIcon: {fileID: 21300000, guid: 69cc77d7c5b3d55468a846aaface218c, type: 3}
-  jobColor: {r: 0.3449571, g: 0.8509804, b: 0.2745098, a: 1}
+  jobColor: {r: 0.49994212, g: 0.6886792, b: 0.4190548, a: 1}
   defense: 0.5
   resist: 0.25
   actions:

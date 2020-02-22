@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Fencer
   description: Specializes in taunting and counterattacking.
   jobIcon: {fileID: 21300000, guid: 0c503d50cf6db264aa28c5c8e123c1e1, type: 3}
-  jobColor: {r: 0.8962264, g: 0.46916127, b: 0.25787643, a: 1}
+  jobColor: {r: 0.8773585, g: 0.51593095, b: 0.33521718, a: 1}
   defense: 0.75
   resist: 0
   actions:

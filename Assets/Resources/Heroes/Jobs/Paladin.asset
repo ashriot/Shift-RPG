@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Paladin
   description: Specializes in protecting the party with some light healing.
   jobIcon: {fileID: 21300000, guid: 6c44655c910bf6d4790fd5e7c9639e45, type: 3}
-  jobColor: {r: 0.83921576, g: 0.3372549, b: 0.4901961, a: 1}
+  jobColor: {r: 0.8396226, g: 0.41585082, b: 0.48891494, a: 1}
   defense: 0.5
   resist: 0.5
   actions:

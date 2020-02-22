@@ -15,7 +15,7 @@ public class HeroPanel : Panel {
     unit.hpCurrent = unit.hpMax;
     unit.armorCurrent = unit.armorMax;
     unit.mpCurrent = unit.mp;
-    unitNameText.text = name;
+    unitNameText.text = unit.heroName;
     currentJobName.text = hero.currentJob.name.ToUpper();
     hpFillImage.fillAmount = unit.hpPercent;
     currentHp.text = unit.hpMax.ToString("N0");

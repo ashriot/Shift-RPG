@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Howl
   description: 
   mpCost: 20
-  potency: 1.5
+  potency: 2
   drainPotency: 0
   hits: 1
   delay: 1

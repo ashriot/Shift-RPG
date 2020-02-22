@@ -39,7 +39,7 @@ public class Panel : MonoBehaviour {
   public float damageDealtPercentMod, damageTakenPercentMod, speedMod;
   public int damageDealtFlatMod;
 
-  public Color red, gray;
+  public Color red, gray, gold;
 
   private Vector3 movePosition;
   private Vector3 initialPos;
@@ -103,10 +103,25 @@ public class Panel : MonoBehaviour {
       exposedText.gameObject.SetActive(false);
     }
     var armorShields = unit.armorCurrent / 10;
+    var secondShields = 0;
+    var thirdShields = 0;
+    if (armorShields > 10) {
+      secondShields = armorShields - 10;
+      armorShields = 10;
+      if (secondShields > 10) {
+        thirdShields = secondShields - 10;
+        secondShields = 10;
+      }
+    }
     for (var m = 0; m < shields.Length; m++) {
       if (m >= armorShields) {
         shields[m].gameObject.SetActive(false);
         continue;
+      }
+      if (!exposed && m < secondShields) {
+        shieldColor = gold;
+      } else if (!exposed) {
+        shieldColor = gray;
       }
       shields[m].gameObject.SetActive(true);
       shields[m].shieldIcon.color = shieldColor;

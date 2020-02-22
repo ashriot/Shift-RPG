@@ -3,6 +3,7 @@
 public abstract class Unit : ScriptableObject {
     
   public new string name;
+  public string heroName;
   public string description;
 
   public int hpMax, armorMax, mp, mpRegen, attack, willpower, speed, crit, critBonus;

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Knight
   m_EditorClassIdentifier: 
   name: Knight
+  heroName: Arthas
   description: 
   hpMax: 300
   armorMax: 40

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Triple Strike
   description: 
-  mpCost: 20
-  potency: 0.25
+  mpCost: 30
+  potency: 0.75
   drainPotency: 0
   hits: 3
   delay: 1

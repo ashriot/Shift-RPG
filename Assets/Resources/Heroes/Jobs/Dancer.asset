@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Dancer
   description: Execllent multi-hit class. Use to stagger enemies quickly.
   jobIcon: {fileID: 21300000, guid: 3ad141d3d911fec4393ea766bd3b40b7, type: 3}
-  jobColor: {r: 0.3333334, g: 0.8980392, b: 0.6908204, a: 1}
+  jobColor: {r: 0.39711642, g: 0.8679245, b: 0.6944689, a: 1}
   defense: 0.25
   resist: 0.25
   actions:
