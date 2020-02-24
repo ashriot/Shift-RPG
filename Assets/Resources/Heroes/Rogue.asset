@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rogue
   m_EditorClassIdentifier: 
   name: Rogue
-  heroName: Sylvanas
+  heroName: Bianca
   description: 
   hpMax: 250
   armorMax: 30

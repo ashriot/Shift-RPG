@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mage
   m_EditorClassIdentifier: 
   name: Mage
-  heroName: Jaina
+  heroName: Nera
   description: 
   hpMax: 200
   armorMax: 20

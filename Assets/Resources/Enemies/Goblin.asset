@@ -10,30 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1974fda8240f4524b9767572e4692ff4, type: 3}
-  m_Name: Tree
+  m_Name: Goblin
   m_EditorClassIdentifier: 
-  name: Tree
+  name: Goblin
   heroName: 
-  description: A tough animate treant with very high martial defense.
-  hpMax: 250
-  armorMax: 40
-  mp: 20
-  mpRegen: 10
-  attack: 25
+  description: A dumb goblin.
+  hpMax: 1
+  armorMax: 0
+  mp: 0
+  mpRegen: 0
+  attack: 5
   willpower: 5
-  speed: 8
-  crit: 10
+  speed: 1
+  crit: 0
   critBonus: 0
   mpModifier: 0
-  staggerDelayAmount: 2
+  staggerDelayAmount: 9
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0
-  defense: 0.75
+  defense: 0
   resist: 0
   breakBonus: 1
   isPlayer: 0
-  sprite: {fileID: 21300000, guid: af1a3d68a7907b144aeb454ed7113059, type: 3}
+  sprite: {fileID: 21300000, guid: 89839037d128e8f468334ebc479eba58, type: 3}
   actions:
-  - {fileID: 11400000, guid: 7bcd09069c07091419a99f39f967ce04, type: 2}
+  - {fileID: 11400000, guid: f7a21bb9ec225c2419c4b611436ae08c, type: 2}
   Xp: 100

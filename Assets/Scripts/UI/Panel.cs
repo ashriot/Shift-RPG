@@ -151,11 +151,11 @@ public class Panel : MonoBehaviour {
 
 public class PredictedPanel {
   
-  public decimal ticks;
-  public Panel panel;
+  public decimal ticksUntilTurn;
+  public Panel panelRef;
 
-  public PredictedPanel(decimal _ticks, ref Panel _panel) {
-    ticks = _ticks;
-    panel = _panel;
+  public PredictedPanel(decimal ticks, ref Panel panel) {
+    ticksUntilTurn = ticks;
+    panelRef = panel;
   }
 }

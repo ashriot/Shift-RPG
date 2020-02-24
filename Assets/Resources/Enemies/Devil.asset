@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Devil
   m_EditorClassIdentifier: 
   name: Devil
+  heroName: 
   description: An evil devil.
   hpMax: 300
   armorMax: 20
@@ -35,3 +36,4 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: ea312e353ef00b545a64ffb3040b8a7c, type: 3}
   actions:
   - {fileID: 11400000, guid: f7a21bb9ec225c2419c4b611436ae08c, type: 2}
+  Xp: 100

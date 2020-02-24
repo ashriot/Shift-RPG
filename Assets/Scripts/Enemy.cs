@@ -7,6 +7,7 @@ public class Enemy : Unit {
   
   public Sprite sprite;
   public List<Action> actions;
+  public int Xp;
 
   public override float Defense { get { return defense; } }
   public override float Resist { get { return resist; } }

@@ -13,6 +13,8 @@ public class BattleManager : MonoBehaviour {
   public ActionMenu actionMenu;
   public ShiftMenu shiftMenu;
   public Tooltip tooltip;
+  public TurnOrder turnOrderList;
+  public VictoryText victoryText;
 
   [Header("Prefabs")]
   public PopupText popupPrefab;
@@ -35,7 +37,7 @@ public class BattleManager : MonoBehaviour {
   public bool pausedForStagger;
   public bool pausedForTriggers;
   public List<Panel> combatants = new List<Panel>();
-  public List<PredictedPanel> potentialTurnOrder;
+  public List<PredictedPanel> potentialTurnOrder = new List<PredictedPanel>();
   public Panel currentPanel;
   public Panel playerTarget;
   public HeroPanel enemyTarget;
@@ -69,6 +71,8 @@ public class BattleManager : MonoBehaviour {
     shiftMenu.selectTarget.gameObject.SetActive(false);
     shiftMenu.gameObject.SetActive(false);
     Tooltip.HideTooltip();
+    victoryText.gameObject.SetActive(false);
+    turnOrderList.gameObject.SetActive(true);
     InitializeBattle();
   }
 
@@ -102,9 +106,9 @@ public class BattleManager : MonoBehaviour {
         panel.unit = Instantiate(enemyLoadList[i]);
         panel.gameObject.SetActive(true);
         panel.Setup();
-
       }
     }
+
     heroes = heroPanels.Where(p => p.gameObject.activeInHierarchy).ToList();
     enemies = enemyPanels.Where(p => p.gameObject.activeInHierarchy).ToList();
 
@@ -117,6 +121,8 @@ public class BattleManager : MonoBehaviour {
     foreach (var heroPanel in heroes) {
       StartCoroutine(DoHandleTraits(heroPanel));
     }
+    var endPos = turnOrderList.transform.position + new Vector3(2f, 0f, 0f);
+    StartCoroutine(DoMoveTo(turnOrderList.transform, turnOrderList.gameObject.transform.position, endPos, 0.25f));
     NextTurn();
   }
 
@@ -133,26 +139,20 @@ public class BattleManager : MonoBehaviour {
     }
     if (Input.GetKeyUp(KeyCode.Escape)) {
       Application.Quit();
-    } else if (Input.GetKeyUp(KeyCode.X)) {
-      heroes[0].unit.hpCurrent = (int)((float)heroes[0].unit.hpCurrent * 0.8f);
-      UpdateUi(heroes[0]);
     }
   }
 
   void SetInitialTicks() {
-      foreach (var c in combatants) {
-        var rand = (decimal)Random.Range(0.5f, 1.5f);
-        c.ticks = CalculateSpeedTicks(c, rand);
-      }
+    foreach (var c in combatants) {
+      var rand = (decimal)Random.Range(0.5f, 1.5f);
+      c.ticks = CalculateSpeedTicks(c, rand);
+    }
   }
 
   void FixedUpdate() {
     if (!battleActive || !battleWaiting || delaying || pausedForStagger || pausedForTriggers || choosingTarget) { return; }
 
     battleWaiting = false;
-
-    // VICTORY!
-    if (enemies.All(x => x.isDead)) return;
 
     if (currentPanel.buffs != null) {
       currentPanel.buffs.TriggerEffects(TriggerTypes.StartOfTurn);
@@ -194,6 +194,11 @@ public class BattleManager : MonoBehaviour {
       MovePanel(currentPanel, true);
       SlideActionMenus(hero, true);
       SlideShiftMenus(hero, true);
+    
+      if (enemies.All(e => e.isDead)) {
+        StartCoroutine(DoVictory());
+        return;
+      }
 
     } else {
       // ENEMY TURN
@@ -217,13 +222,30 @@ public class BattleManager : MonoBehaviour {
     playerTarget = null;
     actionMenu.gameObject.SetActive(false);
     shiftMenu.gameObject.SetActive(false);
-    // check for battle end
-    if (enemies.All(e => e.isDead)) {
-      Debug.Log("You win!");
-    }
-
+    UpdateUi();
     CountdownTicks();
-    // GetPotentialTurnOrder();
+    GetPotentialTurnOrder();
+    Debug.Log("Next turn starting now");
+  }
+
+  IEnumerator DoVictory() {
+    battleActive = false;
+    var endPos = turnOrderList.transform.position + new Vector3(-2f, 0f, 0f);
+    StartCoroutine(DoMoveTo(turnOrderList.transform, turnOrderList.gameObject.transform.position, endPos, 0.25f));
+    MovePanel(currentPanel, false);
+    SlideActionMenus(currentPanel.unit as Hero, false);
+    SlideShiftMenus(currentPanel.unit as Hero, false);
+    AudioManager.instance.FadeOutBgm(1f);
+    yield return new WaitForSeconds(1.25f);
+    AudioManager.instance.PlaySfx("win1");
+    victoryText.gameObject.SetActive(true);
+    victoryText.DisplayVictoryText("YOU WIN!", 1f);
+    yield return new WaitForEndOfFrame();
+    
+  }
+
+  void UpdateTurnOrder() {
+    turnOrderList.UpdateTurnOrder(potentialTurnOrder, potentialTurnOrder.Last().ticksUntilTurn);
   }
 
   void UpdateUi(Panel panel) {
@@ -238,6 +260,7 @@ public class BattleManager : MonoBehaviour {
       panel.ticks = CalculateSpeedTicks(panel, 1m);
       StartCoroutine(DoFlashImage(panel.image, orange));
       StartCoroutine(DoPauseForStagger());
+      GetPotentialTurnOrder();
     }
     panel.updateHpBar = true;
     panel.UpdateCrystalsAndShields();
@@ -266,6 +289,9 @@ public class BattleManager : MonoBehaviour {
       UpdateUi(enemies[i]);
     }
     enemies = enemies.Where(e => !e.isDead).ToList();
+    if (enemies.Count == 0) {
+      StartCoroutine(DoVictory());
+    }
   }
 
   void FadeEnemyOut(EnemyPanel enemy) {
@@ -360,29 +386,29 @@ public class BattleManager : MonoBehaviour {
     // Debug.Log(combatant.name + " ticks: " + combatant.ticks);
   }
 
-  // TODO: FIx this broken shit
-  // void GetPotentialTurnOrder() {
-  //   potentialTurnOrder = new List<PredictedPanel>();
-  //   foreach(var combatant in combatants.Where(c => !c.isDead).OrderBy(c => c.ticks)) {
-  //     var refCombatant = combatant;
-  //     var entry = new PredictedPanel(0m, ref refCombatant);
-  //     potentialTurnOrder.Add(entry);
-  //   }
-  //   while (potentialTurnOrder.Count < 10) {
-  //     var nextTickDown = potentialTurnOrder.OrderBy(c => c.ticks).First().ticks;
-  //     foreach(var pto in potentialTurnOrder) {
-  //       var refCombatant = pto.panel;
-  //       var predictedPanel = new PredictedPanel(CalculateSpeedTicks(refCombatant, 1m), ref refCombatant);
-  //       predictedPanel.ticks -= nextTickDown;
-  //       if (pto.ticks <= 0) {
-  //         potentialTurnOrder.Add(new PredictedPanel(0, ref refCombatant));
-  //         return;
-  //       } else {
-  //         pto.ticks -= nextTickDown;
-  //       }
-  //     }
-  //   }
-  // }
+  void GetPotentialTurnOrder() {
+    potentialTurnOrder.Clear();
+    var simulatedCombatants = new List<PredictedPanel>();
+    foreach(var combatant in combatants.Where(c => !c.isDead).OrderBy(c => c.ticks)) {
+      var refCombatant = combatant;
+      var entry = new PredictedPanel(refCombatant.ticks, ref refCombatant);
+      simulatedCombatants.Add(entry);
+      // Debug.Log($"{ entry.ticksUntilTurn.ToString("#.###") }: { entry.panelRef.name } added to simulation. Ticks per turn: { CalculateSpeedTicks(entry.panelRef, 1m).ToString("#.###") }");
+    }
+    while (potentialTurnOrder.Count < 8) {
+      var pto = simulatedCombatants.OrderBy(c => c.ticksUntilTurn).First();
+      var nextTickDown = pto.ticksUntilTurn;
+      var lastTicks = potentialTurnOrder.Count == 0 ? 0 : potentialTurnOrder.Last().ticksUntilTurn;
+      var entry = new PredictedPanel(lastTicks + nextTickDown, ref pto.panelRef);
+      foreach (var sim in simulatedCombatants) {
+        sim.ticksUntilTurn -= nextTickDown;
+      }
+      pto.ticksUntilTurn += CalculateSpeedTicks(pto.panelRef, 1m);
+      potentialTurnOrder.Add(entry);
+      // Debug.Log($"{ entry.ticksUntilTurn.ToString("#.###") }: { entry.panelRef.name }.");
+    }
+    UpdateTurnOrder();
+  }
 
   public void CountdownTicks() {
     while(true) {
@@ -669,6 +695,10 @@ public class BattleManager : MonoBehaviour {
 
     // Begin ACTION
     for (var h = 0; h < action.hits; h++) {
+      if (enemies.Count == 0) {
+        yield break;
+      }
+
       while (pausedForStagger || delaying) {
         yield return new WaitForEndOfFrame();
       }
@@ -861,7 +891,7 @@ public class BattleManager : MonoBehaviour {
         } else {
           amount = action.potency;
         }
-        target.unit.armorCurrent = Mathf.Clamp(target.unit.armorCurrent + (int)amount, 0, 200);
+        target.unit.armorCurrent = Mathf.Clamp(target.unit.armorCurrent + (int)amount, 0, 100);
         amount /= 10;
       }
     } else if (action.damageType == DamageTypes.ManaGain) {

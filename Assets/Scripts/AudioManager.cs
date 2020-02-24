@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class AudioManager : MonoBehaviour {
 
@@ -77,32 +78,41 @@ public class AudioManager : MonoBehaviour {
     }
   }
 
-    public void PlayBgmId(int id) {
-      if (!bgms[id].isPlaying) {
-        StopMusic();
-        if (id < bgms.Length) {
-          bgms[id].volume = 0.2f;
-          bgms[id].Play();
-        }
+  public void PlayBgmId(int id) {
+    if (!bgms[id].isPlaying) {
+      StopMusic();
+      if (id < bgms.Length) {
+        bgms[id].volume = 0.2f;
+        bgms[id].Play();
       }
     }
+  }
 
-    public void StopMusic() {
-        for (var i = 0; i < bgms.Length; i++) {
-            bgms[i].Stop();
-        }
+  public void FadeOutBgm(float duration) {
+    for (var i = 0; i < bgms.Length; i++) {
+      if (bgms[i].isPlaying) {
+        StartCoroutine(DoFadeOutBgm(bgms[i], duration));
+        return;
+      }
+    }
+  }
+
+  public void StopMusic() {
+    for (var i = 0; i < bgms.Length; i++) {
+      bgms[i].Stop();
+    }
+  }
+
+  public static IEnumerator DoFadeOutBgm (AudioSource audioSource, float duration) {
+    var startVolume = audioSource.volume;
+
+    while (audioSource.volume > 0) {
+        audioSource.volume -= startVolume * Time.deltaTime / duration;
+
+        yield return null;
     }
 
-    public void Mute(string name) {
-        if (name == "blocked") {
-            sfxs[1].mute = true;
-        }
-    }
-
-    public void UnMute(string name) {
-        if (name == "blocked") {
-            sfxs[1].Stop();
-            sfxs[1].mute = false;
-        }
-    }
+    audioSource.Stop();
+    audioSource.volume = startVolume;
+  }
 }

@@ -25,7 +25,7 @@ MonoBehaviour:
   crit: 25
   critBonus: 20
   mpModifier: 0
-  staggerDelayAmount: 2
+  staggerDelayAmount: 3
   hpCurrent: 0
   armorCurrent: 0
   mpCurrent: 0
@@ -40,3 +40,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 507723cf65036a946a7a5e7ce2a3c293, type: 2}
   - {fileID: 11400000, guid: a183f515cb6accd4bbc016ac95f550ff, type: 2}
   - {fileID: 11400000, guid: a31dc81c817d99244a58e9a1228abee2, type: 2}
+  Xp: 100

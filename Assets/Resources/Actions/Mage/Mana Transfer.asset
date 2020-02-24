@@ -18,7 +18,7 @@ MonoBehaviour:
   potency: 40
   drainPotency: 0
   hits: 1
-  delay: 1
+  delay: 0.5
   splitDamage: 0
   removesArmor: 0
   sprite: {fileID: 21300000, guid: b1e56617ae10a514faa30e8f02e0f7a4, type: 3}

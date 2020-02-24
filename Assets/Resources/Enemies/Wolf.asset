@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Wolf
   m_EditorClassIdentifier: 
   name: Wolf
+  heroName: 
   description: A deft wolf that attacks multiple times.
   hpMax: 150
   armorMax: 30
@@ -22,7 +23,7 @@ MonoBehaviour:
   willpower: 25
   speed: 14
   crit: 25
-  surge: 25
+  critBonus: 0
   mpModifier: 0
   staggerDelayAmount: 2
   hpCurrent: 0
@@ -36,3 +37,4 @@ MonoBehaviour:
   actions:
   - {fileID: 11400000, guid: a31dc81c817d99244a58e9a1228abee2, type: 2}
   - {fileID: 11400000, guid: a31dc81c817d99244a58e9a1228abee2, type: 2}
+  Xp: 100
