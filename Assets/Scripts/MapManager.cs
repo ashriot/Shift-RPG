@@ -55,3 +55,11 @@ public class MapManager : MonoBehaviour {
     fadingOut = true;
   }
 }
+
+public class MapColumn {
+
+}
+
+public enum EncounterTypes {
+
+}

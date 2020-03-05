@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Conjuror
   description: Heals and armors the party. Can gift Mana to allies.
   jobIcon: {fileID: 21300000, guid: 137d2d0c2cecee64480a58df85c51172, type: 3}
-  jobColor: {r: 0.59474015, g: 0.8686076, b: 0.9339623, a: 1}
+  jobColor: {r: 0.71595764, g: 0.808994, b: 0.8773585, a: 1}
   defense: 0.5
   resist: 0.5
   actions:

@@ -536,7 +536,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -10, y: -10}
+  m_SizeDelta: {x: -12, y: -12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8126578198015682982
 CanvasRenderer:
@@ -564,7 +564,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ecba310e6b4645841adaf0e1e09208f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2a30b6f3540bdef4da8e5fd30eb38955, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1961,7 +1961,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ecba310e6b4645841adaf0e1e09208f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2a30b6f3540bdef4da8e5fd30eb38955, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1991,7 +1991,7 @@ MonoBehaviour:
   targetCursor: {fileID: 0}
   panelMoved: 0
   hpFillImage: {fileID: 5445665968605768620}
-  image: {fileID: 3482929545793049304}
+  image: {fileID: 7310043241136128172}
   crystals:
   - {fileID: 507694662657102325}
   - {fileID: 1214510337553761992}
@@ -2044,6 +2044,8 @@ MonoBehaviour:
   damageDealtPercentMod: 0
   damageTakenPercentMod: 0
   speedMod: 0
+  newAmount: 0
+  hpSpeed: 0
   damageDealtFlatMod: 0
   red: {r: 0.9529412, g: 0.3600832, b: 0.30980396, a: 1}
   gray: {r: 0.75294125, g: 0.75294125, b: 0.75294125, a: 1}

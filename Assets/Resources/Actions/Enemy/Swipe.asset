@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Swipe
   description: 
   mpCost: 0
-  potency: 1.5
+  potency: 1
   drainPotency: 0
   hits: 1
   delay: 1

@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
   m_Name: Confusion
   m_EditorClassIdentifier: 
-  name: Confusion
+  name: Shadow Bind
   description: 'Enemy gains debuff: Each hit taken delays next turn by 15%.'
   mpCost: 0
   potency: 0
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
@@ -24,8 +25,9 @@ MonoBehaviour:
   targetType: 6
   damageType: 6
   powerType: 0
-  additionalDamage: []
+  additionalActions: []
   buffs: []
   debuffs:
   - {fileID: 11400000, guid: 98c024fe58a518445a22268126326e63, type: 2}
+  particleFx: {fileID: 0}
   sfxName: spell

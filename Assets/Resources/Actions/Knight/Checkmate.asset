@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Checkmate
   m_EditorClassIdentifier: 
   name: Checkmate
-  description: Not yet Implemented
+  description: Deal [150% FTH] spell damage and elay enemy turn by 50%.
   mpCost: 50
-  potency: 0
+  potency: 1.5
   drainPotency: 0
   hits: 1
   delay: 1
@@ -25,7 +25,8 @@ MonoBehaviour:
   targetType: 6
   damageType: 1
   powerType: 1
-  additionalActions: []
+  additionalActions:
+  - {fileID: 11400000, guid: 3884c350958280c47b32e4f94745a999, type: 2}
   buffs: []
   debuffs: []
   particleFx: {fileID: 0}

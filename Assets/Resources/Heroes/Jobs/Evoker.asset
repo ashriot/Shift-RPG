@@ -15,13 +15,10 @@ MonoBehaviour:
   name: Evoker
   description: Single-hit, powerful spells. Deals damage to all enemies each turn.
   jobIcon: {fileID: 21300000, guid: fadb10bcdb13ede4591a99f15a667345, type: 3}
-  jobColor: {r: 0.38781595, g: 0.6426178, b: 0.7830189, a: 1}
+  jobColor: {r: 0.49803922, g: 0.62062365, b: 0.90588236, a: 1}
   defense: 0
   resist: 0.75
   actions:
   - {fileID: 11400000, guid: 400ea5ced35903242a8686ab2893dafc, type: 2}
-  - {fileID: 11400000, guid: 2726e11a623a59c4fb8a83d72714fb4e, type: 2}
-  - {fileID: 11400000, guid: b082ad1757696394b9d77c87d948bb25, type: 2}
-  - {fileID: 11400000, guid: 8d59d01342624844fb1bde9f1793523f, type: 2}
-  trait: {fileID: 11400000, guid: 84fb4da6e27a37b4b8afeeeaee236691, type: 2}
-  shiftAction: {fileID: 11400000, guid: f96a0984274ae9b4998ae41159458b85, type: 2}
+  trait: {fileID: 0}
+  shiftAction: {fileID: 0}

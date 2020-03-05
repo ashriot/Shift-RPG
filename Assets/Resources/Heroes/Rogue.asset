@@ -15,15 +15,15 @@ MonoBehaviour:
   name: Rogue
   heroName: Bianca
   description: 
-  hpMax: 250
+  hpMax: 140
   armorMax: 30
   mp: 30
   mpRegen: 10
-  attack: 25
-  willpower: 20
+  attack: 16
+  willpower: 14
   speed: 14
-  crit: 25
-  critBonus: 30
+  crit: 20
+  critBonus: 20
   mpModifier: 0
   staggerDelayAmount: 1
   hpCurrent: 0
@@ -33,9 +33,7 @@ MonoBehaviour:
   resist: 0
   breakBonus: 1.5
   isPlayer: 1
-  currentJob: {fileID: 11400000, guid: 284e77ec2a430e64897942cdd81bf51e, type: 2}
+  currentJob: {fileID: 11400000, guid: ab307c02ef8ad17448699dda9a514650, type: 2}
   jobs:
-  - {fileID: 11400000, guid: 284e77ec2a430e64897942cdd81bf51e, type: 2}
   - {fileID: 11400000, guid: ab307c02ef8ad17448699dda9a514650, type: 2}
-  - {fileID: 11400000, guid: 6f8b30c3c1420e04da6374fc6a69136b, type: 2}
   shiftedThisTurn: 0

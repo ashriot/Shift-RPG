@@ -15,15 +15,15 @@ MonoBehaviour:
   name: Mage
   heroName: Nera
   description: 
-  hpMax: 200
+  hpMax: 80
   armorMax: 20
   mp: 40
   mpRegen: 10
-  attack: 30
-  willpower: 25
+  attack: 18
+  willpower: 18
   speed: 12
-  crit: 20
-  critBonus: 20
+  crit: 15
+  critBonus: 15
   mpModifier: 0
   staggerDelayAmount: 1
   hpCurrent: 0
@@ -36,6 +36,4 @@ MonoBehaviour:
   currentJob: {fileID: 11400000, guid: 6a76874a6445e5e41a498d0dc325325b, type: 2}
   jobs:
   - {fileID: 11400000, guid: 6a76874a6445e5e41a498d0dc325325b, type: 2}
-  - {fileID: 11400000, guid: 009f875512794fc41b398d4b4cca9f92, type: 2}
-  - {fileID: 11400000, guid: 42f01d7b408fd954bad4edd9ca904b92, type: 2}
   shiftedThisTurn: 0

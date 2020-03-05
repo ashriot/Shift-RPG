@@ -23,7 +23,7 @@ MonoBehaviour:
   willpower: 35
   speed: 13
   crit: 15
-  critBonus: 0
+  critBonus: 20
   mpModifier: 0
   staggerDelayAmount: 2
   hpCurrent: 0

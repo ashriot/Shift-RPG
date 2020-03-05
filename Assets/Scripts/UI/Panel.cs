@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,7 +37,7 @@ public class Panel : MonoBehaviour {
   public bool isDead { get { return unit.isDead; } }
   public decimal ticks;
 
-  public float damageDealtPercentMod, damageTakenPercentMod, speedMod;
+  public float damageDealtPercentMod, damageTakenPercentMod, speedMod, newAmount, hpSpeed;
   public int damageDealtFlatMod;
 
   public Color red, gray, gold;
@@ -44,28 +45,41 @@ public class Panel : MonoBehaviour {
   private Vector3 movePosition;
   private Vector3 initialPos;
 
-  private bool isMoving, isFading;
+  bool moving, fading, flashing;
 
   private float intensity, speed, timer, alpha, exposedTimer;
   private Color fade;
 
   void Update() {
-    if (isMoving) {
+    if (moving) {
       if (timer >= moveLifetime) {
-        isMoving = false;
+        moving = false;
       }
       transform.localPosition = Vector3.MoveTowards(transform.localPosition, movePosition, speed * Time.deltaTime);
       timer += Time.deltaTime;
-    } else if (isFading) {
+    }
+    
+    if (fading) {
       image.color = new Color(image.color.r, image.color.g, image.color.b,
-          Mathf.MoveTowards(image.color.a, 0f, ( 1 / fadeLifetime) * Time.deltaTime));
+        Mathf.MoveTowards(image.color.a, 0f, ( 1 / fadeLifetime) * Time.deltaTime));
           
       if (image.color.a == 0f) {
-          isFading = false;
-          image.gameObject.SetActive(false);
-          hud.SetActive(false);
-          buffs.gameObject.SetActive(false);
-          debuffs.gameObject.SetActive(false);
+        fading = false;
+        image.gameObject.SetActive(false);
+        hud.SetActive(false);
+        buffs.gameObject.SetActive(false);
+        debuffs.gameObject.SetActive(false);
+      }
+    }
+    
+    if (updateHpBar) {
+      if (Mathf.Abs(hpFillImage.fillAmount - newAmount) > 0.001f) {
+        hpFillImage.fillAmount = Mathf.Lerp(hpFillImage.fillAmount, newAmount, Time.deltaTime * (1 / hpSpeed) * 5f);
+      } else {
+        if (newAmount <= 0f) {
+          hpFillImage.fillAmount = 0f;
+        }
+        updateHpBar = false;
       }
     }
   }
@@ -76,6 +90,23 @@ public class Panel : MonoBehaviour {
     unit.mpCurrent = unit.mp;
     hpFillImage.fillAmount = unit.hpPercent;
     UpdateCrystalsAndShields();
+  }
+
+  public void FlashImage() {
+    if (flashing) return;
+    StartCoroutine(DoFlashImage(Color.clear));
+  }
+
+  IEnumerator DoFlashImage(Color color) {
+    flashing = true;
+    var originalColor = image.color;
+    for (int n = 0; n < 4; n++) {
+      image.color = color;
+      yield return new WaitForSeconds(.05f);
+      image.color = originalColor;
+      yield return new WaitForSeconds(.05f);
+    }
+    flashing = false;
   }
 
   public void UpdateCrystalsAndShields() {
@@ -135,7 +166,7 @@ public class Panel : MonoBehaviour {
     // Debug.Log("distance: " + distance + " " + transform.localPosition + " -> " + movePosition);
     speed = initialSpeed * (1 / duration);
     moveLifetime = duration;
-    isMoving = true;
+    moving = true;
   }
 
   public void Click() {
@@ -145,7 +176,7 @@ public class Panel : MonoBehaviour {
   public void FadeOut(float duration) {
     timer = 0f;
     fadeLifetime = duration;
-    isFading = true;
+    fading = true;
   }
 }
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Double Swipe
   description: 
   mpCost: 10
-  potency: 1
+  potency: 0.75
   drainPotency: 0
   hits: 2
   delay: 1

@@ -8,9 +8,10 @@ public class ActionMenu : MonoBehaviour {
   public Vector3 initialPos;
 
   public void DisplayActionMenu(Hero hero) {
+    gameObject.SetActive(true);
     var mpModifier = (1 + hero.mpModifier);
     for (var i = 0; i < actionButtons.Length; i++) {
-      if (hero.currentJob.actions[i] != null) {
+      if (i < hero.currentJob.actions.Length) {
         actionButtons[i].tooltipButton.SetupTooltip(hero.currentJob.actions[i].name, "Battle Action".ToUpper(), hero.currentJob.actions[i].mpCost.ToString(), hero.currentJob.actions[i].description);
         actionButtons[i].gameObject.SetActive(true);
         actionButtons[i].icon.GetComponent<Image>().sprite = hero.currentJob.actions[i].sprite;

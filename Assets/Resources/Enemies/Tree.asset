@@ -16,14 +16,14 @@ MonoBehaviour:
   heroName: 
   description: A tough animate treant with very high martial defense.
   hpMax: 250
-  armorMax: 40
+  armorMax: 50
   mp: 20
   mpRegen: 10
   attack: 25
   willpower: 5
-  speed: 8
+  speed: 10
   crit: 10
-  critBonus: 0
+  critBonus: 20
   mpModifier: 0
   staggerDelayAmount: 2
   hpCurrent: 0

@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
   m_Name: Mesmerize
   m_EditorClassIdentifier: 
-  name: Mesmerize
+  name: Darkness
   description: All enemies being slowed by 15%
   mpCost: 0
   potency: 0
+  drainPotency: 0
   hits: 1
   delay: 1
   splitDamage: 0
   removesArmor: 0
-  sprite: {fileID: 21300000, guid: 2d9734f21525e1e47968dc838109beaf, type: 3}
+  sprite: {fileID: 21300000, guid: e87eaa505f5731b47b1b39b9c67316f9, type: 3}
   targetType: 7
   damageType: 6
   powerType: 2
-  additionalAction: []
+  additionalActions: []
   buffs: []
   debuffs:
-  - {fileID: 11400000, guid: 75f660fe20d10004081667900125de76, type: 2}
+  - {fileID: 0}
+  particleFx: {fileID: 0}
   sfxName: 

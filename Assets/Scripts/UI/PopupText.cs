@@ -39,7 +39,8 @@ public class PopupText : MonoBehaviour {
     text.color = color;
     // Debug.Log("Popup pos: " + transform.position);
     if (shouldMove) {
-      text.fontSize = (int)(text.fontSize * (isCrit ? 1.25f : 1));
+      text.fontSize = (int)(text.fontSize * (isCrit ? 1.5f : 1));
+      // Debug.Log($"Font size: { text.fontSize }");
       distance = initialDistance * (1 / duration) * (isCrit ? 1.25f : 1);
     } else {
       transform.position += new Vector3(0f, 1.25f, 0f); 

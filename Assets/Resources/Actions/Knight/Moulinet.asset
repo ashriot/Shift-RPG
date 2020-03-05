@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc2edd11b9793a341ad9556bb2beea4a, type: 3}
   m_Name: Moulinet
   m_EditorClassIdentifier: 
-  name: Moulinet
+  name: Thunder Hammer
   description: Deal martial damage split between all enemies.
   mpCost: 20
-  potency: 1.2
+  potency: 1.5
   drainPotency: 0
   hits: 1
   delay: 1

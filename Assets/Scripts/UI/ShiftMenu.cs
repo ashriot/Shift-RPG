@@ -22,14 +22,18 @@ public class ShiftMenu : MonoBehaviour {
   }
 
   public void DisplayShiftMenu(Hero hero) {
-    traitTooltipButton.SetupTooltip(hero.currentJob.trait.name, "Passive Trait".ToUpper(), "NA", hero.currentJob.trait.description);
-    traitColor.color = hero.currentJob.jobColor;
-    traitName.text = hero.currentJob.trait.name;
-    traitIcon.sprite = hero.currentJob.trait.sprite;
-    shiftActionTooltipButton.SetupTooltip(hero.currentJob.shiftAction.name, "Shift Action".ToUpper(), "NA", hero.currentJob.shiftAction.description);
-    shiftColor.color = hero.currentJob.jobColor;
-    shiftName.text = hero.currentJob.shiftAction.name;
-    shiftIcon.sprite = hero.currentJob.shiftAction.sprite;
+    if (hero.currentJob.trait != null) {
+      traitTooltipButton.SetupTooltip(hero.currentJob.trait.name, "Passive Trait".ToUpper(), "NA", hero.currentJob.trait.description);
+      traitColor.color = hero.currentJob.jobColor;
+      traitName.text = hero.currentJob.trait.name;
+      traitIcon.sprite = hero.currentJob.trait.sprite;
+    }
+    if (hero.currentJob.shiftAction != null) {
+      shiftActionTooltipButton.SetupTooltip(hero.currentJob.shiftAction.name, "Shift Action".ToUpper(), "NA", hero.currentJob.shiftAction.description);
+      shiftColor.color = hero.currentJob.jobColor;
+      shiftName.text = hero.currentJob.shiftAction.name;
+      shiftIcon.sprite = hero.currentJob.shiftAction.sprite;
+    }
 
     if (hero.jobs.Length > 1) {
       var jobIndex = System.Array.IndexOf(hero.jobs, hero.currentJob);
@@ -48,6 +52,8 @@ public class ShiftMenu : MonoBehaviour {
       colorR.color = jobR.jobColor;
       jobIdR = jobRIndex;
       shiftRTooltipButton.SetupTooltip(jobR.name, "Job".ToUpper(), "NA", jobR.description, jobR);
+    } else {
+      gameObject.SetActive(false);
     }
   }
 

@@ -25,7 +25,8 @@ MonoBehaviour:
   targetType: 1
   damageType: 4
   powerType: 2
-  additionalActions: []
+  additionalActions:
+  - {fileID: 11400000, guid: 4e6d225fdeb6cd841ae75c5cbeaa012f, type: 2}
   buffs: []
   debuffs: []
   particleFx: {fileID: 0}

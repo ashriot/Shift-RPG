@@ -19,11 +19,11 @@ MonoBehaviour:
   armorMax: 30
   mp: 30
   mpRegen: 10
-  attack: 22
-  willpower: 25
+  attack: 20
+  willpower: 20
   speed: 14
-  crit: 25
-  critBonus: 0
+  crit: 35
+  critBonus: 35
   mpModifier: 0
   staggerDelayAmount: 2
   hpCurrent: 0
@@ -35,6 +35,6 @@ MonoBehaviour:
   isPlayer: 0
   sprite: {fileID: 21300000, guid: 0cc7614bc03418648b5dcf96f2a38dee, type: 3}
   actions:
-  - {fileID: 11400000, guid: a31dc81c817d99244a58e9a1228abee2, type: 2}
+  - {fileID: 11400000, guid: 7bcd09069c07091419a99f39f967ce04, type: 2}
   - {fileID: 11400000, guid: a31dc81c817d99244a58e9a1228abee2, type: 2}
   Xp: 100

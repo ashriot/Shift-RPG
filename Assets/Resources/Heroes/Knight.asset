@@ -15,15 +15,15 @@ MonoBehaviour:
   name: Knight
   heroName: Luca
   description: 
-  hpMax: 300
+  hpMax: 200
   armorMax: 40
-  mp: 20
+  mp: 50
   mpRegen: 10
-  attack: 25
-  willpower: 25
+  attack: 12
+  willpower: 10
   speed: 10
-  crit: 15
-  critBonus: 20
+  crit: 10
+  critBonus: 10
   mpModifier: 0
   staggerDelayAmount: 1
   hpCurrent: 0
@@ -36,6 +36,4 @@ MonoBehaviour:
   currentJob: {fileID: 11400000, guid: 947b5115b66aa5b47bb77e690a856ab7, type: 2}
   jobs:
   - {fileID: 11400000, guid: 947b5115b66aa5b47bb77e690a856ab7, type: 2}
-  - {fileID: 11400000, guid: d87cb771f3b66a54cb2b452a10aaaaec, type: 2}
-  - {fileID: 11400000, guid: 1cc36c516db9dd9469c150eea0aca36a, type: 2}
   shiftedThisTurn: 0
