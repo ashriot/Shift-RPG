@@ -12,4 +12,6 @@ public class Job : ScriptableObject {
   public Action[] actions;
   public StatusEffect trait;
   public Action shiftAction;
+
+  public Skill[] skills;
 }

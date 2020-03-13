@@ -20,6 +20,34 @@ MonoBehaviour:
   resist: 0
   actions:
   - {fileID: 11400000, guid: f2a3fcf236e4e724da3569587e294955, type: 2}
-  - {fileID: 11400000, guid: 361e9beb6a126d44a8eb9753a51a9ed1, type: 2}
   trait: {fileID: 0}
   shiftAction: {fileID: 0}
+  skills:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
