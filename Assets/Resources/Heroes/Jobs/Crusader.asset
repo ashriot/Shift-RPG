@@ -20,8 +20,11 @@ MonoBehaviour:
   resist: 0
   actions:
   - {fileID: 11400000, guid: f2a3fcf236e4e724da3569587e294955, type: 2}
-  trait: {fileID: 0}
-  shiftAction: {fileID: 0}
+  - {fileID: 11400000, guid: 61523dcfa30babd469a8eafa59d0cccd, type: 2}
+  - {fileID: 11400000, guid: 8d17c77e264827f418ca5187c95d4d44, type: 2}
+  - {fileID: 11400000, guid: 0bc19a11e7b86174f828c02392233fe9, type: 2}
+  trait: {fileID: 11400000, guid: dea6975a6578f374585227d1929914d0, type: 2}
+  shiftAction: {fileID: 11400000, guid: ddb6b5a314916844ab9e0b62c8137016, type: 2}
   skills:
   - {fileID: 0}
   - {fileID: 0}

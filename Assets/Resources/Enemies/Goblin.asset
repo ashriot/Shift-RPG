@@ -15,8 +15,8 @@ MonoBehaviour:
   name: Goblin
   heroName: 
   description: A dumb goblin.
-  hpMax: 50
-  armorMax: 20
+  hpMax: 250
+  armorMax: 50
   mp: 30
   mpRegen: 10
   attack: 10

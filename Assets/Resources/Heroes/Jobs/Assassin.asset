@@ -20,5 +20,9 @@ MonoBehaviour:
   resist: 0.25
   actions:
   - {fileID: 11400000, guid: d06464835dc24d8488a99433dc85d421, type: 2}
+  - {fileID: 11400000, guid: c87302bcd464f334b8bfd1bc54563315, type: 2}
+  - {fileID: 11400000, guid: 06ad26e560df5cc46b0998f9e3959403, type: 2}
+  - {fileID: 11400000, guid: 327a52eeb976c9d40af1924f6f9c1870, type: 2}
   trait: {fileID: 11400000, guid: 498fe3cf718cfea45a96810446be38d9, type: 2}
   shiftAction: {fileID: 11400000, guid: a4d77ce0c021d504e90eed4ba0676fc6, type: 2}
+  skills: []

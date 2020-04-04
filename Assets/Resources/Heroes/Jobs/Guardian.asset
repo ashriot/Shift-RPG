@@ -25,3 +25,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cd810059a9742a54e8dab58b131880f2, type: 2}
   trait: {fileID: 11400000, guid: 85694d5821c528d488afbad252ca9549, type: 2}
   shiftAction: {fileID: 11400000, guid: 9d9ddb7f76db5fe4a9c26120cf435c7c, type: 2}
+  skills: []

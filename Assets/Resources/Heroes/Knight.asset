@@ -36,4 +36,6 @@ MonoBehaviour:
   currentJob: {fileID: 11400000, guid: 947b5115b66aa5b47bb77e690a856ab7, type: 2}
   jobs:
   - {fileID: 11400000, guid: 947b5115b66aa5b47bb77e690a856ab7, type: 2}
+  - {fileID: 11400000, guid: d87cb771f3b66a54cb2b452a10aaaaec, type: 2}
+  - {fileID: 11400000, guid: 1cc36c516db9dd9469c150eea0aca36a, type: 2}
   shiftedThisTurn: 0
