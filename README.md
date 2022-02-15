@@ -1,2 +1,2 @@
 # Shift-RPG
- An RPG project with a paradigm shift mechanic
+ A 2D RPG project with a paradigm shift mechanism!
